@@ -1,0 +1,8 @@
+bazel-bin
+bazel-out
+bazel-testlogs
+bazel-blink
+
+iwyu.out
+script/analyzer/clang-analysis
+.vscode/settings.json
