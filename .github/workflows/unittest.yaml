@@ -1,0 +1,33 @@
+name: unittest
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  push:
+  workflow_dispatch:
+
+jobs:
+  bazel:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu21.04, ubuntu21.10]
+
+    container:
+      image: curoky/compile:${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: bazel sync
+        run: bazel sync
+
+      - name: bazel build
+        run: bazel build //...
+
+      - name: bazel test
+        run: bazel test //...
+
+      - uses: curoky/actions/tmate@master
+        if: ${{ failure() }}
