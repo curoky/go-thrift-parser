@@ -28,6 +28,8 @@
 namespace blink {
 
 void Channel::process(std::unique_ptr<folly::IOBuf> unframed, std::unique_ptr<THeader> header) {
+  // Note: unframed from IOBufQueue->split(), may be chained.
+  unframed->coalesce();
   CHECK(unframed->isChained() == false);
 
   VLOG(3) << "process len: " << unframed->computeChainDataLength();
