@@ -29,5 +29,6 @@ jobs:
       - name: bazel test
         run: bazel test //...
 
-      - uses: curoky/actions/tmate@master
+      - uses: mxschmitt/action-tmate@v3
         if: ${{ failure() }}
+        timeout-minutes: 30
