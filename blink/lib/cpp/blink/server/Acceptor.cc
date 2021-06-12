@@ -25,8 +25,13 @@
 
 namespace blink {
 
-void Acceptor::connectionAccepted(folly::NetworkSocket fd,
-                                  const folly::SocketAddress& clientAddr) noexcept {
+#ifndef NEW_FACEBOOK
+void Acceptor::connectionAccepted(int fd, const folly::SocketAddress& clientAddr) noexcept {
+#else
+void Acceptor::connectionAccepted(
+    folly::NetworkSocket fd, const folly::SocketAddress& clientAddr,
+    folly::AsyncServerSocket::AcceptCallback::AcceptInfo info) noexcept {
+#endif
   VLOG(3) << "connectionAccepted " << fd << ", " << clientAddr.describe();
 
   // QM: 这个已经是在IO线程里面了

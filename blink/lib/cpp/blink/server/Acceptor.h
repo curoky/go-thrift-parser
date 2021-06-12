@@ -22,13 +22,7 @@
 #include <wangle/acceptor/ConnectionManager.h>
 #include <wangle/acceptor/ServerSocketConfig.h>
 
-#ifndef NEW_FACEBOOK
-namespace folly {
-using NetworkSocket = int;
-}
-#endif
-
-namespace wolic {
+namespace blink {
 
 class Acceptor : public folly::AsyncServerSocket::AcceptCallback,
                  public wangle::ConnectionManager::Callback {
@@ -43,8 +37,13 @@ class Acceptor : public folly::AsyncServerSocket::AcceptCallback,
   ~Acceptor() {}
 
   // Inherited from folly::AsyncServerSocket::AcceptCallback
-  void connectionAccepted(folly::NetworkSocket fd,
-                          const folly::SocketAddress& clientAddr) noexcept override;
+#ifndef NEW_FACEBOOK
+  void connectionAccepted(int fd, const folly::SocketAddress& clientAddr) noexcept override;
+#else
+  void connectionAccepted(
+      folly::NetworkSocket fd, const folly::SocketAddress& clientAddr,
+      folly::AsyncServerSocket::AcceptCallback::AcceptInfo info) noexcept override;
+#endif
 
   void acceptError(const std::exception& ex) noexcept override {
     FB_LOG_EVERY_MS(ERROR, 1000) << "error accepting on acceptor socket: " << ex.what();
