@@ -21,6 +21,7 @@ cc_library(
     hdrs = glob(["blink/**/*.h"]),
     copts = TEST_COPTS,
     defines = ["NEW_FACEBOOK"],
+    includes = ["."],
     linkopts = TEST_LINKOPTS,
     visibility = ["//visibility:public"],
     deps = [
