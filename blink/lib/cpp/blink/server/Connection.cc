@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "Connection.h"
+
+#include "blink/server/Connection.h"
 
 #include <wangle/acceptor/ConnectionManager.h>
 

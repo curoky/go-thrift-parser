@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "Channel.h"
+
+#include "blink/server/Channel.h"
 
 #include <thrift/lib/cpp/protocol/TBinaryProtocol.h>
 #include <thrift/lib/cpp/protocol/TProtocol.h>
@@ -23,7 +24,7 @@
 #include <memory>
 #include <utility>
 
-#include "Connection.h"
+#include "blink/server/Connection.h"
 
 namespace blink {
 

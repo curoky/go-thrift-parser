@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "Server.h"
+
+#include "blink/server/Server.h"
 
 #include <folly/executors/CPUThreadPoolExecutor.h>
 #include <folly/executors/IOThreadPoolExecutor.h>
@@ -22,10 +23,11 @@
 
 #include <utility>
 
-#include "Acceptor.h"
-#include "AsyncSocketHandler.h"
-#include "Channel.h"
-#include "Connection.h"
+#include "blink/server/Acceptor.h"
+#include "blink/server/AsyncSocketHandler.h"
+#include "blink/server/Channel.h"
+#include "blink/server/Connection.h"
+
 namespace blink {
 
 Server::Server(std::shared_ptr<apache::thrift::TProcessor> processor)

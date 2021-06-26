@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "AsyncSocketHandler.h"
 
-#include "Channel.h"
-#include "Connection.h"
+#include "blink/server/AsyncSocketHandler.h"
+
+#include "blink/server/Channel.h"
+#include "blink/server/Connection.h"
 
 namespace blink {
 

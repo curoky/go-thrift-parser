@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #pragma once
 #include <folly/io/async/AsyncSocket.h>
 #include <thrift/lib/cpp/TProcessor.h>
@@ -20,8 +21,8 @@
 #include <memory>
 #include <utility>
 
-#include "AsyncSocketHandler.h"
-#include "FrameUtils.h"
+#include "blink/server/AsyncSocketHandler.h"
+#include "blink/server/FrameUtils.h"
 
 namespace blink {
 
