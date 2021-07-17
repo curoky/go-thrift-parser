@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+//go:generate pigeon -o parser/thrift.peg.go parser/thrift.peg
+//go:generate thrift --gen go --out . ast/ast.thrift
 package main
 func main() {
 }
