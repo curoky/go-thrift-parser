@@ -17,8 +17,11 @@
 package parser
 
 import (
+	"context"
+	"os"
 	"path/filepath"
 
+	"github.com/apache/thrift/lib/go/thrift"
 	"github.com/curoky/blink/blink/compiler/ast"
 	log "github.com/sirupsen/logrus"
 )
@@ -35,6 +38,24 @@ func CreateParser(verbose bool) *Parser {
 }
 
 func (p *Parser) Dump(filename string) {
+	if len(filename) == 0 {
+		filename = "ast.json"
+	}
+	absPath, err := filepath.Abs(filename)
+	if err != nil {
+		log.Error(err)
+	}
+	trans := thrift.NewTMemoryBuffer()
+	serializer := thrift.TSerializer{
+		Transport: trans,
+		Protocol:  thrift.NewTSimpleJSONProtocolConf(trans, nil),
+	}
+	content, err := serializer.WriteString(context.TODO(), &p.Document)
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = os.WriteFile(absPath, []byte(content), 0600)
+	log.Error(err)
 }
 
 func (p *Parser) RecursiveParse(filename string) error {
