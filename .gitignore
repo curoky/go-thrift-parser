@@ -6,3 +6,9 @@ bazel-blink
 iwyu.out
 script/analyzer/clang-analysis
 .vscode/settings.json
+
+blink/compiler/ast/*
+!blink/compiler/ast/ast.thrift
+blink/compiler/parser/thrift.peg.go
+blink/compiler/generator/template/template-packr.go
+blink/compiler/packrd/packed-packr.go
