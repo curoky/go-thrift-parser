@@ -22,9 +22,11 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"runtime"
 
 	"github.com/curoky/blink/blink"
+	"github.com/curoky/blink/blink/compiler/parser"
 	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
 )
@@ -72,6 +74,23 @@ func app() *cli.App {
 			Name:  "verbose",
 			Value: false,
 		},
+	}
+
+	app.Action = func(c *cli.Context) error {
+		input_file, _ := filepath.Abs(c.Path("file"))
+		output_dir := c.Path("out")
+		log.Infof("Input file: %s", input_file)
+		log.Infof("Output dir: %s", output_dir)
+
+		p := parser.CreateParser(c.Bool("verbose"))
+		if err := p.RecursiveParse(input_file); err != nil {
+			log.Fatal(err)
+		}
+		if c.Bool("dump") {
+			p.Dump("ast.json")
+		}
+
+		return nil
 	}
 	return app
 }
