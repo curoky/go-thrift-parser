@@ -26,6 +26,8 @@ import (
 	"runtime"
 
 	"github.com/curoky/blink/blink"
+	"github.com/curoky/blink/blink/compiler/generator"
+	"github.com/curoky/blink/blink/compiler/generator/filter"
 	"github.com/curoky/blink/blink/compiler/parser"
 	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
@@ -89,6 +91,17 @@ func app() *cli.App {
 		if c.Bool("dump") {
 			p.Dump("ast.json")
 		}
+
+		language := c.String("lang")
+		log.Infof("start generate %s", language)
+		filter.Init()
+		generator.CreateGenerator(language).Generate(p.Document.Thrifts[input_file],
+			generator.Config{
+				OutputPrefix: output_dir,
+				MakeReadOnly: c.Bool("readonly"),
+				FormatCode:   c.Bool("fmtcode"),
+			},
+		)
 
 		return nil
 	}
