@@ -16,25 +16,16 @@
 package generator
 
 import (
+	"fmt"
+	"os/exec"
+	"path/filepath"
+
 	"github.com/curoky/blink/blink/compiler/ast"
-	"github.com/curoky/blink/blink/compiler/generator/template"
 )
 
-type Config struct {
-	MakeReadOnly bool
-	OutputPrefix string
-	FormatCode   bool
+type CppGenerator struct {
+	tpl *template.Templator
 }
 
-type Generator interface {
-	Generate(thrift *ast.Thrift, config Config)
-}
-
-func CreateGenerator(lang string) Generator {
-	switch lang {
-	case "cpp":
-		return &CppGenerator{tpl: template.CreateTemplator(lang)}
-	default:
-		return nil
-	}
+func (g *CppGenerator) Generate(thrift *ast.Thrift, conf Config) {
 }
