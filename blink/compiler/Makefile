@@ -1,0 +1,6 @@
+build:
+	go generate ./...
+	go build -ldflags "-linkmode external -extldflags -static" -o ../../dist/blinkc
+
+gen:
+	go generate ./...
