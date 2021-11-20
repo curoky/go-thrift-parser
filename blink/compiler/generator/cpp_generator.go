@@ -21,6 +21,9 @@ import (
 	"path/filepath"
 
 	"github.com/curoky/blink/blink/compiler/ast"
+	"github.com/curoky/blink/blink/compiler/generator/template"
+	"github.com/curoky/blink/blink/compiler/utils"
+	"github.com/flosch/pongo2/v4"
 )
 
 type CppGenerator struct {
@@ -28,4 +31,8 @@ type CppGenerator struct {
 }
 
 func (g *CppGenerator) Generate(thrift *ast.Thrift, conf Config) {
+	ctx := pongo2.Context{"thrift": thrift}
+
+	g.tpl.RenderTo("cpp/types.h.j2", ctx, fmt.Sprintf("%s/%s.h", conf.OutputPrefix, filepath.Base(thrift.Filename)))
+
 }
