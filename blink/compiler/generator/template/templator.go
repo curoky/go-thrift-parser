@@ -19,6 +19,7 @@ package template
 import (
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/curoky/blink/blink"
@@ -46,6 +47,16 @@ func CreateTemplator(lang string) *Templator {
 	}
 }
 
+var trimSpace, emptyLine = regexp.MustCompile(`[ ]*\n`), regexp.MustCompile(`[\r\n]+`)
+
+func removeEmptyLine(str string) string {
+	// return strings.ReplaceAll(str, "\n\n", "\n")
+	str = strings.TrimSpace(str)
+	str = trimSpace.ReplaceAllString(str, "\n")
+	str = emptyLine.ReplaceAllString(str, "\n")
+	return str
+}
+
 func (t *Templator) RenderTo(tpl_path string, context pongo2.Context, output_path string) {
 	tpl, err := t.tpl_set.FromFile(tpl_path)
 	if err != nil {
@@ -65,7 +76,7 @@ func (t *Templator) RenderTo(tpl_path string, context pongo2.Context, output_pat
 		log.Fatal(err)
 	}
 
-	_, err = writer.WriteString(content)
+	_, err = writer.WriteString(removeEmptyLine(content))
 	if err != nil {
 		log.Fatal(err)
 	}
