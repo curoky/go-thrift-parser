@@ -35,3 +35,14 @@ func MakeFileWriteAble(filepath string) {
 		log.Debug(err)
 	}
 }
+
+func ClangFormat(paths []string) {
+	for _, p := range paths {
+		cmd := exec.Command("clang-format", "-style=file", "-i", p)
+		stdoutStderr, err := cmd.CombinedOutput()
+		if err != nil {
+			log.Error(stdoutStderr)
+			log.Fatal(err)
+		}
+	}
+}
