@@ -35,4 +35,10 @@ func (g *CppGenerator) Generate(thrift *ast.Thrift, conf Config) {
 
 	g.tpl.RenderTo("cpp/types.h.j2", ctx, fmt.Sprintf("%s/%s.h", conf.OutputPrefix, filepath.Base(thrift.Filename)))
 
+
+	if conf.MakeReadOnly {
+		for _, f := range g.tpl.OutputList {
+			utils.MakeFileReadOnly(f)
+		}
+	}
 }
