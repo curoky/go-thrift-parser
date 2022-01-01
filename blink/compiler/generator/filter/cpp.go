@@ -16,17 +16,30 @@
 package filter
 
 import (
+	"strings"
+
+	"github.com/curoky/blink/blink/compiler/ast"
 	"github.com/flosch/pongo2/v4"
-	log "github.com/sirupsen/logrus"
 )
 
-func Init() {
-	err := pongo2.RegisterFilter("base_name", BaseName)
-	if err != nil {
-		log.Error(err)
+var cpp_type_map = map[string]string{
+	"bool":   "bool",
+	"byte":   "char",
+	"i16":    "int16_t",
+	"i32":    "int32_t",
+	"i64":    "int64_t",
+	"double": "double",
+	"string": "std::string",
+	"binary": "std::string",
+	"list":   "std::vector",
+	"set":    "std::set",
+	"map":    "std::map",
+}
+
+func CppType(in *pongo2.Value, param *pongo2.Value) (*pongo2.Value, *pongo2.Error) {
+	name := resolveType(in.Interface().(*ast.Type))
+	for k, v := range cpp_type_map {
+		name = strings.Replace(name, k, v, 1)
 	}
-	err = pongo2.RegisterFilter("cpp_type", CppType)
-	if err != nil {
-		log.Error(err)
-	}
+	return pongo2.AsSafeValue(name), nil
 }
