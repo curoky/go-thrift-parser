@@ -16,6 +16,7 @@
 package filter
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/curoky/blink/blink/compiler/ast"
@@ -42,4 +43,23 @@ func CppType(in *pongo2.Value, param *pongo2.Value) (*pongo2.Value, *pongo2.Erro
 		name = strings.Replace(name, k, v, 1)
 	}
 	return pongo2.AsSafeValue(name), nil
+}
+
+
+func resolveCppValue(t *ast.ConstValue) (res string) {
+	switch t.Type {
+	case ast.ConstType_ConstDouble:
+		res = fmt.Sprint(*t.TypedValue.Double)
+	case ast.ConstType_ConstInt:
+		res = fmt.Sprint(*t.TypedValue.Int)
+	case ast.ConstType_ConstLiteral:
+		res = fmt.Sprintf("\"%s\"", *t.TypedValue.Literal)
+	case ast.ConstType_ConstList:
+	case ast.ConstType_ConstMap:
+	}
+	return
+}
+
+func CppValue(in *pongo2.Value, param *pongo2.Value) (*pongo2.Value, *pongo2.Error) {
+	return pongo2.AsSafeValue(resolveCppValue(in.Interface().(*ast.ConstValue))), nil
 }

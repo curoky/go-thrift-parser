@@ -29,4 +29,8 @@ func Init() {
 	if err != nil {
 		log.Error(err)
 	}
+	err = pongo2.RegisterFilter("cpp_value", CppValue)
+	if err != nil {
+		log.Error(err)
+	}
 }
