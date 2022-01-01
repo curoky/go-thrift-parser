@@ -23,6 +23,19 @@ import (
 	"github.com/flosch/pongo2/v4"
 )
 
+func resolveType(t *ast.Type) (name string) {
+	switch t.Name {
+	case "map":
+		name = fmt.Sprintf("map<%s,%s>", resolveType(t.KeyType), resolveType(t.ValueType))
+	case "list":
+		name = fmt.Sprintf("list<%s>", resolveType(t.ValueType))
+	case "set":
+		name = fmt.Sprintf("set<%s>", resolveType(t.ValueType))
+	default:
+		name = t.Name
+	}
+	return
+}
 
 func BaseName(in *pongo2.Value, param *pongo2.Value) (*pongo2.Value, *pongo2.Error) {
 	return pongo2.AsSafeValue(filepath.Base(in.Interface().(string))), nil
