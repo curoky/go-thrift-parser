@@ -45,6 +45,10 @@ func CppType(in *pongo2.Value, param *pongo2.Value) (*pongo2.Value, *pongo2.Erro
 	return pongo2.AsSafeValue(name), nil
 }
 
+func AnnCppType(in *pongo2.Value, param *pongo2.Value) (*pongo2.Value, *pongo2.Error) {
+	t := in.Interface().(map[string]*ast.Annotation)["cpp.type"]
+	return pongo2.AsSafeValue(t.Value), nil
+}
 
 func resolveCppValue(t *ast.ConstValue) (res string) {
 	switch t.Type {
