@@ -7,3 +7,18 @@
 // @date:
 // @version: {{ version }}
 {% endmacro %}
+
+
+{% macro namespace_begin(namespace) export %}
+{% set namepsace_list = thrift.Namespaces.cpp.Name | split:"." %}
+{% for ns in namepsace_list %}
+namespace {{ ns }} {
+{% endfor %}
+{% endmacro %}
+
+{% macro namespace_end(namespace) export %}
+{% set namepsace_list = thrift.Namespaces.cpp.Name | split:"." %}
+{% for ns in namepsace_list %}
+} // namespace {{ ns }}
+{% endfor %}
+{% endmacro %}
