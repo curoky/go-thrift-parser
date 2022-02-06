@@ -34,6 +34,7 @@ func (g *CppGenerator) Generate(thrift *ast.Thrift, conf Config) {
 	ctx := pongo2.Context{"thrift": thrift}
 
 	g.tpl.RenderTo("cpp/types.h.j2", ctx, fmt.Sprintf("%s/%s.h", conf.OutputPrefix, filepath.Base(thrift.Filename)))
+	g.tpl.RenderTo("cpp/types.cc.j2", ctx, fmt.Sprintf("%s/%s.cc", conf.OutputPrefix, filepath.Base(thrift.Filename)))
 
 	if conf.FormatCode {
 		if _, err := exec.LookPath("clang-format"); err == nil {
