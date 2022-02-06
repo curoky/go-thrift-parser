@@ -1,6 +1,56 @@
 {% import "utils.j2" autogen_head,namespace_begin,namespace_end %}
 {{ autogen_head() }}
 
+#pragma once
+#include <vector>
+#include <map>
+#include <set>
+#include <string>
+
+#include <rttr/type>
+
 {{ namespace_begin() }}
+
+{# struct xxx_constants { #}
+{% for cs in thrift.Constants %}
+  static const {{ cs.Type | cpp_type }}  {{ cs.Name }}_ = {{ cs.Value | cpp_value }};
+  inline static const {{ cs.Type | cpp_type }}& {{ cs.Name }}() {
+    return {{ cs.Name }}_;
+  }
+{% endfor %}
+{# } #}
+
+{# BEGIN declare_enums #}
+{% for en in thrift.Enums %}
+enum class {{ en.Name }} {
+  {% for v in en.Values %}
+    {{ v.Name }} = {{ v.Value }},
+  {% endfor %}
+};
+{% endfor %}
+{# END declare_enums #}
+
+{# BEGIN forward_declare #}
+{% for st in thrift.Structs %}
+struct {{ st.Name }};
+{% endfor %}
+{# END forward_declare #}
+
+{# BEGIN typedefs #}
+{% for td in thrift.Typedefs %}
+typedef {{ td.Type | cpp_type }} {{ td.Alias }};
+{% endfor %}
+{# END typedefs #}
+
+{# BEGIN declare_structs #}
+{% for st in thrift.Structs %}
+struct RTTR_API {{ st.Name }} {
+  {% for f in st.Fields %}
+  {{ f.Type | cpp_type }} {{ f.Name }} {% if f.Default %} = {{ f.Default | cpp_value }} {% endif %};
+  {% endfor %}
+  RTTR_ENABLE()
+};
+{% endfor %}
+{# END declare_structs #}
 
 {{ namespace_end() }}
