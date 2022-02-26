@@ -40,8 +40,10 @@ var cpp_type_map = map[string]string{
 func CppType(in *pongo2.Value, param *pongo2.Value) (*pongo2.Value, *pongo2.Error) {
 	name := resolveType(in.Interface().(*ast.Type))
 	for k, v := range cpp_type_map {
-		name = strings.Replace(name, k, v, 1)
+		name = strings.Replace(name, k, v, -1)
 	}
+	// TODO(curoky): remove this trick
+	name = strings.Replace(name, "std::std::", "std::", -1)
 	return pongo2.AsSafeValue(name), nil
 }
 
