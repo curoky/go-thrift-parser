@@ -12,3 +12,6 @@ blink/compiler/ast/*
 blink/compiler/parser/thrift.peg.go
 blink/compiler/generator/template/template-packr.go
 blink/compiler/packrd/packed-packr.go
+
+dist/blinkc
+go.sum
