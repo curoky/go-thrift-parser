@@ -15,3 +15,7 @@ blink/compiler/packrd/packed-packr.go
 
 dist/blinkc
 go.sum
+examples/type/foo.thrift.cc
+examples/type/foo.thrift.h
+compile_commands.json
+examples/type/ast.json

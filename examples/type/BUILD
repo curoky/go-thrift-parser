@@ -12,14 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@com_grail_bazel_compdb//:defs.bzl", "compilation_database")
+load("@rules_cc//cc:defs.bzl", "cc_test")
+load("//bazel:copts.bzl", "TEST_COPTS", "TEST_LINKOPTS")
 
-compilation_database(
-    name = "compdb",
-    output_base = "/shm/cache/bazel",
-    # bazel query '//blink/...' 2>&1 | xargs -n 1 | awk '{print "\""$1"\","}' | grep "\"//" | sort -n
-    targets = [
-        "//blink/lib/cpp:blink",
-        "//examples/type:type",
+cc_test(
+    name = "type",
+    testonly = False,
+    srcs = glob(["*.cc"]),
+    copts = TEST_COPTS + [
+        "-DUBPA_USREFL_USE_NAMEOF",
+    ],
+    linkopts = TEST_LINKOPTS,
+    deps = [
+        "@com_github_aantron_better_enums//:better-enums",
+        "@com_github_curoky_wolic//:catch2_main",
+        "@com_github_neargye_nameof//:nameof",
+        "@com_github_rttrorg_rttr//:rttr",
+        "@com_github_ubpa_usrefl//:usrefl",
+        "@com_github_veselink1_refl_cpp//:refl-cpp",
     ],
 )
