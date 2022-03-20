@@ -35,7 +35,7 @@ void Acceptor::connectionAccepted(
 #endif
   VLOG(3) << "connectionAccepted " << fd << ", " << clientAddr.describe();
 
-  // QM: 这个已经是在IO线程里面了
+  // Note: 这个已经是在IO线程里面了
   CHECK(base_ == folly::EventBaseManager::get()->getEventBase());
 
   // TODO(curoky): use socketOptions_
