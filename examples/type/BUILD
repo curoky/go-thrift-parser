@@ -23,6 +23,7 @@ cc_test(
         "-DUBPA_USREFL_USE_NAMEOF",
     ],
     linkopts = TEST_LINKOPTS,
+    visibility = ["//visibility:public"],
     deps = [
         "@com_github_aantron_better_enums//:better-enums",
         "@com_github_curoky_wolic//:catch2_main",
