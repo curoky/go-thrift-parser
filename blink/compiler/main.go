@@ -17,7 +17,6 @@
 //go:generate pigeon -o parser/thrift.peg.go parser/thrift.peg
 //go:generate thrift --gen go --out . ast/ast.thrift
 //go:generate packr2
-//go:generate ./fix-packr.sh
 
 package main
 
