@@ -24,7 +24,7 @@ git_repository(
 
 load("@com_curoky_rules_pkg//:rules_dependencies.bzl", "pkg_rules_dependencies")
 
-pkg_rules_dependencies(["qt"])
+pkg_rules_dependencies()
 
 load("@com_curoky_rules_pkg//:register_toolchains.bzl", "pkg_register_toolchains")
 
