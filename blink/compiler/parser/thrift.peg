@@ -189,8 +189,14 @@ Field           <-  id:FieldID? _ req:FieldReq? _ typ:FieldType _ name:Identifie
     Type : typ.(*ast.Type),
     Annotations: toAnnotations(annotations),
   }
-  if req != nil && !req.(bool) {
-    f.Requiredness = ast.FieldType_Optional
+  if req != nil {
+    if !req.(bool) {
+      f.Requiredness = ast.FieldType_Optional
+    } else {
+      f.Requiredness = ast.FieldType_Required
+    }
+  } else {
+    f.Requiredness = ast.FieldType_Default
   }
 	if def != nil {
 		f.Default = def.([]interface{})[2].(*ast.ConstValue)
