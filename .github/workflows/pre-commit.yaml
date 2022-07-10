@@ -25,11 +25,11 @@ jobs:
       - name: setup pakcr
         run: go install github.com/gobuffalo/packr/v2/packr2@latest
 
-      - name: setup mod
-        run: go mod tidy
-
       - name: generate code
         run: cd blink/compiler && go generate
+
+      - name: setup mod
+        run: go mod tidy
 
       - uses: pre-commit/action@v2.0.3
         with:
