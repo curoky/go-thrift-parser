@@ -17,11 +17,10 @@
 package parser
 
 import (
-	"context"
+	"encoding/json"
 	"os"
 	"path/filepath"
 
-	"github.com/apache/thrift/lib/go/thrift"
 	"github.com/curoky/blink/blink/compiler/ast"
 	log "github.com/sirupsen/logrus"
 )
@@ -45,12 +44,7 @@ func (p *Parser) Dump(filename string) {
 	if err != nil {
 		log.Error(err)
 	}
-	trans := thrift.NewTMemoryBuffer()
-	serializer := thrift.TSerializer{
-		Transport: trans,
-		Protocol:  thrift.NewTSimpleJSONProtocolConf(trans, nil),
-	}
-	content, err := serializer.WriteString(context.TODO(), &p.Document)
+	content, err := json.Marshal(p.Document)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -91,4 +85,8 @@ func (p *Parser) RecursiveParse(filename string) error {
 		inc.Reference = p.Document.Thrifts[inc.Path]
 	}
 	return nil
+}
+
+func (p *Parser) Resolve() {
+	resolve(&p.Document)
 }

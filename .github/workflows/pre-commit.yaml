@@ -13,11 +13,6 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: '1.17'
-      - name: setup thrift
-        run: |
-          curl -sSL -o ./thrift https://github.com/curoky/static-binaries/releases/download/v1.0.0/thrift-0.14.2
-          chmod +x ./thrift
-          sudo mv ./thrift /usr/local/bin
 
       - name: setup pigeon
         run: go install github.com/mna/pigeon@latest

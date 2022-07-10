@@ -47,20 +47,36 @@ func toAnnotations(v interface{}) map[string]*ast.Annotation {
   }
   return v.(map[string]*ast.Annotation)
 }
+
+func computeIncludeName(path string) string {
+  segs := strings.Split(path, "/")
+  name := strings.Split(segs[len(segs)-1], ".")
+  return name[0]
 }
 
-Document <- __ headers:(Header __)* definitions:(Definition __)* (EOF / EndOfDocumentError) {
-  thrift := &ast.Thrift{
+func registerType(c *current, typ *ast.Type) *ast.Type {
+  thrift := c.globalStore["thrift"].(*ast.Thrift)
+  thrift.AllTypes = append(thrift.AllTypes, typ)
+  return typ
+}
+}
+
+Document <- &{
+  c.globalStore["thrift"] = &ast.Thrift{
 		Includes: make([]*ast.Include, 0),
 		Namespaces: make(map[string]*ast.Namespace, 0),
-		Typedefs: make([]*ast.Typedef, 0),
-		Constants: make([]*ast.Constant, 0),
-		Enums: make([]*ast.Enum, 0),
-		Structs: make([]*ast.StructLike, 0),
-		Unions: make([]*ast.StructLike, 0),
-		Exceptions: make([]*ast.StructLike, 0),
-		Services: make([]*ast.Service, 0),
-	}
+		Typedefs: make(map[string]*ast.Type, 0),
+		Constants: make(map[string]*ast.Constant, 0),
+		Enums: make(map[string]*ast.Type, 0),
+		Structs: make(map[string]*ast.Type, 0),
+		Unions: make(map[string]*ast.Type, 0),
+		Exceptions: make(map[string]*ast.Type, 0),
+		Services: make(map[string]*ast.Service, 0),
+		AllTypes: make([]*ast.Type, 0),
+  }
+  return true, nil
+} __ headers:(Header __)* definitions:(Definition __)* (EOF / EndOfDocumentError) {
+  thrift := c.globalStore["thrift"].(*ast.Thrift)
 	docs := make([]interface{}, 0)
   if headers != nil {
     docs = append(docs, toIfaceSlice(headers)...)
@@ -70,26 +86,29 @@ Document <- __ headers:(Header __)* definitions:(Definition __)* (EOF / EndOfDoc
   }
 	for _, st := range docs {
 		switch v := st.([]interface{})[0].(type) {
-      case *ast.Namespace:
-        thrift.Namespaces[v.Language] = v
-      case cpp_include:
-        thrift.CppIncludes = append(thrift.CppIncludes, string(v))
-      case *ast.Constant:
-        thrift.Constants = append(thrift.Constants, v)
-      case *ast.Enum:
-        thrift.Enums = append(thrift.Enums, v)
-      case *ast.Typedef:
-        thrift.Typedefs = append(thrift.Typedefs, v)
-      case *ast.StructLike:
-        switch v.Category{
-          case "struct": thrift.Structs = append(thrift.Structs, v)
-          case "union": thrift.Unions = append(thrift.Structs, v)
-          case "exception": thrift.Exceptions = append(thrift.Structs, v)
-        }
-      case *ast.Service:
-        thrift.Services = append(thrift.Services, v)
       case *ast.Include:
         thrift.Includes = append(thrift.Includes, v)
+      case cpp_include:
+        thrift.CppIncludes = append(thrift.CppIncludes, string(v))
+      case *ast.Namespace:
+        thrift.Namespaces[v.Language] = v
+      case *ast.Constant:
+        thrift.Constants[v.Name] = v
+      case *ast.Type:
+        switch v.Category {
+          case ast.CategoryEnum:
+            thrift.Enums[v.Name] = v
+          case ast.CategoryTypedef:
+            thrift.Typedefs[v.Name] = v
+          case ast.CategoryStruct:
+            thrift.Structs[v.Name] = v
+          case ast.CategoryUnion:
+            thrift.Unions[v.Name] = v
+          case ast.CategoryException:
+            thrift.Exceptions[v.Name] = v
+        }
+      case *ast.Service:
+        thrift.Services[v.Name] = v
       default:
         return nil, fmt.Errorf("parser: unknown value %#v", v)
 		}
@@ -98,7 +117,7 @@ Document <- __ headers:(Header __)* definitions:(Definition __)* (EOF / EndOfDoc
 }
 
 Header          <- Include / CppInclude / Namespace
-Include         <- "include" _ file:Literal EOS { return &ast.Include{Path: file.(string)}, nil }
+Include         <- "include" _ file:Literal EOS { return &ast.Include{Path: file.(string), Name: computeIncludeName(file.(string))}, nil }
 CppInclude      <- "cpp_include" _ file:Literal EOS { return cpp_include(file.(string)), nil  }
 Namespace       <- "namespace" _ scope:NamespaceScope _ ns:Identifier EOS {
   return &ast.Namespace{
@@ -116,18 +135,22 @@ Const           <-  "const" _ typ:FieldType _ name:Identifier __ "=" __ value:Co
   }, nil
 }
 Typedef         <-  "typedef" _ typ:FieldType _ name:Identifier _ annotations:TypeAnnotations? EOS {
-  return &ast.Typedef{
-    Type: typ.(*ast.Type),
-    Alias: name.(string),
+  return &ast.Type{
+    Name: name.(string),
+    PreRefType: typ.(*ast.Type),
+    Category: ast.CategoryTypedef,
     Annotations: toAnnotations(annotations),
+    Belong: c.globalStore["thrift"].(*ast.Thrift),
   }, nil
 }
 Enum            <-  "enum" _ name:Identifier __ '{' __ values:(EnumValue __)* '}' _ annotations:TypeAnnotations? EOS {
   vs := toIfaceSlice(values)
-  en := &ast.Enum{
+  en := &ast.Type{
     Name: name.(string),
     Values: make([]*ast.EnumValue, len(vs)),
+    Category: ast.CategoryEnum,
     Annotations: toAnnotations(annotations),
+    Belong: c.globalStore["thrift"].(*ast.Thrift),
   }
   // TODO(curoky): Technically, all enum name must have value. So we need check emun value Strictly
   var nextValue int64 = 0
@@ -153,12 +176,19 @@ EnumValue       <-  name:Identifier _ value:('=' _ IntConstant)? _ annotations:T
   return ev, nil
 }
 StructLike          <-  category:("struct"/"union"/"exception") _ struc:StructLikeImpl {
-  st := struc.(*ast.StructLike)
-  st.Category = string(category.([]uint8))
+  st := struc.(*ast.Type)
+  switch string(category.([]uint8)) {
+    case "struct":
+      st.Category = ast.CategoryStruct
+    case "union":
+      st.Category = ast.CategoryUnion
+    case "exception":
+      st.Category = ast.CategoryException
+  }
   return st, nil
 }
 StructLikeImpl      <-  name:Identifier __ '{' __ fields:FieldList '}' _ annotations:TypeAnnotations? EOS {
-  st := &ast.StructLike{
+  st := &ast.Type{
     Name: name.(string),
     Annotations: toAnnotations(annotations),
   }
@@ -191,12 +221,12 @@ Field           <-  id:FieldID? _ req:FieldReq? _ typ:FieldType _ name:Identifie
   }
   if req != nil {
     if !req.(bool) {
-      f.Requiredness = ast.FieldType_Optional
+      f.Requiredness = ast.FieldTypeOptional
     } else {
-      f.Requiredness = ast.FieldType_Required
+      f.Requiredness = ast.FieldTypeRequired
     }
   } else {
-    f.Requiredness = ast.FieldType_Default
+    f.Requiredness = ast.FieldTypeDefault
   }
 	if def != nil {
 		f.Default = def.([]interface{})[2].(*ast.ConstValue)
@@ -223,42 +253,49 @@ Function        <-  oneway:("oneway" __)? typ:FunctionType __ name:Identifier _ 
   if t.Name != "void" {
     m.ReturnType = t
   }
-  if oneway != nil {
-    m.Oneway = true
-  }
   if arguments != nil {
     m.Arguments = arguments.([]*ast.Field)
   }
   if exceptions != nil {
 		m.Exceptions = exceptions.([]*ast.Field)
 		for _, e := range m.Exceptions {
-			e.Requiredness = ast.FieldType_Optional
+			e.Requiredness = ast.FieldTypeOptional
 		}
   }
   return m, nil
 }
+// TODO(curoky): should merge void to FieldType ?
 FunctionType    <-  typ:(FieldType / "void") {
   if t, ok := typ.(*ast.Type); ok {
     return t, nil
   }
-  return &ast.Type{Name: string(c.text)}, nil
+  return &ast.Type{
+    Name: string(c.text),
+    Category: ast.CategoryVoid,
+  }, nil
 }
 Throws          <-  "throws" __ '(' __ exceptions:FieldList ')' { return exceptions, nil }
 
 // Types
 FieldType       <-  typ:(BaseType / ContainerType / Identifier) { // Identifier must at last
   if t, ok := typ.(string); ok {
-		return &ast.Type{Name: string(t)}, nil
+    return registerType(c, &ast.Type{
+      Name: string(t),
+      Category: ast.CategoryIdentifier,
+      Belong: c.globalStore["thrift"].(*ast.Thrift),
+    }), nil
 	}
 	return typ, nil
 }
 DefinitionType  <-  typ:(BaseType / ContainerType) { return typ, nil }
-BaseType        <-  name:("bool" / "byte" / "i8" / "i16" / "i32" / "i64" / "double" / "string" / "binary" / "slist") _ annotations:TypeAnnotations? {
-  name_str := string(name.([]uint8))
+BaseType        <-  name:("bool" / "byte" / "i8" / "i16" / "i32" / "i64" / "double" / "string" / "binary" / "void") _ annotations:TypeAnnotations? {
+  nameStr := string(name.([]uint8))
+  category, _ := ast.ParseCategory(strings.Title(nameStr))
   return &ast.Type{
-		Name: name_str,
-    Category: baseTypeNameToCategory[name_str],
+		Name: nameStr,
+    Category: category,
 		Annotations: toAnnotations(annotations),
+    Belong: c.globalStore["thrift"].(*ast.Thrift),
 	}, nil
 }
 ContainerType   <-  typ:(MapType / SetType / ListType) { return typ, nil }
@@ -267,24 +304,27 @@ MapType         <-  "map" _ CppType? _ '<' _ key:FieldType _ ',' _ value:FieldTy
 		Name: "map",
 		KeyType: key.(*ast.Type),
 		ValueType: value.(*ast.Type),
-    Category: ast.Category_Map,
+    Category: ast.CategoryMap,
 		Annotations: toAnnotations(annotations),
+    Belong: c.globalStore["thrift"].(*ast.Thrift),
 	}, nil
 }
 SetType         <-  "set" _ CppType? _ '<' _ typ:FieldType '>' _ annotations:TypeAnnotations? {
   return &ast.Type{
 		Name: "set",
 		ValueType: typ.(*ast.Type),
-    Category: ast.Category_Set,
+    Category: ast.CategorySet,
 		Annotations: toAnnotations(annotations),
+    Belong: c.globalStore["thrift"].(*ast.Thrift),
 	}, nil
 }
 ListType        <-  "list" _ '<' _ typ:FieldType _ '>' _ CppType? _ annotations:TypeAnnotations? {
   return &ast.Type{
 		Name: "list",
 		ValueType: typ.(*ast.Type),
-    Category: ast.Category_List,
+    Category: ast.CategoryList,
 		Annotations: toAnnotations(annotations),
+    Belong: c.globalStore["thrift"].(*ast.Thrift),
 	}, nil
 }
 CppType         <-  "cpp_type" cppType:Literal { return cppType, nil }
@@ -293,7 +333,7 @@ CppType         <-  "cpp_type" cppType:Literal { return cppType, nil }
 ConstValue      <-  ConstantInt / ConstDouble / ConstLiteral / ConstIdentifier / ConstList / ConstMap
 ConstantInt     <-  value:IntConstant {
   return &ast.ConstValue{
-    Type: ast.ConstType_ConstInt,
+    Type: ast.ConstTypeInt,
     TypedValue: &ast.ConstTypedValue{
       Int: toPI64(value.(int64)),
     },
@@ -301,7 +341,7 @@ ConstantInt     <-  value:IntConstant {
 }
 ConstDouble  <-  value:DoubleConstant {
   return &ast.ConstValue{
-    Type: ast.ConstType_ConstDouble,
+    Type: ast.ConstTypeDouble,
     TypedValue: &ast.ConstTypedValue{
       Double: toPF64(value.(float64)),
     },
@@ -310,7 +350,7 @@ ConstDouble  <-  value:DoubleConstant {
 ConstList       <-  '[' __ values:(ConstValue __ ListSeparator? __)* ']' {
   valueSlice := values.([]interface{})
   cv := &ast.ConstValue{
-    Type: ast.ConstType_ConstList,
+    Type: ast.ConstTypeList,
     TypedValue: &ast.ConstTypedValue{
       List: make([]*ast.ConstValue, len(valueSlice)),
     },
@@ -326,7 +366,7 @@ ConstMap        <-  '{' __ values:(ConstValue __ ':' __ ConstValue __ ListSepara
 	}
 	vals := values.([]interface{})
   cv := &ast.ConstValue{
-    Type: ast.ConstType_ConstMap,
+    Type: ast.ConstTypeMap,
     TypedValue: &ast.ConstTypedValue{
       Map: make([]*ast.MapConstValue, len(vals)),
     },
@@ -343,7 +383,7 @@ ConstMap        <-  '{' __ values:(ConstValue __ ':' __ ConstValue __ ListSepara
 }
 ConstLiteral    <- literal:Literal {
   return &ast.ConstValue{
-    Type: ast.ConstType_ConstLiteral,
+    Type: ast.ConstTypeLiteral,
     TypedValue: &ast.ConstTypedValue{
       Literal: toPStr(literal.(string)),
     },
@@ -351,7 +391,7 @@ ConstLiteral    <- literal:Literal {
 }
 ConstIdentifier    <- ident:Identifier {
   return &ast.ConstValue{
-    Type: ast.ConstType_ConstIdentifier,
+    Type: ast.ConstTypeIdentifier,
     TypedValue: &ast.ConstTypedValue{
       Identifier: ident.(*string),
     },
