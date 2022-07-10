@@ -254,8 +254,10 @@ FieldType       <-  typ:(BaseType / ContainerType / Identifier) { // Identifier 
 }
 DefinitionType  <-  typ:(BaseType / ContainerType) { return typ, nil }
 BaseType        <-  name:("bool" / "byte" / "i8" / "i16" / "i32" / "i64" / "double" / "string" / "binary" / "slist") _ annotations:TypeAnnotations? {
+  name_str := string(name.([]uint8))
   return &ast.Type{
-		Name: string(name.([]uint8)),
+		Name: name_str,
+    Category: baseTypeNameToCategory[name_str],
 		Annotations: toAnnotations(annotations),
 	}, nil
 }
@@ -265,6 +267,7 @@ MapType         <-  "map" _ CppType? _ '<' _ key:FieldType _ ',' _ value:FieldTy
 		Name: "map",
 		KeyType: key.(*ast.Type),
 		ValueType: value.(*ast.Type),
+    Category: ast.Category_Map,
 		Annotations: toAnnotations(annotations),
 	}, nil
 }
@@ -272,6 +275,7 @@ SetType         <-  "set" _ CppType? _ '<' _ typ:FieldType '>' _ annotations:Typ
   return &ast.Type{
 		Name: "set",
 		ValueType: typ.(*ast.Type),
+    Category: ast.Category_Set,
 		Annotations: toAnnotations(annotations),
 	}, nil
 }
@@ -279,6 +283,7 @@ ListType        <-  "list" _ '<' _ typ:FieldType _ '>' _ CppType? _ annotations:
   return &ast.Type{
 		Name: "list",
 		ValueType: typ.(*ast.Type),
+    Category: ast.Category_List,
 		Annotations: toAnnotations(annotations),
 	}, nil
 }
