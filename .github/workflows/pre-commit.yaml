@@ -1,16 +1,36 @@
-name: Pre Commit
+name: pre commit
 
 on:
   pull_request:
   push:
+    branches: [master]
 
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
-    container:
-      image: curoky/formatter:latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '1.17'
+      - name: setup thrift
+        run: |
+          curl -sSL -o ./thrift https://github.com/curoky/static-binaries/releases/download/v1.0.0/thrift-0.14.2
+          chmod +x ./thrift
+          sudo mv ./thrift /usr/local/bin
+
+      - name: setup pigeon
+        run: go install github.com/mna/pigeon@latest
+
+      - name: setup pakcr
+        run: go install github.com/gobuffalo/packr/v2/packr2@latest
+
+      - name: setup mod
+        run: go mod tidy
+
+      - name: generate code
+        run: cd blink/compiler && go generate
+
       - uses: pre-commit/action@v2.0.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}

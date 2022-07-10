@@ -1,12 +1,9 @@
 name: unittest
 
 on:
-  push:
-    tags:
-      - v*
-    branches:
-      - master
   pull_request:
+  push:
+    branches: [master]
 
 jobs:
   compiler:
@@ -17,12 +14,29 @@ jobs:
         with:
           go-version: '1.17'
 
+      - name: setup thrift
+        run: |
+          curl -sSL -o ./thrift https://github.com/curoky/static-binaries/releases/download/v1.0.0/thrift-0.14.2
+          chmod +x ./thrift
+          sudo mv ./thrift /usr/local/bin
+
+      - name: setup pigeon
+        run: go install github.com/mna/pigeon@latest
+
+      - name: setup pakcr
+        run: go install github.com/gobuffalo/packr/v2/packr2@latest
+
       - name: build compiler
         run: |
           cd blink/compiler
-          go get -t -v ./...
+          go generate
+          go mod tidy
+          go build -ldflags "-linkmode external -extldflags -static"
           go test -race ./...
-          make
+
+      - uses: mxschmitt/action-tmate@v3
+        if: ${{ failure() }}
+        timeout-minutes: 30
 
   library-cpp:
     runs-on: ubuntu-latest
