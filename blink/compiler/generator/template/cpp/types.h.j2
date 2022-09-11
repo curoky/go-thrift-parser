@@ -48,6 +48,32 @@ struct RTTR_API {{ st.Name }} {
   {% for f in st.Fields %}
   {{ f.Type | cpp_type }} {{ f.Name }} {% if f.Default %} = {{ f.Default | cpp_value }} {% endif %};
   {% endfor %}
+
+  struct {
+    {% for f in st.Fields %}
+      {% if f.Requiredness == 1 || f.Requiredness == 3 %}
+        bool {{ f.Name }} = false;
+      {% endif%}
+    {% endfor %}
+  } __isset = {};
+
+  {% for f in st.Fields %}
+    {% if f.Requiredness == 1 || f.Requiredness == 3 %}
+      template <typename T = {{ f.Type | cpp_type }}>
+      auto& set_{{ f.Name }}(T&& table) {
+        this->{{ f.Name }} = std::forward<T>(table);
+        __isset.{{ f.Name }} = true;
+        return this->{{ f.Name }};
+      }
+      template <typename T = {{ f.Type | cpp_type }}>
+      auto& __set_{{ f.Name }}(T&& table) {
+        return set_{{ f.Name }}(std::forward<T>(table));
+      }
+      const {{ f.Type | cpp_type }}* get_{{ f.Name }}() const {
+        return __isset.{{ f.Name }} == true ? &this->{{ f.Name }} : nullptr;
+      }
+    {% endif%}
+  {% endfor %}
   RTTR_ENABLE()
 };
 {% endfor %}
