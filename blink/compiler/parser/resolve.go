@@ -17,19 +17,61 @@
 package parser
 
 import (
+	"strings"
+
 	"github.com/curoky/blink/blink/compiler/ast"
+	log "github.com/sirupsen/logrus"
 )
 
-var baseTypeNameToCategory = map[string]ast.Category{
-	"bool":   ast.Category_Bool,
-	"byte":   ast.Category_Byte,
-	"i16":    ast.Category_I16,
-	"i32":    ast.Category_I32,
-	"i64":    ast.Category_I64,
-	"double": ast.Category_Double,
-	"string": ast.Category_String,
-	"binary": ast.Category_Binary,
-	"list":   ast.Category_List,
-	"set":    ast.Category_Set,
-	"map":    ast.Category_Map,
+func getTypeFromDocument(name string, thrift *ast.Thrift) *ast.Type {
+	log.Infof("getTypeFromDocument %s", name)
+	if typ, ok := thrift.Enums[name]; ok {
+		return typ
+	}
+	if typ, ok := thrift.Typedefs[name]; ok {
+		return typ
+	}
+	if typ, ok := thrift.Structs[name]; ok {
+		return typ
+	}
+	if typ, ok := thrift.Unions[name]; ok {
+		return typ
+	}
+	if typ, ok := thrift.Exceptions[name]; ok {
+		return typ
+	}
+	return nil
+}
+
+func resolveType(doc *ast.Document, typ *ast.Type) *ast.Type {
+	if typ.Category != ast.CategoryIdentifier && typ.Category != ast.CategoryTypedef {
+		return typ
+	}
+	// log.Infof("resolveType %s %v", typ.Name, typ.Category)
+	// TODO(curoky): remove duplicated code
+	if strings.Contains(typ.Name, ".") {
+		seg := strings.Split(typ.Name, ".")
+		for _, inc := range typ.Belong.Includes {
+			if inc.Name == seg[0] {
+				if typ.PreRefType == nil {
+					typ.PreRefType = getTypeFromDocument(seg[1], inc.Reference)
+				}
+				typ.FinalRefType = resolveType(doc, typ.PreRefType)
+			}
+		}
+	} else {
+		if typ.PreRefType == nil {
+			typ.PreRefType = getTypeFromDocument(typ.Name, typ.Belong)
+		}
+		typ.FinalRefType = resolveType(doc, typ.PreRefType)
+	}
+	return typ.FinalRefType
+}
+
+func resolve(doc *ast.Document) {
+	for _, thrift := range doc.Thrifts {
+		for _, typ := range thrift.AllTypes {
+			resolveType(doc, typ)
+		}
+	}
 }

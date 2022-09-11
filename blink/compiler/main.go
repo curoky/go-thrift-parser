@@ -88,6 +88,7 @@ func app() *cli.App {
 		if err := p.RecursiveParse(input_file); err != nil {
 			log.Fatal(err)
 		}
+		p.Resolve()
 		if c.Bool("dump") {
 			p.Dump("ast.json")
 		}
