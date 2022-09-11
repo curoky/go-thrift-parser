@@ -23,7 +23,9 @@ RTTR_REGISTRATION {
 {% for _, st in thrift.Structs %}
   rttr::registration::class_<{{ st.Name }}>("{{ st.Name }}")
   {% for f in st.Fields %}
-    .property("{{ f.Name }}", &{{ st.Name }}::{{ f.Name }})(rttr::metadata("thrift", "{{ f.ID }},{{ f.Requiredness.String | safe }}"))
+    .property("{{ f.Name }}", &{{ st.Name }}::{{ f.Name }})(
+      rttr::metadata("thrift", "{{ f.ID }},{{ f.Requiredness.String | safe }},{{ f.Type.FinalType | expandCategory }}")
+    )
   {% endfor %};
 {% endfor %}
 // END Register_structs
