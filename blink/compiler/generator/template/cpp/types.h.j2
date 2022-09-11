@@ -12,7 +12,7 @@
 {{ namespace_begin() }}
 
 {# struct xxx_constants { #}
-{% for cs in thrift.Constants %}
+{% for _, cs in thrift.Constants %}
   static const {{ cs.Type | cpp_type }}  {{ cs.Name }}_ = {{ cs.Value | cpp_value }};
   inline static const {{ cs.Type | cpp_type }}& {{ cs.Name }}() {
     return {{ cs.Name }}_;
@@ -21,8 +21,8 @@
 {# } #}
 
 {# BEGIN declare_enums #}
-{% for en in thrift.Enums %}
-enum class {{ en.Name }} {
+{% for _, en in thrift.Enums %}
+enum struct {{ en.Name }} {
   {% for v in en.Values %}
     {{ v.Name }} = {{ v.Value }},
   {% endfor %}
@@ -31,19 +31,19 @@ enum class {{ en.Name }} {
 {# END declare_enums #}
 
 {# BEGIN forward_declare #}
-{% for st in thrift.Structs %}
+{% for _, st in thrift.Structs %}
 struct {{ st.Name }};
 {% endfor %}
 {# END forward_declare #}
 
 {# BEGIN typedefs #}
-{% for td in thrift.Typedefs %}
-typedef {{ td.Type | cpp_type }} {{ td.Alias }};
+{% for _, td in thrift.Typedefs %}
+typedef {{ td.PreRefType | cpp_type }} {{ td.Name }};
 {% endfor %}
 {# END typedefs #}
 
 {# BEGIN declare_structs #}
-{% for st in thrift.Structs %}
+{% for _, st in thrift.Structs %}
 struct RTTR_API {{ st.Name }} {
   {% for f in st.Fields %}
   {{ f.Type | cpp_type }} {{ f.Name }} {% if f.Default %} = {{ f.Default | cpp_value }} {% endif %};

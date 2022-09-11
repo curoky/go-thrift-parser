@@ -9,7 +9,7 @@
 
 RTTR_REGISTRATION {
 // BEGIN Register_enums
-{% for en in thrift.Enums %}
+{% for _, en in thrift.Enums %}
   rttr::registration::enumeration<{{ en.Name }}>("{{ en.Name }}")(
   {% for v in en.Values %}
     rttr::value("{{ v.Name }}", {{ en.Name }}::{{ v.Name }}),
@@ -20,7 +20,7 @@ RTTR_REGISTRATION {
 // END Register_enums
 
 // BEGIN Register_structs
-{% for st in thrift.Structs %}
+{% for _, st in thrift.Structs %}
   rttr::registration::class_<{{ st.Name }}>("{{ st.Name }}")
   {% for f in st.Fields %}
     .property("{{ f.Name }}", &{{ st.Name }}::{{ f.Name }})(rttr::metadata("thrift", "{{ f.ID }},{{ f.Requiredness.String | safe }}"))
