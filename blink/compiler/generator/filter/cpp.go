@@ -54,14 +54,14 @@ func AnnCppType(in *pongo2.Value, param *pongo2.Value) (*pongo2.Value, *pongo2.E
 
 func resolveCppValue(t *ast.ConstValue) (res string) {
 	switch t.Type {
-	case ast.ConstType_ConstDouble:
+	case ast.ConstTypeDouble:
 		res = fmt.Sprint(*t.TypedValue.Double)
-	case ast.ConstType_ConstInt:
+	case ast.ConstTypeInt:
 		res = fmt.Sprint(*t.TypedValue.Int)
-	case ast.ConstType_ConstLiteral:
+	case ast.ConstTypeLiteral:
 		res = fmt.Sprintf("\"%s\"", *t.TypedValue.Literal)
-	case ast.ConstType_ConstList:
-	case ast.ConstType_ConstMap:
+	case ast.ConstTypeList:
+	case ast.ConstTypeMap:
 	}
 	return
 }
