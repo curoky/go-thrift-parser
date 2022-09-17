@@ -37,4 +37,8 @@ func Init() {
 	if err != nil {
 		log.Error(err)
 	}
+	err = pongo2.RegisterFilter("expandCategory", expandCategory)
+	if err != nil {
+		log.Error(err)
+	}
 }

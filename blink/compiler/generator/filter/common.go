@@ -37,6 +37,20 @@ func resolveType(t *ast.Type) (name string) {
 	return
 }
 
+func expandCategory(in *pongo2.Value, param *pongo2.Value) (*pongo2.Value, *pongo2.Error) {
+	t := in.Interface().(*ast.Type)
+	name := t.Name
+	switch t.Category {
+	case ast.CategoryMap:
+		name = fmt.Sprintf("map|%s|%s", t.KeyType.FinalType().Category.String(), t.ValueType.FinalType().Category.String())
+	case ast.CategoryList:
+		name = fmt.Sprintf("list|%s", t.ValueType.FinalType().Category.String())
+	case ast.CategorySet:
+		name = fmt.Sprintf("set|%s", t.ValueType.FinalType().Category.String())
+	}
+	return pongo2.AsSafeValue(name), nil
+}
+
 func BaseName(in *pongo2.Value, param *pongo2.Value) (*pongo2.Value, *pongo2.Error) {
 	return pongo2.AsSafeValue(filepath.Base(in.Interface().(string))), nil
 }
