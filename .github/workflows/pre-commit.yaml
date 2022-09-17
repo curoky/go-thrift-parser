@@ -21,7 +21,7 @@ jobs:
         run: go install github.com/gobuffalo/packr/v2/packr2@latest
 
       - name: generate code
-        run: cd blink/compiler && go generate
+        run: cd blink/compiler && go generate ./...
 
       - name: setup mod
         run: go mod tidy

@@ -23,7 +23,7 @@ jobs:
       - name: build compiler
         run: |
           cd blink/compiler
-          go generate
+          go generate ./...
           go mod tidy
           go build -ldflags "-linkmode external -extldflags -static"
           go test -race ./...
