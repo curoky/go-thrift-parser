@@ -17,9 +17,6 @@ jobs:
       - name: setup pigeon
         run: go install github.com/mna/pigeon@latest
 
-      - name: setup pakcr
-        run: go install github.com/gobuffalo/packr/v2/packr2@latest
-
       - name: setup go-enum
         run: |
           curl -sSL -o ./go-enum https://github.com/abice/go-enum/releases/download/v0.3.9/go-enum_Linux_x86_64
@@ -37,21 +34,3 @@ jobs:
       - uses: mxschmitt/action-tmate@v3
         if: ${{ failure() }}
         timeout-minutes: 30
-
-  library-cpp:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: bazelbuild/setup-bazelisk@v1
-
-      - name: setup gcc
-        run: sudo apt-get install -y gcc-11 g++-11 gperf
-
-      - name: bazel sync
-        run: bazel sync
-
-      - name: bazel build
-        run: bazel build //...
-        env:
-          CC: gcc-11
-          CXX: g++-11
