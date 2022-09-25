@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+//go:generate pigeon -o thrift.peg.go thrift.peg
+
 package parser
 
 import (
@@ -21,7 +23,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/curoky/blink/blink/compiler/ast"
+	"github.com/curoky/go-thrift-parser/parser/ast"
 	log "github.com/sirupsen/logrus"
 )
 

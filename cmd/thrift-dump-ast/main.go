@@ -14,30 +14,27 @@
  * limitations under the License.
  */
 
-//go:generate pigeon -o parser/thrift.peg.go parser/thrift.peg
 //go:generate packr2
 
 package main
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
-	"runtime"
 
-	"github.com/curoky/blink/blink"
-	"github.com/curoky/blink/blink/compiler/generator"
-	"github.com/curoky/blink/blink/compiler/generator/filter"
-	"github.com/curoky/blink/blink/compiler/parser"
+	// "github.com/curoky/go-thrift-parser"
+	// "github.com/curoky/go-thrift-parser/parser/generator"
+	// "github.com/curoky/go-thrift-parser/compparseriler/generator/filter"
+	// "github.com/curoky/go-thrift-parser/parser/parser"
 	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
 )
 
 func app() *cli.App {
 	app := &cli.App{
-		Name:    "blink compiler",
-		Usage:   "compiler thrift IDL",
-		Version: fmt.Sprintf("%s (%s)", blink.Version, runtime.Version()),
+		Name:  "blink compiler",
+		Usage: "compiler thrift IDL",
+		// Version: fmt.Sprintf("%s (%s)", "1.0.0", runtime.Version()),
 	}
 	app.Flags = []cli.Flag{
 		&cli.PathFlag{
@@ -84,25 +81,25 @@ func app() *cli.App {
 		log.Infof("Input file: %s", input_file)
 		log.Infof("Output dir: %s", output_dir)
 
-		p := parser.CreateParser(c.Bool("verbose"))
-		if err := p.RecursiveParse(input_file); err != nil {
-			log.Fatal(err)
-		}
-		p.Resolve()
-		if c.Bool("dump") {
-			p.Dump("ast.json")
-		}
+		// 	p := parser.CreateParser(c.Bool("verbose"))
+		// 	if err := p.RecursiveParse(input_file); err != nil {
+		// 		log.Fatal(err)
+		// 	}
+		// 	p.Resolve()
+		// 	if c.Bool("dump") {
+		// 		p.Dump("ast.json")
+		// 	}
 
-		language := c.String("lang")
-		log.Infof("start generate %s", language)
-		filter.Init()
-		generator.CreateGenerator(language).Generate(p.Document.Thrifts[input_file],
-			generator.Config{
-				OutputPrefix: output_dir,
-				MakeReadOnly: c.Bool("readonly"),
-				FormatCode:   c.Bool("fmtcode"),
-			},
-		)
+		// 	language := c.String("lang")
+		// 	log.Infof("start generate %s", language)
+		// 	filter.Init()
+		// 	generator.CreateGenerator(language).Generate(p.Document.Thrifts[input_file],
+		// 		generator.Config{
+		// 			OutputPrefix: output_dir,
+		// 			MakeReadOnly: c.Bool("readonly"),
+		// 			FormatCode:   c.Bool("fmtcode"),
+		// 		},
+		// 	)
 
 		return nil
 	}

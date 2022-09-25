@@ -19,7 +19,7 @@ package parser
 import (
 	"strings"
 
-	"github.com/curoky/blink/blink/compiler/ast"
+	"github.com/curoky/go-thrift-parser/parser/ast"
 	log "github.com/sirupsen/logrus"
 )
 
