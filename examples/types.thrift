@@ -1,4 +1,5 @@
 namespace cpp idl.thrift
+namespace java idl.thrift
 // cpp_include
 
 const string GLOBAL_CONST_VAR_STRING = "123";
@@ -11,13 +12,18 @@ enum EnumType {
     THREE = 3;
 }
 
-struct MockRequest {
+union UnionType {
+    1:i16 var_i16;
+    2:i32 var_i32;
+}
+
+struct StructType {
     // basic type
-    1:bool var_bool = 0;
+    1:bool var_bool;
     // The "byte" type is a compatibility alias for "i8".
     // Use "i8" to emphasize the signedness of this type.
     2:byte var_byte;
-    3:i16 var_i16 = 1;
+    3:i16 var_i16;
     4:i32 var_i32;
     5:i64 var_i64;
     6:double var_double;
@@ -35,21 +41,18 @@ struct MockRequest {
     14:EnumType var_enum;
     15:set<EnumType> var_enum_set;
 
+    // union
+    16:UnionType var_union;
+
     // Field Requiredness
     17:required i32 var_required_i32;
     18:optional i32 var_optional_i32;
 }
 
-struct MockResponse {
-    1:MockRequest req;
+struct OutterStructType {
+    1:StructType req;
 }
 
-exception MockException {
+exception ExceptionType {
   1: string msg;
-}
-
-service EchoService {
-    MockResponse echo(1: MockRequest req) throws (1:MockException ex);
-    // Oneway methods can't throw exceptions.
-    oneway void oneway_echo(1: MockRequest req);
 }

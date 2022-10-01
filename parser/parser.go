@@ -39,9 +39,6 @@ func CreateParser(verbose bool) *Parser {
 }
 
 func (p *Parser) Dump(filename string) {
-	if len(filename) == 0 {
-		filename = "ast.json"
-	}
 	absPath, err := filepath.Abs(filename)
 	if err != nil {
 		log.Error(err)
@@ -51,7 +48,9 @@ func (p *Parser) Dump(filename string) {
 		log.Fatal(err)
 	}
 	err = os.WriteFile(absPath, []byte(content), 0600)
-	log.Error(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func (p *Parser) RecursiveParse(filename string) error {

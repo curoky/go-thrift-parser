@@ -14,28 +14,19 @@
  * limitations under the License.
  */
 
-//go:generate packr2
-
 package main
 
 import (
 	"os"
 	"path/filepath"
 
-	// "github.com/curoky/go-thrift-parser"
-	// "github.com/curoky/go-thrift-parser/parser/generator"
-	// "github.com/curoky/go-thrift-parser/compparseriler/generator/filter"
-	// "github.com/curoky/go-thrift-parser/parser/parser"
+	"github.com/curoky/go-thrift-parser/parser"
 	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
 )
 
 func app() *cli.App {
-	app := &cli.App{
-		Name:  "blink compiler",
-		Usage: "compiler thrift IDL",
-		// Version: fmt.Sprintf("%s (%s)", "1.0.0", runtime.Version()),
-	}
+	app := &cli.App{}
 	app.Flags = []cli.Flag{
 		&cli.PathFlag{
 			Name:      "file",
@@ -48,27 +39,6 @@ func app() *cli.App {
 			Usage:    "output directory",
 			Required: true,
 		},
-		&cli.StringFlag{
-			Name:     "lang",
-			Usage:    "language need to generate",
-			Required: true,
-		},
-		&cli.BoolFlag{
-			Name:  "dump",
-			Value: false,
-			Usage: "dump ast",
-		},
-		&cli.BoolFlag{
-			Name:  "readonly",
-			Value: true,
-			Usage: "make output file readony",
-		},
-		&cli.BoolFlag{
-			Name:   "fmtcode",
-			Value:  true,
-			Usage:  "format code",
-			Hidden: true,
-		},
 		&cli.BoolFlag{
 			Name:  "verbose",
 			Value: false,
@@ -79,28 +49,17 @@ func app() *cli.App {
 		input_file, _ := filepath.Abs(c.Path("file"))
 		output_dir := c.Path("out")
 		log.Infof("Input file: %s", input_file)
-		log.Infof("Output dir: %s", output_dir)
 
-		// 	p := parser.CreateParser(c.Bool("verbose"))
-		// 	if err := p.RecursiveParse(input_file); err != nil {
-		// 		log.Fatal(err)
-		// 	}
-		// 	p.Resolve()
-		// 	if c.Bool("dump") {
-		// 		p.Dump("ast.json")
-		// 	}
+		p := parser.CreateParser(c.Bool("verbose"))
+		if err := p.RecursiveParse(input_file); err != nil {
+			log.Fatal(err)
+		}
+		p.Resolve()
 
-		// 	language := c.String("lang")
-		// 	log.Infof("start generate %s", language)
-		// 	filter.Init()
-		// 	generator.CreateGenerator(language).Generate(p.Document.Thrifts[input_file],
-		// 		generator.Config{
-		// 			OutputPrefix: output_dir,
-		// 			MakeReadOnly: c.Bool("readonly"),
-		// 			FormatCode:   c.Bool("fmtcode"),
-		// 		},
-		// 	)
+		log.Infof("Dump to: %s", output_dir)
+		p.Dump(output_dir)
 
+		log.Infof("Success!")
 		return nil
 	}
 	return app
