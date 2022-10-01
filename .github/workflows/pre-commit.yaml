@@ -9,29 +9,19 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
         with:
-          go-version: '1.17'
+          go-version: '1.19'
 
-      - name: setup pigeon
-        run: go install github.com/mna/pigeon@latest
-
-      - name: setup pakcr
-        run: go install github.com/gobuffalo/packr/v2/packr2@latest
-
-      - name: setup go-enum
+      - name: setup tools
         run: |
-          curl -sSL -o ./go-enum https://github.com/abice/go-enum/releases/download/v0.3.9/go-enum_Linux_x86_64
-          chmod +x ./go-enum
-          sudo mv ./go-enum /usr/local/bin
+          go install github.com/mna/pigeon@latest
+          go install github.com/abice/go-enum@latest
 
-      - name: generate code
-        run: cd blink/compiler && go generate ./...
+      - run: go generate ./...
+      - run: go mod tidy
 
-      - name: setup mod
-        run: go mod tidy
-
-      - uses: pre-commit/action@v2.0.3
+      - uses: pre-commit/action@v3.0.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
