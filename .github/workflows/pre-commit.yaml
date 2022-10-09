@@ -20,6 +20,7 @@ jobs:
           go install github.com/abice/go-enum@latest
 
       - run: go generate ./...
+
       - run: go mod tidy
 
       - uses: pre-commit/action@v3.0.0

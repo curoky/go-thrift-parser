@@ -43,9 +43,16 @@ package ast
 // )
 type Category int32
 
+type SourceInfo struct {
+	Line, Col, Offset int
+	Text              string
+}
+
 type Annotation struct {
 	Name  string
 	Value string
+
+	SourceInfo *SourceInfo
 }
 
 type Type struct {
@@ -69,6 +76,8 @@ type Type struct {
 	Values []*EnumValue
 
 	ExpandCategoryStr string
+
+	SourceInfo *SourceInfo
 }
 
 func (t *Type) FinalType() *Type {
@@ -82,12 +91,16 @@ type Namespace struct {
 	Name        string
 	Language    string
 	Annotations map[string]*Annotation
+
+	SourceInfo *SourceInfo
 }
 
 type EnumValue struct {
 	Name        string
 	Value       int64
 	Annotations map[string]*Annotation
+
+	SourceInfo *SourceInfo
 }
 
 // ENUM(
@@ -105,12 +118,16 @@ type ConstValueExtra struct {
 	IsEnum bool
 	Index  int64
 	Sel    string
+
+	SourceInfo *SourceInfo
 }
 
 type ConstValue struct {
 	Type       ConstType
 	TypedValue *ConstTypedValue
 	Extra      *ConstValueExtra
+
+	SourceInfo *SourceInfo
 }
 
 type ConstTypedValue struct {
@@ -120,11 +137,15 @@ type ConstTypedValue struct {
 	Identifier *string
 	List       []*ConstValue
 	Map        []*MapConstValue
+
+	SourceInfo *SourceInfo
 }
 
 type MapConstValue struct {
 	Key   *ConstValue
 	Value *ConstValue
+
+	SourceInfo *SourceInfo
 }
 
 type Constant struct {
@@ -132,6 +153,8 @@ type Constant struct {
 	Type        *Type
 	Value       *ConstValue
 	Annotations map[string]*Annotation
+
+	SourceInfo *SourceInfo
 }
 
 // ENUM(
@@ -148,6 +171,8 @@ type Field struct {
 	Type         *Type
 	Default      *ConstValue
 	Annotations  map[string]*Annotation
+
+	SourceInfo *SourceInfo
 }
 
 type Function struct {
@@ -156,6 +181,8 @@ type Function struct {
 	Arguments   []*Field
 	Exceptions  []*Field
 	Annotations map[string]*Annotation
+
+	SourceInfo *SourceInfo
 }
 
 type Service struct {
@@ -163,12 +190,16 @@ type Service struct {
 	Extends     string
 	Functions   []*Function
 	Annotations map[string]*Annotation
+
+	SourceInfo *SourceInfo
 }
 
 type Include struct {
 	Path      string
 	Name      string // short name when include
 	Reference *Thrift
+
+	SourceInfo *SourceInfo
 }
 
 type Thrift struct {

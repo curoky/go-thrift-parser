@@ -20,18 +20,9 @@ jobs:
           go install github.com/abice/go-enum@latest
 
       - run: go generate ./...
+
       - run: go mod tidy
+
       - run: go build ./cmd/thrift-dump-ast
+
       - run: go test -race ./...
-
-      # - name: build compiler
-      #   run: |
-      #     cd blink/compiler
-      #     go generate ./...
-      #     go mod tidy
-      #     go build -ldflags "-linkmode external -extldflags -static"
-      #     go test -race ./...
-
-      # - uses: mxschmitt/action-tmate@v3
-      #   if: ${{ failure() }}
-      #   timeout-minutes: 30
