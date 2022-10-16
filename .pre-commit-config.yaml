@@ -47,6 +47,13 @@ repos:
         args: ['--line-length=100']
   # >>>>>>>>>>>>>>>>>>>>> python <<<<<<<<<<<<<<<<<<<< #
 
+  # >>>>>>>>>>>>>>>>>>>>> golang <<<<<<<<<<<<<<<<<<<< #
+  - repo: https://github.com/golangci/golangci-lint
+    rev: 'v1.51.1'
+    hooks:
+      - id: golangci-lint
+  # >>>>>>>>>>>>>>>>>>>>> golang <<<<<<<<<<<<<<<<<<<< #
+
   - repo: https://github.com/yoheimuta/protolint
     rev: 'v0.42.2'
     hooks:
@@ -55,10 +62,6 @@ repos:
     rev: 'v0.33.0'
     hooks:
       - id: markdownlint
-  - repo: https://github.com/golangci/golangci-lint
-    rev: 'v1.51.1'
-    hooks:
-      - id: golangci-lint
   - repo: https://github.com/pre-commit/mirrors-clang-format
     rev: 'v15.0.7'
     hooks:
