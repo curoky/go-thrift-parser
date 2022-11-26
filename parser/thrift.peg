@@ -64,14 +64,15 @@ func computeIncludeName(path string) string {
 }
 
 func registerType(c *current, typ *ast.Type) *ast.Type {
-  thrift := c.globalStore["thrift"].(*ast.Thrift)
-  thrift.AllTypes = append(thrift.AllTypes, typ)
+  document := c.globalStore["document"].(*ast.Document)
+  document.AllTypes = append(document.AllTypes, typ)
   return typ
 }
 }
 
 Document <- &{
-  c.globalStore["thrift"] = &ast.Thrift{
+  c.globalStore["document"] = &ast.Document{
+    Body: make([]interface{}, 0),
 		Includes: make([]*ast.Include, 0),
 		Namespaces: make(map[string]*ast.Namespace, 0),
 		Typedefs: make(map[string]*ast.Type, 0),
@@ -85,44 +86,43 @@ Document <- &{
   }
   return true, nil
 } __ headers:(Header __)* definitions:(Definition __)* (EOF / EndOfDocumentError) {
-  thrift := c.globalStore["thrift"].(*ast.Thrift)
-	docs := make([]interface{}, 0)
+  document := c.globalStore["document"].(*ast.Document)
   if headers != nil {
-    docs = append(docs, toIfaceSlice(headers)...)
+    document.Body = append(document.Body, toIfaceSlice(headers)...)
   }
   if definitions != nil {
-    docs = append(docs, toIfaceSlice(definitions)...)
+    document.Body = append(document.Body, toIfaceSlice(definitions)...)
   }
-	for _, st := range docs {
+	for _, st := range document.Body {
 		switch v := st.([]interface{})[0].(type) {
       case *ast.Include:
-        thrift.Includes = append(thrift.Includes, v)
+        document.Includes = append(document.Includes, v)
       case cpp_include:
-        thrift.CppIncludes = append(thrift.CppIncludes, string(v))
+        document.CppIncludes = append(document.CppIncludes, string(v))
       case *ast.Namespace:
-        thrift.Namespaces[v.Language] = v
+        document.Namespaces[v.Language] = v
       case *ast.Constant:
-        thrift.Constants[v.Name] = v
+        document.Constants[v.Name] = v
       case *ast.Type:
         switch v.Category {
           case ast.CategoryEnum:
-            thrift.Enums[v.Name] = v
+            document.Enums[v.Name] = v
           case ast.CategoryTypedef:
-            thrift.Typedefs[v.Name] = v
+            document.Typedefs[v.Name] = v
           case ast.CategoryStruct:
-            thrift.Structs[v.Name] = v
+            document.Structs[v.Name] = v
           case ast.CategoryUnion:
-            thrift.Unions[v.Name] = v
+            document.Unions[v.Name] = v
           case ast.CategoryException:
-            thrift.Exceptions[v.Name] = v
+            document.Exceptions[v.Name] = v
         }
       case *ast.Service:
-        thrift.Services[v.Name] = v
+        document.Services[v.Name] = v
       default:
         return nil, fmt.Errorf("parser: unknown value %#v", v)
 		}
 	}
-	return thrift, nil
+	return document, nil
 }
 
 Header          <- Include / CppInclude / Namespace
@@ -157,7 +157,7 @@ Typedef         <-  "typedef" _ typ:FieldType _ name:Identifier _ annotations:Ty
     PreRefType: typ.(*ast.Type),
     Category: ast.CategoryTypedef,
     Annotations: toAnnotations(annotations),
-    Belong: c.globalStore["thrift"].(*ast.Thrift),
+    Belong: c.globalStore["document"].(*ast.Document),
     SourceInfo: getSourceInfo(c),
   }, nil
 }
@@ -168,7 +168,7 @@ Enum            <-  "enum" _ name:Identifier __ '{' __ values:(EnumValue __)* '}
     Values: make([]*ast.EnumValue, len(vs)),
     Category: ast.CategoryEnum,
     Annotations: toAnnotations(annotations),
-    Belong: c.globalStore["thrift"].(*ast.Thrift),
+    Belong: c.globalStore["document"].(*ast.Document),
     SourceInfo: getSourceInfo(c),
   }
   // TODO(curoky): Technically, all enum name must have value. So we need check emun value Strictly
@@ -307,7 +307,7 @@ FieldType       <-  typ:(BaseType / ContainerType / Identifier) { // Identifier 
     return registerType(c, &ast.Type{
       Name: string(t),
       Category: ast.CategoryIdentifier,
-      Belong: c.globalStore["thrift"].(*ast.Thrift),
+      Belong: c.globalStore["document"].(*ast.Document),
       SourceInfo: getSourceInfo(c),
     }), nil
 	}
@@ -321,7 +321,7 @@ BaseType        <-  name:("bool" / "byte" / "i8" / "i16" / "i32" / "i64" / "doub
 		Name: nameStr,
     Category: category,
 		Annotations: toAnnotations(annotations),
-    Belong: c.globalStore["thrift"].(*ast.Thrift),
+    Belong: c.globalStore["document"].(*ast.Document),
     SourceInfo: getSourceInfo(c),
 	}, nil
 }
@@ -333,7 +333,7 @@ MapType         <-  "map" _ CppType? _ '<' _ key:FieldType _ ',' _ value:FieldTy
 		ValueType: value.(*ast.Type),
     Category: ast.CategoryMap,
 		Annotations: toAnnotations(annotations),
-    Belong: c.globalStore["thrift"].(*ast.Thrift),
+    Belong: c.globalStore["document"].(*ast.Document),
     SourceInfo: getSourceInfo(c),
 	}, nil
 }
@@ -343,7 +343,7 @@ SetType         <-  "set" _ CppType? _ '<' _ typ:FieldType '>' _ annotations:Typ
 		ValueType: typ.(*ast.Type),
     Category: ast.CategorySet,
 		Annotations: toAnnotations(annotations),
-    Belong: c.globalStore["thrift"].(*ast.Thrift),
+    Belong: c.globalStore["document"].(*ast.Document),
     SourceInfo: getSourceInfo(c),
 	}, nil
 }
@@ -353,7 +353,7 @@ ListType        <-  "list" _ '<' _ typ:FieldType _ '>' _ CppType? _ annotations:
 		ValueType: typ.(*ast.Type),
     Category: ast.CategoryList,
 		Annotations: toAnnotations(annotations),
-    Belong: c.globalStore["thrift"].(*ast.Thrift),
+    Belong: c.globalStore["document"].(*ast.Document),
     SourceInfo: getSourceInfo(c),
 	}, nil
 }

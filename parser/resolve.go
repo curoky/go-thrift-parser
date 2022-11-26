@@ -23,27 +23,27 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func getTypeFromDocument(name string, thrift *ast.Thrift) *ast.Type {
+func getTypeFromDocument(name string, doc *ast.Document) *ast.Type {
 	log.Infof("getTypeFromDocument %s", name)
-	if typ, ok := thrift.Enums[name]; ok {
+	if typ, ok := doc.Enums[name]; ok {
 		return typ
 	}
-	if typ, ok := thrift.Typedefs[name]; ok {
+	if typ, ok := doc.Typedefs[name]; ok {
 		return typ
 	}
-	if typ, ok := thrift.Structs[name]; ok {
+	if typ, ok := doc.Structs[name]; ok {
 		return typ
 	}
-	if typ, ok := thrift.Unions[name]; ok {
+	if typ, ok := doc.Unions[name]; ok {
 		return typ
 	}
-	if typ, ok := thrift.Exceptions[name]; ok {
+	if typ, ok := doc.Exceptions[name]; ok {
 		return typ
 	}
 	return nil
 }
 
-func resolveType(doc *ast.Document, typ *ast.Type) *ast.Type {
+func resolveType(thrift *ast.Thrift, typ *ast.Type) *ast.Type {
 	if typ.Category != ast.CategoryIdentifier && typ.Category != ast.CategoryTypedef {
 		return typ
 	}
@@ -56,22 +56,22 @@ func resolveType(doc *ast.Document, typ *ast.Type) *ast.Type {
 				if typ.PreRefType == nil {
 					typ.PreRefType = getTypeFromDocument(seg[1], inc.Reference)
 				}
-				typ.FinalRefType = resolveType(doc, typ.PreRefType)
+				typ.FinalRefType = resolveType(thrift, typ.PreRefType)
 			}
 		}
 	} else {
 		if typ.PreRefType == nil {
 			typ.PreRefType = getTypeFromDocument(typ.Name, typ.Belong)
 		}
-		typ.FinalRefType = resolveType(doc, typ.PreRefType)
+		typ.FinalRefType = resolveType(thrift, typ.PreRefType)
 	}
 	return typ.FinalRefType
 }
 
-func resolve(doc *ast.Document) {
-	for _, thrift := range doc.Thrifts {
-		for _, typ := range thrift.AllTypes {
-			resolveType(doc, typ)
+func resolve(thrift *ast.Thrift) {
+	for _, doc := range thrift.Documents {
+		for _, typ := range doc.AllTypes {
+			resolveType(thrift, typ)
 		}
 	}
 }

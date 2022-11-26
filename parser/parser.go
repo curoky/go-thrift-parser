@@ -28,13 +28,13 @@ import (
 )
 
 type Parser struct {
-	Document ast.Document
+	Thrift ast.Thrift
 	Verbose  bool
 }
 
 func CreateParser(verbose bool) *Parser {
 	p := &Parser{Verbose: verbose}
-	p.Document.Thrifts = make(map[string]*ast.Thrift)
+	p.Thrift.Documents = make(map[string]*ast.Document)
 	return p
 }
 
@@ -43,7 +43,7 @@ func (p *Parser) Dump(filename string) {
 	if err != nil {
 		log.Error(err)
 	}
-	content, err := json.Marshal(p.Document)
+	content, err := json.Marshal(p.Thrift)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -61,7 +61,7 @@ func (p *Parser) RecursiveParse(filename string) error {
 		return err
 	}
 
-	if _, ok := p.Document.Thrifts[absPath]; ok {
+	if _, ok := p.Thrift.Documents[absPath]; ok {
 		log.Infof("RecursiveParse: already in cached, skip %s", absPath)
 		return nil
 	}
@@ -72,10 +72,10 @@ func (p *Parser) RecursiveParse(filename string) error {
 		log.Errorf("RecursiveParse: parse failed %s, err %s", absPath, err)
 		return err
 	}
-	tt := i.(*ast.Thrift)
+	tt := i.(*ast.Document)
 	tt.Filename = absPath
 	log.Infof("RecursiveParse: parse %s success", tt.Filename)
-	p.Document.Thrifts[absPath] = tt
+	p.Thrift.Documents[absPath] = tt
 
 	for _, inc := range tt.Includes {
 		inc.Path = filepath.Join(filepath.Dir(absPath), inc.Path)
@@ -83,11 +83,11 @@ func (p *Parser) RecursiveParse(filename string) error {
 		if err != nil {
 			return err
 		}
-		inc.Reference = p.Document.Thrifts[inc.Path]
+		inc.Reference = p.Thrift.Documents[inc.Path]
 	}
 	return nil
 }
 
 func (p *Parser) Resolve() {
-	resolve(&p.Document)
+	resolve(&p.Thrift)
 }

@@ -59,7 +59,7 @@ type Type struct {
 	Name        string
 	Category    Category
 	Annotations map[string]*Annotation
-	Belong      *Thrift `json:"-"`
+	Belong      *Document `json:"-"`
 
 	// for list/set/map
 	KeyType   *Type
@@ -197,13 +197,15 @@ type Service struct {
 type Include struct {
 	Path      string
 	Name      string // short name when include
-	Reference *Thrift
+	Reference *Document
 
 	SourceInfo *SourceInfo
 }
 
-type Thrift struct {
-	Filename    string
+type Document struct {
+	Filename string
+	Body     []interface{}
+
 	Includes    []*Include
 	CppIncludes []string
 	Namespaces  map[string]*Namespace
@@ -220,6 +222,6 @@ type Thrift struct {
 	AllTypes []*Type
 }
 
-type Document struct {
-	Thrifts map[string]*Thrift
+type Thrift struct {
+	Documents map[string]*Document
 }
