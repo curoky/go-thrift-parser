@@ -28,8 +28,8 @@ import (
 )
 
 type Parser struct {
-	Thrift ast.Thrift
-	Verbose  bool
+	Thrift  ast.Thrift
+	Verbose bool
 }
 
 func CreateParser(verbose bool) *Parser {
@@ -38,23 +38,24 @@ func CreateParser(verbose bool) *Parser {
 	return p
 }
 
-func (p *Parser) Dump(filename string) {
+func (p *Parser) Dump(filename string) error {
 	absPath, err := filepath.Abs(filename)
 	if err != nil {
-		log.Error(err)
+		return err
 	}
 	content, err := json.Marshal(p.Thrift)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	err = os.WriteFile(absPath, []byte(content), 0600)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
+	return nil
 }
 
 func (p *Parser) RecursiveParse(filename string) error {
-	log.Infof("RecursiveParse: start process %s", filename)
+	log.Debugf("RecursiveParse: start process %s", filename)
 
 	absPath, err := filepath.Abs(filename)
 	if err != nil {
@@ -62,22 +63,22 @@ func (p *Parser) RecursiveParse(filename string) error {
 	}
 
 	if _, ok := p.Thrift.Documents[absPath]; ok {
-		log.Infof("RecursiveParse: already in cached, skip %s", absPath)
+		log.Debugf("RecursiveParse: already in cached, skip %s", absPath)
 		return nil
 	}
 
-	log.Infof("RecursiveParse: parse %s", absPath)
+	log.Debugf("RecursiveParse: parse %s", absPath)
 	i, err := ParseFile(absPath, Debug(p.Verbose))
 	if err != nil {
 		log.Errorf("RecursiveParse: parse failed %s, err %s", absPath, err)
 		return err
 	}
-	tt := i.(*ast.Document)
-	tt.Filename = absPath
-	log.Infof("RecursiveParse: parse %s success", tt.Filename)
-	p.Thrift.Documents[absPath] = tt
+	doc := i.(*ast.Document)
+	doc.Filename = absPath
+	log.Debugf("RecursiveParse: parse %s success", doc.Filename)
+	p.Thrift.Documents[absPath] = doc
 
-	for _, inc := range tt.Includes {
+	for _, inc := range doc.Includes {
 		inc.Path = filepath.Join(filepath.Dir(absPath), inc.Path)
 		err = p.RecursiveParse(inc.Path)
 		if err != nil {
