@@ -202,12 +202,14 @@ type Include struct {
 	SourceInfo *SourceInfo
 }
 
+type CppInclude string
+
 type Document struct {
 	Filename string
 	Body     []interface{}
 
 	Includes    []*Include            `json:"-"`
-	CppIncludes []string              `json:"-"`
+	CppIncludes []CppInclude          `json:"-"`
 	Namespaces  map[string]*Namespace `json:"-"`
 	Constants   map[string]*Constant  `json:"-"`
 	Enums       map[string]*Type      `json:"-"`

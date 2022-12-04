@@ -9,8 +9,6 @@ import (
   log "github.com/sirupsen/logrus"
 )
 
-type cpp_include string
-
 func toIfaceSlice(v interface{}) []interface{} {
   if v == nil {
       return nil
@@ -93,35 +91,6 @@ Document <- &{
   if definitions != nil {
     document.Body = append(document.Body, toIfaceSlice(definitions)...)
   }
-	for _, st := range document.Body {
-		switch v := st.([]interface{})[0].(type) {
-      case *ast.Include:
-        document.Includes = append(document.Includes, v)
-      case cpp_include:
-        document.CppIncludes = append(document.CppIncludes, string(v))
-      case *ast.Namespace:
-        document.Namespaces[v.Language] = v
-      case *ast.Constant:
-        document.Constants[v.Name] = v
-      case *ast.Type:
-        switch v.Category {
-          case ast.CategoryEnum:
-            document.Enums[v.Name] = v
-          case ast.CategoryTypedef:
-            document.Typedefs[v.Name] = v
-          case ast.CategoryStruct:
-            document.Structs[v.Name] = v
-          case ast.CategoryUnion:
-            document.Unions[v.Name] = v
-          case ast.CategoryException:
-            document.Exceptions[v.Name] = v
-        }
-      case *ast.Service:
-        document.Services[v.Name] = v
-      default:
-        return nil, fmt.Errorf("parser: unknown value %#v", v)
-		}
-	}
 	return document, nil
 }
 
@@ -133,7 +102,7 @@ Include         <- "include" _ file:Literal EOS {
     SourceInfo: getSourceInfo(c),
   }, nil
 }
-CppInclude      <- "cpp_include" _ file:Literal EOS { return cpp_include(file.(string)), nil  }
+CppInclude      <- "cpp_include" _ file:Literal EOS { return ast.CppInclude(file.(string)), nil  }
 Namespace       <- "namespace" _ scope:NamespaceScope _ ns:Identifier EOS {
   return &ast.Namespace{
     Language: scope.(string),
