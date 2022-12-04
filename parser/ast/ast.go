@@ -206,20 +206,20 @@ type Document struct {
 	Filename string
 	Body     []interface{}
 
-	Includes    []*Include
-	CppIncludes []string
-	Namespaces  map[string]*Namespace
-	Constants   map[string]*Constant
-	Enums       map[string]*Type
-	Typedefs    map[string]*Type
-	Structs     map[string]*Type
-	Unions      map[string]*Type
-	Exceptions  map[string]*Type
-	Services    map[string]*Service
+	Includes    []*Include            `json:"-"`
+	CppIncludes []string              `json:"-"`
+	Namespaces  map[string]*Namespace `json:"-"`
+	Constants   map[string]*Constant  `json:"-"`
+	Enums       map[string]*Type      `json:"-"`
+	Typedefs    map[string]*Type      `json:"-"`
+	Structs     map[string]*Type      `json:"-"`
+	Unions      map[string]*Type      `json:"-"`
+	Exceptions  map[string]*Type      `json:"-"`
+	Services    map[string]*Service   `json:"-"`
 
 	// Just for resolve
 	// TODO: remove this
-	AllTypes []*Type
+	AllTypes []*Type `json:"-"`
 }
 
 type Thrift struct {
