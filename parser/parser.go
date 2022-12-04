@@ -75,7 +75,11 @@ func (p *Parser) RecursiveParse(filename string) error {
 	}
 	doc := docIf.(*ast.Document)
 	doc.Filename = absPath
-	doc.Resolve(&p.Thrift)
+
+	err = doc.Resolve(&p.Thrift)
+	if err != nil {
+		return err
+	}
 
 	log.Debugf("RecursiveParse: parse %s success", doc.Filename)
 	p.Thrift.Documents[absPath] = doc

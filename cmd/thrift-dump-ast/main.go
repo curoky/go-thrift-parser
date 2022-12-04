@@ -57,7 +57,10 @@ func app() *cli.App {
 		p.Resolve()
 
 		log.Infof("Dump to: %s", output_dir)
-		p.Dump(output_dir)
+		err := p.Dump(output_dir)
+		if err != nil {
+			return err
+		}
 
 		log.Infof("Success!")
 		return nil
