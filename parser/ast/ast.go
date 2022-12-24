@@ -202,14 +202,18 @@ type Include struct {
 	SourceInfo *SourceInfo
 }
 
-type CppInclude string
+type CppInclude struct {
+	Name string
+
+	SourceInfo *SourceInfo
+}
 
 type Document struct {
 	Filename string
 	Body     []interface{}
 
 	Includes    []*Include            `json:"-"`
-	CppIncludes []CppInclude          `json:"-"`
+	CppIncludes []*CppInclude          `json:"-"`
 	Namespaces  map[string]*Namespace `json:"-"`
 	Constants   map[string]*Constant  `json:"-"`
 	Enums       map[string]*Type      `json:"-"`
@@ -219,7 +223,6 @@ type Document struct {
 	Exceptions  map[string]*Type      `json:"-"`
 	Services    map[string]*Service   `json:"-"`
 
-	// Just for resolve
 	// TODO: remove this
 	AllTypes []*Type `json:"-"`
 }

@@ -102,7 +102,12 @@ Include         <- "include" _ file:Literal EOS {
     SourceInfo: getSourceInfo(c),
   }, nil
 }
-CppInclude      <- "cpp_include" _ file:Literal EOS { return ast.CppInclude(file.(string)), nil  }
+CppInclude      <- "cpp_include" _ file:Literal EOS {
+  return &ast.CppInclude{
+    Name: file.(string),
+    SourceInfo: getSourceInfo(c),
+  }, nil
+}
 Namespace       <- "namespace" _ scope:NamespaceScope _ ns:Identifier EOS {
   return &ast.Namespace{
     Language: scope.(string),

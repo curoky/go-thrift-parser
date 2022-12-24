@@ -10,8 +10,8 @@ func (document *Document) Resolve(thrift *Thrift) error {
 		switch v := st.([]interface{})[0].(type) {
 		case *Include:
 			document.Includes = append(document.Includes, v)
-		case CppInclude:
-			document.CppIncludes = append(document.CppIncludes, CppInclude(v))
+		case *CppInclude:
+			document.CppIncludes = append(document.CppIncludes, v)
 		case *Namespace:
 			document.Namespaces[v.Language] = v
 		case *Constant:
