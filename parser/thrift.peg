@@ -174,13 +174,13 @@ StructLike          <-  category:("struct"/"union"/"exception") _ struc:StructLi
     case "exception":
       st.Category = ast.CategoryException
   }
+  st.SourceInfo = getSourceInfo(c)
   return st, nil
 }
 StructLikeImpl      <-  name:Identifier __ '{' __ fields:FieldList '}' _ annotations:TypeAnnotations? EOS {
   st := &ast.Type{
     Name: name.(string),
     Annotations: toAnnotations(annotations),
-    SourceInfo: getSourceInfo(c),
   }
   if fields != nil {
     st.Fields = fields.([]*ast.Field)
