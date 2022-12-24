@@ -94,7 +94,3 @@ func (p *Parser) RecursiveParse(filename string) error {
 	}
 	return nil
 }
-
-func (p *Parser) Resolve() {
-	resolve(&p.Thrift)
-}

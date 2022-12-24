@@ -54,7 +54,6 @@ func app() *cli.App {
 		if err := p.RecursiveParse(input_file); err != nil {
 			log.Fatal(err)
 		}
-		p.Resolve()
 
 		log.Infof("Dump to: %s", output_dir)
 		err := p.Dump(output_dir)
