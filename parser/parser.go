@@ -20,6 +20,7 @@ package parser
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 
@@ -28,13 +29,15 @@ import (
 )
 
 type Parser struct {
-	Thrift  ast.Thrift
-	Verbose bool
+	Thrift       ast.Thrift
+	IncludePaths []string
+	Verbose      bool
 }
 
-func CreateParser(verbose bool) *Parser {
+func CreateParser(verbose bool, includePaths []string) *Parser {
 	p := &Parser{Verbose: verbose}
 	p.Thrift.Documents = make(map[string]*ast.Document)
+	p.IncludePaths = includePaths
 	return p
 }
 
@@ -54,12 +57,30 @@ func (p *Parser) Dump(filename string) error {
 	return nil
 }
 
+func (p *Parser) findThriftFileInIncludePath(filename string) *string {
+	if filepath.IsAbs(filename) {
+		if _, err := os.Stat(filename); err == nil {
+			return &filename
+		}
+	}
+	for _, includePath := range p.IncludePaths {
+		log.Debugf("findThriftFileInIncludePath: %s %s", includePath, filename)
+		path := filepath.Join(includePath, filename)
+		if _, err := os.Stat(path); err == nil {
+			return &path
+		}
+	}
+	return nil
+}
+
 func (p *Parser) RecursiveParse(filename string) error {
 	log.Debugf("RecursiveParse: start process %s", filename)
 
-	absPath, err := filepath.Abs(filename)
-	if err != nil {
-		return err
+	absPath := ""
+	if path := p.findThriftFileInIncludePath(filename); path != nil {
+		absPath = *path
+	} else {
+		return fmt.Errorf("RecursiveParse: can't find %s", filename)
 	}
 
 	if _, ok := p.Thrift.Documents[absPath]; ok {
@@ -85,7 +106,6 @@ func (p *Parser) RecursiveParse(filename string) error {
 	p.Thrift.Documents[absPath] = doc
 
 	for _, inc := range doc.Includes {
-		inc.Path = filepath.Join(filepath.Dir(absPath), inc.Path)
 		err = p.RecursiveParse(inc.Path)
 		if err != nil {
 			return err

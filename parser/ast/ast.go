@@ -213,7 +213,7 @@ type Document struct {
 	Body     []interface{}
 
 	Includes    []*Include            `json:"-"`
-	CppIncludes []*CppInclude          `json:"-"`
+	CppIncludes []*CppInclude         `json:"-"`
 	Namespaces  map[string]*Namespace `json:"-"`
 	Constants   map[string]*Constant  `json:"-"`
 	Enums       map[string]*Type      `json:"-"`
