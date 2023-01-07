@@ -334,7 +334,7 @@ ListType        <-  "list" _ '<' _ typ:FieldType _ '>' _ CppType? _ annotations:
 CppType         <-  "cpp_type" cppType:Literal { return cppType, nil }
 
 // Constant Values
-ConstValue      <-  ConstantInt / ConstDouble / ConstLiteral / ConstIdentifier / ConstList / ConstMap
+ConstValue      <-  ConstDouble / ConstantInt / ConstLiteral / ConstIdentifier / ConstList / ConstMap
 ConstantInt     <-  value:IntConstant {
   return &ast.ConstValue{
     Type: ast.ConstTypeInt,
@@ -405,7 +405,7 @@ ConstIdentifier    <- ident:Identifier {
   return &ast.ConstValue{
     Type: ast.ConstTypeIdentifier,
     TypedValue: &ast.ConstTypedValue{
-      Identifier: ident.(*string),
+      Identifier: toPStr(ident.(string)),
       SourceInfo: getSourceInfo(c),
     },
     SourceInfo: getSourceInfo(c),
