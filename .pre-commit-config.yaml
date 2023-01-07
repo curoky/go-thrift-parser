@@ -52,6 +52,14 @@ repos:
     rev: 'v1.51.1'
     hooks:
       - id: golangci-lint
+  - repo: local
+    hooks:
+      - id: gofmt
+        name: gofmt
+        types: [go]
+        language: golang
+        entry: gofmt -l -w
+
   # >>>>>>>>>>>>>>>>>>>>> golang <<<<<<<<<<<<<<<<<<<< #
 
   - repo: https://github.com/yoheimuta/protolint
