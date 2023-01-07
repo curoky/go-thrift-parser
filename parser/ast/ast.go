@@ -1,5 +1,8 @@
 /*
- * Copyright 2021 curoky(cccuroky@gmail.com).
+ * Copyright (c) 2020-2023 curoky(cccuroky@gmail.com).
+ *
+ * This file is part of go-thrift-parser.
+ * See https://github.com/curoky/blink for further info.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
