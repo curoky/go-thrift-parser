@@ -30,18 +30,24 @@ func app() *cli.App {
 	app.Flags = []cli.Flag{
 		&cli.PathFlag{
 			Name:      "file",
-			Usage:     "input file path",
+			Usage:     "Set the input thrift file path",
 			TakesFile: true,
 			Required:  true,
 		},
 		&cli.PathFlag{
 			Name:     "out",
-			Usage:    "output directory",
+			Usage:    "Set the output file path",
 			Required: true,
 		},
 		&cli.BoolFlag{
 			Name:  "verbose",
+			Usage: "Verbose mode",
 			Value: false,
+		},
+		&cli.StringSliceFlag{
+			Name:  "include",
+			Usage: "Add a directory to the list of directories searched for include directives",
+			Value: cli.NewStringSlice(),
 		},
 	}
 
@@ -50,7 +56,7 @@ func app() *cli.App {
 		output_dir := c.Path("out")
 		log.Infof("Input file: %s", input_file)
 
-		p := parser.CreateParser(c.Bool("verbose"))
+		p := parser.CreateParser(c.Bool("verbose"), c.StringSlice("include"))
 		if err := p.RecursiveParse(input_file); err != nil {
 			log.Fatal(err)
 		}
