@@ -1,0 +1,6 @@
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - go run ../../cmd/thrift-dump-ast --file types.thrift --out ast.json

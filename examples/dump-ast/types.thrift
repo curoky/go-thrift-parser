@@ -1,6 +1,6 @@
-namespace cpp idl.thrift
-namespace java idl.thrift
-// cpp_include
+namespace cpp foo
+namespace java foo
+cpp_include "foo.h"
 
 const string GLOBAL_CONST_VAR_STRING = "123";
 typedef string StrType
