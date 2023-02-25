@@ -31,16 +31,24 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+type PreProcessorType func(filename string) ([]byte, error)
+
 type Parser struct {
 	Thrift       ast.Thrift
 	IncludePaths []string
 	Verbose      bool
+	PreProcessor PreProcessorType
+}
+
+func readOnlyProcessor(filename string) ([]byte, error) {
+	return os.ReadFile(filename)
 }
 
 func CreateParser(verbose bool, includePaths []string) *Parser {
 	p := &Parser{Verbose: verbose}
 	p.Thrift.Documents = make(map[string]*ast.Document)
 	p.IncludePaths = includePaths
+	p.PreProcessor = readOnlyProcessor
 	return p
 }
 
@@ -92,7 +100,13 @@ func (p *Parser) RecursiveParse(filename string) error {
 	}
 
 	log.Debugf("RecursiveParse: parse %s", absPath)
-	docIf, err := ParseFile(absPath, Debug(p.Verbose))
+	content, err := p.PreProcessor(absPath)
+	if err != nil {
+		log.Errorf("RecursiveParse: PreProcessor failed %s, err %s", absPath, err)
+		return err
+	}
+
+	docIf, err := Parse(absPath, content, Debug(p.Verbose))
 	if err != nil {
 		log.Errorf("RecursiveParse: parse failed %s, err %s", absPath, err)
 		return err
