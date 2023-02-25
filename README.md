@@ -1,6 +1,11 @@
 # Go thrift parser
 
-[![License](http://img.shields.io/:license-mit-blue.svg)](https://github.com/curoky/go-thrift-parser/blob/master/LICENSE.md)
+[![unittest](https://github.com/curoky/go-thrift-parser/actions/workflows/unittest.yaml/badge.svg)](https://github.com/curoky/go-thrift-parser/actions/workflows/unittest.yaml)
+![GitHub license](https://img.shields.io/github/license/curoky/go-thrift-parser)
+[![Go Report Card](https://goreportcard.com/badge/github.com/curoky/go-thrift-parser)](https://goreportcard.com/report/github.com/curoky/go-thrift-parser)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/curoky/go-thrift-parser)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/curoky/go-thrift-parser)
+[![GoDoc](https://pkg.go.dev/badge/github.com/curoky/go-thrift-parser?status.svg)](https://pkg.go.dev/github.com/curoky/go-thrift-parser?tab=doc)
 
 `go-thrift-parser` is a Go package which parses a thrift file.
 
