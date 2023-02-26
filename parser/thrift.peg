@@ -300,7 +300,7 @@ BaseType        <-  name:("bool" / "byte" / "i8" / "i16" / "i32" / "i64" / "doub
 	}, nil
 }
 ContainerType   <-  typ:(MapType / SetType / ListType) { return typ, nil }
-MapType         <-  "map" _ CppType? _ '<' _ key:FieldType _ ',' _ value:FieldType _ '>' _ annotations:TypeAnnotations? {
+MapType         <-  ("map" / "hash_map") _ CppType? _ '<' _ key:FieldType _ ',' _ value:FieldType _ '>' _ annotations:TypeAnnotations? {
   return &ast.Type{
 		Name: "map",
 		KeyType: key.(*ast.Type),
@@ -311,7 +311,7 @@ MapType         <-  "map" _ CppType? _ '<' _ key:FieldType _ ',' _ value:FieldTy
     SourceInfo: getSourceInfo(c),
 	}, nil
 }
-SetType         <-  "set" _ CppType? _ '<' _ typ:FieldType '>' _ annotations:TypeAnnotations? {
+SetType         <-  ("set" / "hash_set") _ CppType? _ '<' _ typ:FieldType '>' _ annotations:TypeAnnotations? {
   return &ast.Type{
 		Name: "set",
 		ValueType: typ.(*ast.Type),
