@@ -17,6 +17,9 @@ union UnionType {
     2:i32 var_i32;
 }
 
+struct InnerStructType {
+}
+
 struct StructType {
     // basic type
     1:bool var_bool;
@@ -30,29 +33,39 @@ struct StructType {
     7:string var_string;
     8:binary var_binary; // equal to string
     9:StrType var_string_type;
+    10:InnerStructType var_struct_type;
 
     // conatiner
-    10:list<string> var_string_list;
-    11:list<binary> var_binary_list;
-    12:set<string> var_string_set;
-    13:map<string, binary> var_string_binary_map;
+    100:list<string> var_string_list;
+    101:list<binary> var_binary_list;
+    102:set<string> var_string_set;
+    103:map<string, binary> var_string_binary_map;
+    104:list<InnerStructType> var_struct_list;
+    105:set<InnerStructType> var_struct_set;
+    106:map<string, InnerStructType> var_string_struct_map;
 
     // enum
-    14:EnumType var_enum;
-    15:set<EnumType> var_enum_set;
+    201:EnumType var_enum;
+    202:set<EnumType> var_enum_set;
 
     // union
-    16:UnionType var_union;
+    301:UnionType var_union;
 
     // Field Requiredness
-    17:required i32 var_required_i32;
-    18:optional i32 var_optional_i32;
-}
-
-struct OutterStructType {
-    1:StructType req;
+    401:required i32 var_required_i32;
+    402:optional i32 var_optional_i32;
 }
 
 exception ExceptionType {
   1: string msg;
+}
+
+struct MethodReq {
+}
+
+struct MethodResponse {
+}
+
+service ServiceV1 {
+  MethodResponse method1(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');
 }

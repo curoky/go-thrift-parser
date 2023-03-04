@@ -78,5 +78,22 @@ func (document *Document) Resolve(thrift *Thrift) error {
 			}
 		}
 	}
+
+	for _, service := range document.Services {
+		for _, function := range service.Functions {
+			for _, argument := range function.Arguments {
+				if argument.Type.Category == CategoryIdentifier {
+					if originalType, exists := document.Types[argument.Type.Name]; exists {
+						argument.Type = originalType
+					}
+				}
+			}
+			if function.ReturnType.Category == CategoryIdentifier {
+				if originalType, exists := document.Types[function.ReturnType.Name]; exists {
+					function.ReturnType = originalType
+				}
+			}
+		}
+	}
 	return nil
 }
