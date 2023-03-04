@@ -888,20 +888,65 @@
                   "KeyType": null,
                   "ValueType": {
                     "Name": "EnumType",
-                    "Category": "Identifier",
+                    "Category": "Enum",
                     "Annotations": null,
                     "KeyType": null,
                     "ValueType": null,
                     "PreRefType": null,
                     "FinalRefType": null,
                     "Fields": null,
-                    "Values": null,
+                    "Values": [
+                      {
+                        "Name": "ZERO",
+                        "Value": 0,
+                        "Annotations": null,
+                        "SourceInfo": {
+                          "Line": 9,
+                          "Col": 5,
+                          "Offset": 148,
+                          "Text": "ZERO= 0"
+                        }
+                      },
+                      {
+                        "Name": "ONE",
+                        "Value": 1,
+                        "Annotations": null,
+                        "SourceInfo": {
+                          "Line": 10,
+                          "Col": 5,
+                          "Offset": 160,
+                          "Text": "ONE = 1;"
+                        }
+                      },
+                      {
+                        "Name": "TWO",
+                        "Value": 2,
+                        "Annotations": null,
+                        "SourceInfo": {
+                          "Line": 11,
+                          "Col": 5,
+                          "Offset": 173,
+                          "Text": "TWO = 2;"
+                        }
+                      },
+                      {
+                        "Name": "THREE",
+                        "Value": 3,
+                        "Annotations": null,
+                        "SourceInfo": {
+                          "Line": 12,
+                          "Col": 5,
+                          "Offset": 186,
+                          "Text": "THREE = 3;"
+                        }
+                      }
+                    ],
                     "ExpandCategoryStr": "",
                     "SourceInfo": {
-                      "Line": 42,
-                      "Col": 12,
-                      "Offset": 864,
-                      "Text": "EnumType"
+                      "Line": 8,
+                      "Col": 1,
+                      "Offset": 128,
+                      "Text": "enum EnumType {\n    ZERO= 0\n    ONE = 1;\n    TWO = 2;\n    THREE = 3;\n}\n"
                     }
                   },
                   "PreRefType": null,
@@ -1708,20 +1753,65 @@
                         "KeyType": null,
                         "ValueType": {
                           "Name": "EnumType",
-                          "Category": "Identifier",
+                          "Category": "Enum",
                           "Annotations": null,
                           "KeyType": null,
                           "ValueType": null,
                           "PreRefType": null,
                           "FinalRefType": null,
                           "Fields": null,
-                          "Values": null,
+                          "Values": [
+                            {
+                              "Name": "ZERO",
+                              "Value": 0,
+                              "Annotations": null,
+                              "SourceInfo": {
+                                "Line": 9,
+                                "Col": 5,
+                                "Offset": 148,
+                                "Text": "ZERO= 0"
+                              }
+                            },
+                            {
+                              "Name": "ONE",
+                              "Value": 1,
+                              "Annotations": null,
+                              "SourceInfo": {
+                                "Line": 10,
+                                "Col": 5,
+                                "Offset": 160,
+                                "Text": "ONE = 1;"
+                              }
+                            },
+                            {
+                              "Name": "TWO",
+                              "Value": 2,
+                              "Annotations": null,
+                              "SourceInfo": {
+                                "Line": 11,
+                                "Col": 5,
+                                "Offset": 173,
+                                "Text": "TWO = 2;"
+                              }
+                            },
+                            {
+                              "Name": "THREE",
+                              "Value": 3,
+                              "Annotations": null,
+                              "SourceInfo": {
+                                "Line": 12,
+                                "Col": 5,
+                                "Offset": 186,
+                                "Text": "THREE = 3;"
+                              }
+                            }
+                          ],
                           "ExpandCategoryStr": "",
                           "SourceInfo": {
-                            "Line": 42,
-                            "Col": 12,
-                            "Offset": 864,
-                            "Text": "EnumType"
+                            "Line": 8,
+                            "Col": 1,
+                            "Offset": 128,
+                            "Text": "enum EnumType {\n    ZERO= 0\n    ONE = 1;\n    TWO = 2;\n    THREE = 3;\n}\n"
                           }
                         },
                         "PreRefType": null,

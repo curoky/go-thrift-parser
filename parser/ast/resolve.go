@@ -66,6 +66,16 @@ func (document *Document) Resolve(thrift *Thrift) error {
 					field.Type = originalType
 				}
 			}
+			if (field.Type.KeyType != nil) && (field.Type.KeyType.Category == CategoryIdentifier) {
+				if originalType, exists := document.Types[field.Type.KeyType.Name]; exists {
+					field.Type.KeyType = originalType
+				}
+			}
+			if (field.Type.ValueType != nil) && (field.Type.ValueType.Category == CategoryIdentifier) {
+				if originalType, exists := document.Types[field.Type.ValueType.Name]; exists {
+					field.Type.ValueType = originalType
+				}
+			}
 		}
 	}
 	return nil
