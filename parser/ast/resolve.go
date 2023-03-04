@@ -88,7 +88,7 @@ func (document *Document) Resolve(thrift *Thrift) error {
 					}
 				}
 			}
-			if function.ReturnType.Category == CategoryIdentifier {
+			if function.ReturnType != nil && (function.ReturnType.Category == CategoryIdentifier) {
 				if originalType, exists := document.Types[function.ReturnType.Name]; exists {
 					function.ReturnType = originalType
 				}

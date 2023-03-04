@@ -68,4 +68,5 @@ struct MethodResponse {
 
 service ServiceV1 {
   MethodResponse method1(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');
+  void method2(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');
 }

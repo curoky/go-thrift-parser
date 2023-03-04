@@ -1533,6 +1533,72 @@
                   "Offset": 1382,
                   "Text": "MethodResponse method1(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');"
                 }
+              },
+              {
+                "Name": "method2",
+                "ReturnType": null,
+                "Arguments": [
+                  {
+                    "ID": 1,
+                    "Name": "req",
+                    "Requiredness": "Default",
+                    "Type": {
+                      "Name": "MethodReq",
+                      "Category": "Struct",
+                      "Annotations": null,
+                      "KeyType": null,
+                      "ValueType": null,
+                      "PreRefType": null,
+                      "FinalRefType": null,
+                      "Fields": [],
+                      "Values": null,
+                      "ExpandCategoryStr": "",
+                      "SourceInfo": {
+                        "Line": 63,
+                        "Col": 1,
+                        "Offset": 1311,
+                        "Text": "struct MethodReq {\n}\n"
+                      }
+                    },
+                    "Default": null,
+                    "Annotations": null,
+                    "SourceInfo": {
+                      "Line": 71,
+                      "Col": 16,
+                      "Offset": 1468,
+                      "Text": "1: MethodReq req"
+                    }
+                  }
+                ],
+                "Exceptions": null,
+                "Annotations": {
+                  "tag.v1": {
+                    "Name": "tag.v1",
+                    "Value": "xxx",
+                    "SourceInfo": {
+                      "Line": 71,
+                      "Col": 35,
+                      "Offset": 1487,
+                      "Text": "tag.v1='xxx', "
+                    }
+                  },
+                  "tag.v2": {
+                    "Name": "tag.v2",
+                    "Value": "xxx",
+                    "SourceInfo": {
+                      "Line": 71,
+                      "Col": 49,
+                      "Offset": 1501,
+                      "Text": "tag.v2='xxx'"
+                    }
+                  }
+                },
+                "SourceInfo": {
+                  "Line": 71,
+                  "Col": 3,
+                  "Offset": 1455,
+                  "Text": "void method2(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');"
+                }
               }
             ],
             "Annotations": null,
@@ -1540,7 +1606,7 @@
               "Line": 69,
               "Col": 1,
               "Offset": 1360,
-              "Text": "service ServiceV1 {\n  MethodResponse method1(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');\n}\n"
+              "Text": "service ServiceV1 {\n  MethodResponse method1(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');\n  void method2(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');\n}\n"
             }
           },
           null
