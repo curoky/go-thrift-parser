@@ -62,8 +62,6 @@ func computeIncludeName(path string) string {
 }
 
 func registerType(c *current, typ *ast.Type) *ast.Type {
-  document := c.globalStore["document"].(*ast.Document)
-  document.AllTypes = append(document.AllTypes, typ)
   return typ
 }
 }
@@ -73,6 +71,7 @@ Document <- &{
     Body: make([]interface{}, 0),
 		Includes: make([]*ast.Include, 0),
 		Namespaces: make(map[string]*ast.Namespace, 0),
+		Types: make(map[string]*ast.Type, 0),
 		Typedefs: make(map[string]*ast.Type, 0),
 		Constants: make(map[string]*ast.Constant, 0),
 		Enums: make(map[string]*ast.Type, 0),
@@ -80,7 +79,6 @@ Document <- &{
 		Unions: make(map[string]*ast.Type, 0),
 		Exceptions: make(map[string]*ast.Type, 0),
 		Services: make(map[string]*ast.Service, 0),
-		AllTypes: make([]*ast.Type, 0),
   }
   return true, nil
 } __ headers:(Header __)* definitions:(Definition __)* (EOF / EndOfDocumentError) {
@@ -126,25 +124,25 @@ Const           <-  "const" _ typ:FieldType _ name:Identifier __ "=" __ value:Co
   }, nil
 }
 Typedef         <-  "typedef" _ typ:FieldType _ name:Identifier _ annotations:TypeAnnotations? EOS {
-  return &ast.Type{
+  return registerType(c, &ast.Type{
     Name: name.(string),
     PreRefType: typ.(*ast.Type),
     Category: ast.CategoryTypedef,
     Annotations: toAnnotations(annotations),
     Belong: c.globalStore["document"].(*ast.Document),
     SourceInfo: getSourceInfo(c),
-  }, nil
+  }), nil
 }
 Enum            <-  "enum" _ name:Identifier __ '{' __ values:(EnumValue __)* '}' _ annotations:TypeAnnotations? EOS {
   vs := toIfaceSlice(values)
-  en := &ast.Type{
+  en := registerType(c, &ast.Type{
     Name: name.(string),
     Values: make([]*ast.EnumValue, len(vs)),
     Category: ast.CategoryEnum,
     Annotations: toAnnotations(annotations),
     Belong: c.globalStore["document"].(*ast.Document),
     SourceInfo: getSourceInfo(c),
-  }
+  })
   // TODO(curoky): Technically, all enum name must have value. So we need check emun value Strictly
   var nextValue int64 = 0
   for i, v := range vs {
@@ -179,6 +177,7 @@ StructLike          <-  category:("struct"/"union"/"exception") _ struc:StructLi
     case "exception":
       st.Category = ast.CategoryException
   }
+  registerType(c, st)
   st.SourceInfo = getSourceInfo(c)
   return st, nil
 }
@@ -267,11 +266,11 @@ FunctionType    <-  typ:(FieldType / "void") {
   if t, ok := typ.(*ast.Type); ok {
     return t, nil
   }
-  return &ast.Type{
+  return registerType(c, &ast.Type{
     Name: string(c.text),
     Category: ast.CategoryVoid,
     SourceInfo: getSourceInfo(c),
-  }, nil
+  }), nil
 }
 Throws          <-  "throws" __ '(' __ exceptions:FieldList ')' { return exceptions, nil }
 
@@ -291,17 +290,17 @@ DefinitionType  <-  typ:(BaseType / ContainerType) { return typ, nil }
 BaseType        <-  name:("bool" / "byte" / "i8" / "i16" / "i32" / "i64" / "double" / "string" / "binary" / "void") _ annotations:TypeAnnotations? {
   nameStr := string(name.([]uint8))
   category, _ := ast.ParseCategory(strings.Title(nameStr))
-  return &ast.Type{
+  return registerType(c, &ast.Type{
 		Name: nameStr,
     Category: category,
 		Annotations: toAnnotations(annotations),
     Belong: c.globalStore["document"].(*ast.Document),
     SourceInfo: getSourceInfo(c),
-	}, nil
+	}), nil
 }
 ContainerType   <-  typ:(MapType / SetType / ListType) { return typ, nil }
 MapType         <-  ("map" / "hash_map") _ CppType? _ '<' _ key:FieldType _ ',' _ value:FieldType _ '>' _ annotations:TypeAnnotations? {
-  return &ast.Type{
+  return registerType(c, &ast.Type{
 		Name: "map",
 		KeyType: key.(*ast.Type),
 		ValueType: value.(*ast.Type),
@@ -309,27 +308,27 @@ MapType         <-  ("map" / "hash_map") _ CppType? _ '<' _ key:FieldType _ ',' 
 		Annotations: toAnnotations(annotations),
     Belong: c.globalStore["document"].(*ast.Document),
     SourceInfo: getSourceInfo(c),
-	}, nil
+	}), nil
 }
 SetType         <-  ("set" / "hash_set") _ CppType? _ '<' _ typ:FieldType '>' _ annotations:TypeAnnotations? {
-  return &ast.Type{
+  return registerType(c, &ast.Type{
 		Name: "set",
 		ValueType: typ.(*ast.Type),
     Category: ast.CategorySet,
 		Annotations: toAnnotations(annotations),
     Belong: c.globalStore["document"].(*ast.Document),
     SourceInfo: getSourceInfo(c),
-	}, nil
+	}), nil
 }
 ListType        <-  "list" _ '<' _ typ:FieldType _ '>' _ CppType? _ annotations:TypeAnnotations? {
-  return &ast.Type{
+  return registerType(c, &ast.Type{
 		Name: "list",
 		ValueType: typ.(*ast.Type),
     Category: ast.CategoryList,
 		Annotations: toAnnotations(annotations),
     Belong: c.globalStore["document"].(*ast.Document),
     SourceInfo: getSourceInfo(c),
-	}, nil
+	}), nil
 }
 CppType         <-  "cpp_type" cppType:Literal { return cppType, nil }
 

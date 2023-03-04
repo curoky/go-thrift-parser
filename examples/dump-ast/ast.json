@@ -1,7 +1,7 @@
 {
   "Documents": {
-    "/home/curoky/repos/go-thrift-parser/examples/dump-ast/types.thrift": {
-      "Filename": "/home/curoky/repos/go-thrift-parser/examples/dump-ast/types.thrift",
+    "/home/curoky/repos/project/go-thrift-parser/examples/dump-ast/types.thrift": {
+      "Filename": "/home/curoky/repos/project/go-thrift-parser/examples/dump-ast/types.thrift",
       "Body": [
         [
           {
@@ -550,20 +550,37 @@
                 "Requiredness": "Default",
                 "Type": {
                   "Name": "StrType",
-                  "Category": "Identifier",
+                  "Category": "Typedef",
                   "Annotations": null,
                   "KeyType": null,
                   "ValueType": null,
-                  "PreRefType": null,
+                  "PreRefType": {
+                    "Name": "string",
+                    "Category": "String",
+                    "Annotations": null,
+                    "KeyType": null,
+                    "ValueType": null,
+                    "PreRefType": null,
+                    "FinalRefType": null,
+                    "Fields": null,
+                    "Values": null,
+                    "ExpandCategoryStr": "",
+                    "SourceInfo": {
+                      "Line": 6,
+                      "Col": 9,
+                      "Offset": 112,
+                      "Text": "string "
+                    }
+                  },
                   "FinalRefType": null,
                   "Fields": null,
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 32,
-                    "Col": 7,
-                    "Offset": 612,
-                    "Text": "StrType"
+                    "Line": 6,
+                    "Col": 1,
+                    "Offset": 104,
+                    "Text": "typedef string StrType\n"
                   }
                 },
                 "Default": null,
@@ -790,20 +807,65 @@
                 "Requiredness": "Default",
                 "Type": {
                   "Name": "EnumType",
-                  "Category": "Identifier",
+                  "Category": "Enum",
                   "Annotations": null,
                   "KeyType": null,
                   "ValueType": null,
                   "PreRefType": null,
                   "FinalRefType": null,
                   "Fields": null,
-                  "Values": null,
+                  "Values": [
+                    {
+                      "Name": "ZERO",
+                      "Value": 0,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 9,
+                        "Col": 5,
+                        "Offset": 148,
+                        "Text": "ZERO= 0"
+                      }
+                    },
+                    {
+                      "Name": "ONE",
+                      "Value": 1,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 10,
+                        "Col": 5,
+                        "Offset": 160,
+                        "Text": "ONE = 1;"
+                      }
+                    },
+                    {
+                      "Name": "TWO",
+                      "Value": 2,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 11,
+                        "Col": 5,
+                        "Offset": 173,
+                        "Text": "TWO = 2;"
+                      }
+                    },
+                    {
+                      "Name": "THREE",
+                      "Value": 3,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 12,
+                        "Col": 5,
+                        "Offset": 186,
+                        "Text": "THREE = 3;"
+                      }
+                    }
+                  ],
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 41,
-                    "Col": 8,
-                    "Offset": 834,
-                    "Text": "EnumType"
+                    "Line": 8,
+                    "Col": 1,
+                    "Offset": 128,
+                    "Text": "enum EnumType {\n    ZERO= 0\n    ONE = 1;\n    TWO = 2;\n    THREE = 3;\n}\n"
                   }
                 },
                 "Default": null,
@@ -869,20 +931,83 @@
                 "Requiredness": "Default",
                 "Type": {
                   "Name": "UnionType",
-                  "Category": "Identifier",
+                  "Category": "Union",
                   "Annotations": null,
                   "KeyType": null,
                   "ValueType": null,
                   "PreRefType": null,
                   "FinalRefType": null,
-                  "Fields": null,
+                  "Fields": [
+                    {
+                      "ID": 1,
+                      "Name": "var_i16",
+                      "Requiredness": "Default",
+                      "Type": {
+                        "Name": "i16",
+                        "Category": "I16",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": null,
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 16,
+                          "Col": 7,
+                          "Offset": 224,
+                          "Text": "i16 "
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 16,
+                        "Col": 5,
+                        "Offset": 222,
+                        "Text": "1:i16 var_i16;"
+                      }
+                    },
+                    {
+                      "ID": 2,
+                      "Name": "var_i32",
+                      "Requiredness": "Default",
+                      "Type": {
+                        "Name": "i32",
+                        "Category": "I32",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": null,
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 17,
+                          "Col": 7,
+                          "Offset": 243,
+                          "Text": "i32 "
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 17,
+                        "Col": 5,
+                        "Offset": 241,
+                        "Text": "2:i32 var_i32;"
+                      }
+                    }
+                  ],
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 45,
-                    "Col": 8,
-                    "Offset": 909,
-                    "Text": "UnionType"
+                    "Line": 15,
+                    "Col": 1,
+                    "Offset": 200,
+                    "Text": "union UnionType {\n    1:i16 var_i16;\n    2:i32 var_i32;\n}\n"
                   }
                 },
                 "Default": null,
@@ -984,20 +1109,806 @@
                 "Requiredness": "Default",
                 "Type": {
                   "Name": "StructType",
-                  "Category": "Identifier",
+                  "Category": "Struct",
                   "Annotations": null,
                   "KeyType": null,
                   "ValueType": null,
                   "PreRefType": null,
                   "FinalRefType": null,
-                  "Fields": null,
+                  "Fields": [
+                    {
+                      "ID": 1,
+                      "Name": "var_bool",
+                      "Requiredness": "Default",
+                      "Type": {
+                        "Name": "bool",
+                        "Category": "Bool",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": null,
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 22,
+                          "Col": 7,
+                          "Offset": 303,
+                          "Text": "bool "
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 22,
+                        "Col": 5,
+                        "Offset": 301,
+                        "Text": "1:bool var_bool;"
+                      }
+                    },
+                    {
+                      "ID": 2,
+                      "Name": "var_byte",
+                      "Requiredness": "Default",
+                      "Type": {
+                        "Name": "byte",
+                        "Category": "Byte",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": null,
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 25,
+                          "Col": 7,
+                          "Offset": 440,
+                          "Text": "byte "
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 25,
+                        "Col": 5,
+                        "Offset": 438,
+                        "Text": "2:byte var_byte;"
+                      }
+                    },
+                    {
+                      "ID": 3,
+                      "Name": "var_i16",
+                      "Requiredness": "Default",
+                      "Type": {
+                        "Name": "i16",
+                        "Category": "I16",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": null,
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 26,
+                          "Col": 7,
+                          "Offset": 461,
+                          "Text": "i16 "
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 26,
+                        "Col": 5,
+                        "Offset": 459,
+                        "Text": "3:i16 var_i16;"
+                      }
+                    },
+                    {
+                      "ID": 4,
+                      "Name": "var_i32",
+                      "Requiredness": "Default",
+                      "Type": {
+                        "Name": "i32",
+                        "Category": "I32",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": null,
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 27,
+                          "Col": 7,
+                          "Offset": 480,
+                          "Text": "i32 "
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 27,
+                        "Col": 5,
+                        "Offset": 478,
+                        "Text": "4:i32 var_i32;"
+                      }
+                    },
+                    {
+                      "ID": 5,
+                      "Name": "var_i64",
+                      "Requiredness": "Default",
+                      "Type": {
+                        "Name": "i64",
+                        "Category": "I64",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": null,
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 28,
+                          "Col": 7,
+                          "Offset": 499,
+                          "Text": "i64 "
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 28,
+                        "Col": 5,
+                        "Offset": 497,
+                        "Text": "5:i64 var_i64;"
+                      }
+                    },
+                    {
+                      "ID": 6,
+                      "Name": "var_double",
+                      "Requiredness": "Default",
+                      "Type": {
+                        "Name": "double",
+                        "Category": "Double",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": null,
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 29,
+                          "Col": 7,
+                          "Offset": 518,
+                          "Text": "double "
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 29,
+                        "Col": 5,
+                        "Offset": 516,
+                        "Text": "6:double var_double;"
+                      }
+                    },
+                    {
+                      "ID": 7,
+                      "Name": "var_string",
+                      "Requiredness": "Default",
+                      "Type": {
+                        "Name": "string",
+                        "Category": "String",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": null,
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 30,
+                          "Col": 7,
+                          "Offset": 543,
+                          "Text": "string "
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 30,
+                        "Col": 5,
+                        "Offset": 541,
+                        "Text": "7:string var_string;"
+                      }
+                    },
+                    {
+                      "ID": 8,
+                      "Name": "var_binary",
+                      "Requiredness": "Default",
+                      "Type": {
+                        "Name": "binary",
+                        "Category": "Binary",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": null,
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 31,
+                          "Col": 7,
+                          "Offset": 568,
+                          "Text": "binary "
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 31,
+                        "Col": 5,
+                        "Offset": 566,
+                        "Text": "8:binary var_binary;"
+                      }
+                    },
+                    {
+                      "ID": 9,
+                      "Name": "var_string_type",
+                      "Requiredness": "Default",
+                      "Type": {
+                        "Name": "StrType",
+                        "Category": "Typedef",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": null,
+                        "PreRefType": {
+                          "Name": "string",
+                          "Category": "String",
+                          "Annotations": null,
+                          "KeyType": null,
+                          "ValueType": null,
+                          "PreRefType": null,
+                          "FinalRefType": null,
+                          "Fields": null,
+                          "Values": null,
+                          "ExpandCategoryStr": "",
+                          "SourceInfo": {
+                            "Line": 6,
+                            "Col": 9,
+                            "Offset": 112,
+                            "Text": "string "
+                          }
+                        },
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 6,
+                          "Col": 1,
+                          "Offset": 104,
+                          "Text": "typedef string StrType\n"
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 32,
+                        "Col": 5,
+                        "Offset": 610,
+                        "Text": "9:StrType var_string_type;"
+                      }
+                    },
+                    {
+                      "ID": 10,
+                      "Name": "var_string_list",
+                      "Requiredness": "Default",
+                      "Type": {
+                        "Name": "list",
+                        "Category": "List",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": {
+                          "Name": "string",
+                          "Category": "String",
+                          "Annotations": null,
+                          "KeyType": null,
+                          "ValueType": null,
+                          "PreRefType": null,
+                          "FinalRefType": null,
+                          "Fields": null,
+                          "Values": null,
+                          "ExpandCategoryStr": "",
+                          "SourceInfo": {
+                            "Line": 35,
+                            "Col": 13,
+                            "Offset": 667,
+                            "Text": "string"
+                          }
+                        },
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 35,
+                          "Col": 8,
+                          "Offset": 662,
+                          "Text": "list\u003cstring\u003e "
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 35,
+                        "Col": 5,
+                        "Offset": 659,
+                        "Text": "10:list\u003cstring\u003e var_string_list;"
+                      }
+                    },
+                    {
+                      "ID": 11,
+                      "Name": "var_binary_list",
+                      "Requiredness": "Default",
+                      "Type": {
+                        "Name": "list",
+                        "Category": "List",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": {
+                          "Name": "binary",
+                          "Category": "Binary",
+                          "Annotations": null,
+                          "KeyType": null,
+                          "ValueType": null,
+                          "PreRefType": null,
+                          "FinalRefType": null,
+                          "Fields": null,
+                          "Values": null,
+                          "ExpandCategoryStr": "",
+                          "SourceInfo": {
+                            "Line": 36,
+                            "Col": 13,
+                            "Offset": 704,
+                            "Text": "binary"
+                          }
+                        },
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 36,
+                          "Col": 8,
+                          "Offset": 699,
+                          "Text": "list\u003cbinary\u003e "
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 36,
+                        "Col": 5,
+                        "Offset": 696,
+                        "Text": "11:list\u003cbinary\u003e var_binary_list;"
+                      }
+                    },
+                    {
+                      "ID": 12,
+                      "Name": "var_string_set",
+                      "Requiredness": "Default",
+                      "Type": {
+                        "Name": "set",
+                        "Category": "Set",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": {
+                          "Name": "string",
+                          "Category": "String",
+                          "Annotations": null,
+                          "KeyType": null,
+                          "ValueType": null,
+                          "PreRefType": null,
+                          "FinalRefType": null,
+                          "Fields": null,
+                          "Values": null,
+                          "ExpandCategoryStr": "",
+                          "SourceInfo": {
+                            "Line": 37,
+                            "Col": 12,
+                            "Offset": 740,
+                            "Text": "string"
+                          }
+                        },
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 37,
+                          "Col": 8,
+                          "Offset": 736,
+                          "Text": "set\u003cstring\u003e "
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 37,
+                        "Col": 5,
+                        "Offset": 733,
+                        "Text": "12:set\u003cstring\u003e var_string_set;"
+                      }
+                    },
+                    {
+                      "ID": 13,
+                      "Name": "var_string_binary_map",
+                      "Requiredness": "Default",
+                      "Type": {
+                        "Name": "map",
+                        "Category": "Map",
+                        "Annotations": null,
+                        "KeyType": {
+                          "Name": "string",
+                          "Category": "String",
+                          "Annotations": null,
+                          "KeyType": null,
+                          "ValueType": null,
+                          "PreRefType": null,
+                          "FinalRefType": null,
+                          "Fields": null,
+                          "Values": null,
+                          "ExpandCategoryStr": "",
+                          "SourceInfo": {
+                            "Line": 38,
+                            "Col": 12,
+                            "Offset": 775,
+                            "Text": "string"
+                          }
+                        },
+                        "ValueType": {
+                          "Name": "binary",
+                          "Category": "Binary",
+                          "Annotations": null,
+                          "KeyType": null,
+                          "ValueType": null,
+                          "PreRefType": null,
+                          "FinalRefType": null,
+                          "Fields": null,
+                          "Values": null,
+                          "ExpandCategoryStr": "",
+                          "SourceInfo": {
+                            "Line": 38,
+                            "Col": 20,
+                            "Offset": 783,
+                            "Text": "binary"
+                          }
+                        },
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 38,
+                          "Col": 8,
+                          "Offset": 771,
+                          "Text": "map\u003cstring, binary\u003e "
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 38,
+                        "Col": 5,
+                        "Offset": 768,
+                        "Text": "13:map\u003cstring, binary\u003e var_string_binary_map;"
+                      }
+                    },
+                    {
+                      "ID": 14,
+                      "Name": "var_enum",
+                      "Requiredness": "Default",
+                      "Type": {
+                        "Name": "EnumType",
+                        "Category": "Enum",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": null,
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": [
+                          {
+                            "Name": "ZERO",
+                            "Value": 0,
+                            "Annotations": null,
+                            "SourceInfo": {
+                              "Line": 9,
+                              "Col": 5,
+                              "Offset": 148,
+                              "Text": "ZERO= 0"
+                            }
+                          },
+                          {
+                            "Name": "ONE",
+                            "Value": 1,
+                            "Annotations": null,
+                            "SourceInfo": {
+                              "Line": 10,
+                              "Col": 5,
+                              "Offset": 160,
+                              "Text": "ONE = 1;"
+                            }
+                          },
+                          {
+                            "Name": "TWO",
+                            "Value": 2,
+                            "Annotations": null,
+                            "SourceInfo": {
+                              "Line": 11,
+                              "Col": 5,
+                              "Offset": 173,
+                              "Text": "TWO = 2;"
+                            }
+                          },
+                          {
+                            "Name": "THREE",
+                            "Value": 3,
+                            "Annotations": null,
+                            "SourceInfo": {
+                              "Line": 12,
+                              "Col": 5,
+                              "Offset": 186,
+                              "Text": "THREE = 3;"
+                            }
+                          }
+                        ],
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 8,
+                          "Col": 1,
+                          "Offset": 128,
+                          "Text": "enum EnumType {\n    ZERO= 0\n    ONE = 1;\n    TWO = 2;\n    THREE = 3;\n}\n"
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 41,
+                        "Col": 5,
+                        "Offset": 831,
+                        "Text": "14:EnumType var_enum;"
+                      }
+                    },
+                    {
+                      "ID": 15,
+                      "Name": "var_enum_set",
+                      "Requiredness": "Default",
+                      "Type": {
+                        "Name": "set",
+                        "Category": "Set",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": {
+                          "Name": "EnumType",
+                          "Category": "Identifier",
+                          "Annotations": null,
+                          "KeyType": null,
+                          "ValueType": null,
+                          "PreRefType": null,
+                          "FinalRefType": null,
+                          "Fields": null,
+                          "Values": null,
+                          "ExpandCategoryStr": "",
+                          "SourceInfo": {
+                            "Line": 42,
+                            "Col": 12,
+                            "Offset": 864,
+                            "Text": "EnumType"
+                          }
+                        },
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 42,
+                          "Col": 8,
+                          "Offset": 860,
+                          "Text": "set\u003cEnumType\u003e "
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 42,
+                        "Col": 5,
+                        "Offset": 857,
+                        "Text": "15:set\u003cEnumType\u003e var_enum_set;"
+                      }
+                    },
+                    {
+                      "ID": 16,
+                      "Name": "var_union",
+                      "Requiredness": "Default",
+                      "Type": {
+                        "Name": "UnionType",
+                        "Category": "Union",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": null,
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": [
+                          {
+                            "ID": 1,
+                            "Name": "var_i16",
+                            "Requiredness": "Default",
+                            "Type": {
+                              "Name": "i16",
+                              "Category": "I16",
+                              "Annotations": null,
+                              "KeyType": null,
+                              "ValueType": null,
+                              "PreRefType": null,
+                              "FinalRefType": null,
+                              "Fields": null,
+                              "Values": null,
+                              "ExpandCategoryStr": "",
+                              "SourceInfo": {
+                                "Line": 16,
+                                "Col": 7,
+                                "Offset": 224,
+                                "Text": "i16 "
+                              }
+                            },
+                            "Default": null,
+                            "Annotations": null,
+                            "SourceInfo": {
+                              "Line": 16,
+                              "Col": 5,
+                              "Offset": 222,
+                              "Text": "1:i16 var_i16;"
+                            }
+                          },
+                          {
+                            "ID": 2,
+                            "Name": "var_i32",
+                            "Requiredness": "Default",
+                            "Type": {
+                              "Name": "i32",
+                              "Category": "I32",
+                              "Annotations": null,
+                              "KeyType": null,
+                              "ValueType": null,
+                              "PreRefType": null,
+                              "FinalRefType": null,
+                              "Fields": null,
+                              "Values": null,
+                              "ExpandCategoryStr": "",
+                              "SourceInfo": {
+                                "Line": 17,
+                                "Col": 7,
+                                "Offset": 243,
+                                "Text": "i32 "
+                              }
+                            },
+                            "Default": null,
+                            "Annotations": null,
+                            "SourceInfo": {
+                              "Line": 17,
+                              "Col": 5,
+                              "Offset": 241,
+                              "Text": "2:i32 var_i32;"
+                            }
+                          }
+                        ],
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 15,
+                          "Col": 1,
+                          "Offset": 200,
+                          "Text": "union UnionType {\n    1:i16 var_i16;\n    2:i32 var_i32;\n}\n"
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 45,
+                        "Col": 5,
+                        "Offset": 906,
+                        "Text": "16:UnionType var_union;"
+                      }
+                    },
+                    {
+                      "ID": 17,
+                      "Name": "var_required_i32",
+                      "Requiredness": "Required",
+                      "Type": {
+                        "Name": "i32",
+                        "Category": "I32",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": null,
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 48,
+                          "Col": 17,
+                          "Offset": 973,
+                          "Text": "i32 "
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 48,
+                        "Col": 5,
+                        "Offset": 961,
+                        "Text": "17:required i32 var_required_i32;"
+                      }
+                    },
+                    {
+                      "ID": 18,
+                      "Name": "var_optional_i32",
+                      "Requiredness": "Optional",
+                      "Type": {
+                        "Name": "i32",
+                        "Category": "I32",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": null,
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 49,
+                          "Col": 17,
+                          "Offset": 1011,
+                          "Text": "i32 "
+                        }
+                      },
+                      "Default": null,
+                      "Annotations": null,
+                      "SourceInfo": {
+                        "Line": 49,
+                        "Col": 5,
+                        "Offset": 999,
+                        "Text": "18:optional i32 var_optional_i32;"
+                      }
+                    }
+                  ],
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 53,
-                    "Col": 7,
-                    "Offset": 1068,
-                    "Text": "StructType"
+                    "Line": 20,
+                    "Col": 1,
+                    "Offset": 259,
+                    "Text": "struct StructType {\n    // basic type\n    1:bool var_bool;\n    // The \"byte\" type is a compatibility alias for \"i8\".\n    // Use \"i8\" to emphasize the signedness of this type.\n    2:byte var_byte;\n    3:i16 var_i16;\n    4:i32 var_i32;\n    5:i64 var_i64;\n    6:double var_double;\n    7:string var_string;\n    8:binary var_binary; // equal to string\n    9:StrType var_string_type;\n\n    // conatiner\n    10:list\u003cstring\u003e var_string_list;\n    11:list\u003cbinary\u003e var_binary_list;\n    12:set\u003cstring\u003e var_string_set;\n    13:map\u003cstring, binary\u003e var_string_binary_map;\n\n    // enum\n    14:EnumType var_enum;\n    15:set\u003cEnumType\u003e var_enum_set;\n\n    // union\n    16:UnionType var_union;\n\n    // Field Requiredness\n    17:required i32 var_required_i32;\n    18:optional i32 var_optional_i32;\n}\n"
                   }
                 },
                 "Default": null,

@@ -215,19 +215,18 @@ type Document struct {
 	Filename string
 	Body     []interface{}
 
+	// Follow fields just for ease of use.
 	Includes    []*Include            `json:"-"`
 	CppIncludes []*CppInclude         `json:"-"`
 	Namespaces  map[string]*Namespace `json:"-"`
 	Constants   map[string]*Constant  `json:"-"`
+	Types       map[string]*Type      `json:"-"`
 	Enums       map[string]*Type      `json:"-"`
 	Typedefs    map[string]*Type      `json:"-"`
 	Structs     map[string]*Type      `json:"-"`
 	Unions      map[string]*Type      `json:"-"`
 	Exceptions  map[string]*Type      `json:"-"`
 	Services    map[string]*Service   `json:"-"`
-
-	// TODO: remove this
-	AllTypes []*Type `json:"-"`
 }
 
 type Thrift struct {

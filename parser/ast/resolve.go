@@ -48,10 +48,24 @@ func (document *Document) Resolve(thrift *Thrift) error {
 			case CategoryException:
 				document.Exceptions[v.Name] = v
 			}
+			if v.Category != CategoryIdentifier {
+				document.Types[v.Name] = v
+			}
+
 		case *Service:
 			document.Services[v.Name] = v
 		default:
 			return fmt.Errorf("parser: unknown value %#v", v)
+		}
+	}
+
+	for _, typ := range document.Types {
+		for _, field := range typ.Fields {
+			if field.Type.Category == CategoryIdentifier {
+				if originalType, exists := document.Types[field.Type.Name]; exists {
+					field.Type = originalType
+				}
+			}
 		}
 	}
 	return nil
