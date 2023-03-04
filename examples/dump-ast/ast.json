@@ -309,6 +309,44 @@
         ],
         [
           {
+            "Name": "InnerStructTypeTypedef",
+            "Category": "Typedef",
+            "Annotations": null,
+            "KeyType": null,
+            "ValueType": null,
+            "PreRefType": {
+              "Name": "InnerStructType",
+              "Category": "Struct",
+              "Annotations": null,
+              "KeyType": null,
+              "ValueType": null,
+              "PreRefType": null,
+              "FinalRefType": null,
+              "Fields": [],
+              "Values": null,
+              "ExpandCategoryStr": "",
+              "SourceInfo": {
+                "Line": 20,
+                "Col": 1,
+                "Offset": 259,
+                "Text": "struct InnerStructType {\n}\n"
+              }
+            },
+            "FinalRefType": null,
+            "Fields": null,
+            "Values": null,
+            "ExpandCategoryStr": "",
+            "SourceInfo": {
+              "Line": 23,
+              "Col": 1,
+              "Offset": 287,
+              "Text": "typedef InnerStructType InnerStructTypeTypedef\n"
+            }
+          },
+          ["Cg=="]
+        ],
+        [
+          {
             "Name": "StructType",
             "Category": "Struct",
             "Annotations": null,
@@ -333,18 +371,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 25,
+                    "Line": 27,
                     "Col": 7,
-                    "Offset": 331,
+                    "Offset": 379,
                     "Text": "bool "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 25,
+                  "Line": 27,
                   "Col": 5,
-                  "Offset": 329,
+                  "Offset": 377,
                   "Text": "1:bool var_bool;"
                 }
               },
@@ -364,18 +402,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 28,
+                    "Line": 30,
                     "Col": 7,
-                    "Offset": 468,
+                    "Offset": 516,
                     "Text": "byte "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 28,
+                  "Line": 30,
                   "Col": 5,
-                  "Offset": 466,
+                  "Offset": 514,
                   "Text": "2:byte var_byte;"
                 }
               },
@@ -395,18 +433,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 29,
+                    "Line": 31,
                     "Col": 7,
-                    "Offset": 489,
+                    "Offset": 537,
                     "Text": "i16 "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 29,
+                  "Line": 31,
                   "Col": 5,
-                  "Offset": 487,
+                  "Offset": 535,
                   "Text": "3:i16 var_i16;"
                 }
               },
@@ -426,18 +464,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 30,
+                    "Line": 32,
                     "Col": 7,
-                    "Offset": 508,
+                    "Offset": 556,
                     "Text": "i32 "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 30,
+                  "Line": 32,
                   "Col": 5,
-                  "Offset": 506,
+                  "Offset": 554,
                   "Text": "4:i32 var_i32;"
                 }
               },
@@ -457,18 +495,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 31,
+                    "Line": 33,
                     "Col": 7,
-                    "Offset": 527,
+                    "Offset": 575,
                     "Text": "i64 "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 31,
+                  "Line": 33,
                   "Col": 5,
-                  "Offset": 525,
+                  "Offset": 573,
                   "Text": "5:i64 var_i64;"
                 }
               },
@@ -488,18 +526,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 32,
+                    "Line": 34,
                     "Col": 7,
-                    "Offset": 546,
+                    "Offset": 594,
                     "Text": "double "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 32,
+                  "Line": 34,
                   "Col": 5,
-                  "Offset": 544,
+                  "Offset": 592,
                   "Text": "6:double var_double;"
                 }
               },
@@ -519,18 +557,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 33,
+                    "Line": 35,
                     "Col": 7,
-                    "Offset": 571,
+                    "Offset": 619,
                     "Text": "string "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 33,
+                  "Line": 35,
                   "Col": 5,
-                  "Offset": 569,
+                  "Offset": 617,
                   "Text": "7:string var_string;"
                 }
               },
@@ -550,18 +588,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 34,
+                    "Line": 36,
                     "Col": 7,
-                    "Offset": 596,
+                    "Offset": 644,
                     "Text": "binary "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 34,
+                  "Line": 36,
                   "Col": 5,
-                  "Offset": 594,
+                  "Offset": 642,
                   "Text": "8:binary var_binary;"
                 }
               },
@@ -607,9 +645,9 @@
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 35,
+                  "Line": 37,
                   "Col": 5,
-                  "Offset": 638,
+                  "Offset": 686,
                   "Text": "9:StrType var_string_type;"
                 }
               },
@@ -638,9 +676,9 @@
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 36,
+                  "Line": 38,
                   "Col": 5,
-                  "Offset": 669,
+                  "Offset": 717,
                   "Text": "10:InnerStructType var_struct_type;"
                 }
               },
@@ -665,9 +703,9 @@
                     "Values": null,
                     "ExpandCategoryStr": "",
                     "SourceInfo": {
-                      "Line": 39,
+                      "Line": 41,
                       "Col": 14,
-                      "Offset": 736,
+                      "Offset": 784,
                       "Text": "string"
                     }
                   },
@@ -677,18 +715,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 39,
+                    "Line": 41,
                     "Col": 9,
-                    "Offset": 731,
+                    "Offset": 779,
                     "Text": "list\u003cstring\u003e "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 39,
+                  "Line": 41,
                   "Col": 5,
-                  "Offset": 727,
+                  "Offset": 775,
                   "Text": "100:list\u003cstring\u003e var_string_list;"
                 }
               },
@@ -713,9 +751,9 @@
                     "Values": null,
                     "ExpandCategoryStr": "",
                     "SourceInfo": {
-                      "Line": 40,
+                      "Line": 42,
                       "Col": 14,
-                      "Offset": 774,
+                      "Offset": 822,
                       "Text": "binary"
                     }
                   },
@@ -725,18 +763,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 40,
+                    "Line": 42,
                     "Col": 9,
-                    "Offset": 769,
+                    "Offset": 817,
                     "Text": "list\u003cbinary\u003e "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 40,
+                  "Line": 42,
                   "Col": 5,
-                  "Offset": 765,
+                  "Offset": 813,
                   "Text": "101:list\u003cbinary\u003e var_binary_list;"
                 }
               },
@@ -761,9 +799,9 @@
                     "Values": null,
                     "ExpandCategoryStr": "",
                     "SourceInfo": {
-                      "Line": 41,
+                      "Line": 43,
                       "Col": 13,
-                      "Offset": 811,
+                      "Offset": 859,
                       "Text": "string"
                     }
                   },
@@ -773,18 +811,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 41,
+                    "Line": 43,
                     "Col": 9,
-                    "Offset": 807,
+                    "Offset": 855,
                     "Text": "set\u003cstring\u003e "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 41,
+                  "Line": 43,
                   "Col": 5,
-                  "Offset": 803,
+                  "Offset": 851,
                   "Text": "102:set\u003cstring\u003e var_string_set;"
                 }
               },
@@ -808,9 +846,9 @@
                     "Values": null,
                     "ExpandCategoryStr": "",
                     "SourceInfo": {
-                      "Line": 42,
+                      "Line": 44,
                       "Col": 13,
-                      "Offset": 847,
+                      "Offset": 895,
                       "Text": "string"
                     }
                   },
@@ -826,9 +864,9 @@
                     "Values": null,
                     "ExpandCategoryStr": "",
                     "SourceInfo": {
-                      "Line": 42,
+                      "Line": 44,
                       "Col": 21,
-                      "Offset": 855,
+                      "Offset": 903,
                       "Text": "binary"
                     }
                   },
@@ -838,18 +876,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 42,
+                    "Line": 44,
                     "Col": 9,
-                    "Offset": 843,
+                    "Offset": 891,
                     "Text": "map\u003cstring, binary\u003e "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 42,
+                  "Line": 44,
                   "Col": 5,
-                  "Offset": 839,
+                  "Offset": 887,
                   "Text": "103:map\u003cstring, binary\u003e var_string_binary_map;"
                 }
               },
@@ -886,18 +924,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 43,
+                    "Line": 45,
                     "Col": 9,
-                    "Offset": 894,
+                    "Offset": 942,
                     "Text": "list\u003cInnerStructType\u003e "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 43,
+                  "Line": 45,
                   "Col": 5,
-                  "Offset": 890,
+                  "Offset": 938,
                   "Text": "104:list\u003cInnerStructType\u003e var_struct_list;"
                 }
               },
@@ -934,18 +972,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 44,
+                    "Line": 46,
                     "Col": 9,
-                    "Offset": 941,
+                    "Offset": 989,
                     "Text": "set\u003cInnerStructType\u003e "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 44,
+                  "Line": 46,
                   "Col": 5,
-                  "Offset": 937,
+                  "Offset": 985,
                   "Text": "105:set\u003cInnerStructType\u003e var_struct_set;"
                 }
               },
@@ -969,9 +1007,9 @@
                     "Values": null,
                     "ExpandCategoryStr": "",
                     "SourceInfo": {
-                      "Line": 45,
+                      "Line": 47,
                       "Col": 13,
-                      "Offset": 990,
+                      "Offset": 1038,
                       "Text": "string"
                     }
                   },
@@ -999,24 +1037,24 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 45,
+                    "Line": 47,
                     "Col": 9,
-                    "Offset": 986,
+                    "Offset": 1034,
                     "Text": "map\u003cstring, InnerStructType\u003e "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 45,
+                  "Line": 47,
                   "Col": 5,
-                  "Offset": 982,
+                  "Offset": 1030,
                   "Text": "106:map\u003cstring, InnerStructType\u003e var_string_struct_map;"
                 }
               },
               {
                 "ID": 107,
-                "Name": "var_string_struct_map",
+                "Name": "var_string_list_struct_map",
                 "Requiredness": "Default",
                 "Type": {
                   "Name": "map",
@@ -1034,9 +1072,9 @@
                     "Values": null,
                     "ExpandCategoryStr": "",
                     "SourceInfo": {
-                      "Line": 46,
+                      "Line": 48,
                       "Col": 13,
-                      "Offset": 1050,
+                      "Offset": 1098,
                       "Text": "string"
                     }
                   },
@@ -1069,9 +1107,9 @@
                     "Values": null,
                     "ExpandCategoryStr": "",
                     "SourceInfo": {
-                      "Line": 46,
+                      "Line": 48,
                       "Col": 21,
-                      "Offset": 1058,
+                      "Offset": 1106,
                       "Text": "list\u003cInnerStructType\u003e"
                     }
                   },
@@ -1081,19 +1119,118 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 46,
+                    "Line": 48,
                     "Col": 9,
-                    "Offset": 1046,
+                    "Offset": 1094,
                     "Text": "map\u003cstring, list\u003cInnerStructType\u003e\u003e "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 46,
+                  "Line": 48,
                   "Col": 5,
-                  "Offset": 1042,
-                  "Text": "107:map\u003cstring, list\u003cInnerStructType\u003e\u003e var_string_struct_map;"
+                  "Offset": 1090,
+                  "Text": "107:map\u003cstring, list\u003cInnerStructType\u003e\u003e var_string_list_struct_map;"
+                }
+              },
+              {
+                "ID": 108,
+                "Name": "var_string_list_struct_map2",
+                "Requiredness": "Default",
+                "Type": {
+                  "Name": "map",
+                  "Category": "Map",
+                  "Annotations": null,
+                  "KeyType": {
+                    "Name": "string",
+                    "Category": "String",
+                    "Annotations": null,
+                    "KeyType": null,
+                    "ValueType": null,
+                    "PreRefType": null,
+                    "FinalRefType": null,
+                    "Fields": null,
+                    "Values": null,
+                    "ExpandCategoryStr": "",
+                    "SourceInfo": {
+                      "Line": 49,
+                      "Col": 13,
+                      "Offset": 1169,
+                      "Text": "string"
+                    }
+                  },
+                  "ValueType": {
+                    "Name": "list",
+                    "Category": "List",
+                    "Annotations": null,
+                    "KeyType": null,
+                    "ValueType": {
+                      "Name": "InnerStructTypeTypedef",
+                      "Category": "Typedef",
+                      "Annotations": null,
+                      "KeyType": null,
+                      "ValueType": null,
+                      "PreRefType": {
+                        "Name": "InnerStructType",
+                        "Category": "Struct",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": null,
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": [],
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 20,
+                          "Col": 1,
+                          "Offset": 259,
+                          "Text": "struct InnerStructType {\n}\n"
+                        }
+                      },
+                      "FinalRefType": null,
+                      "Fields": null,
+                      "Values": null,
+                      "ExpandCategoryStr": "",
+                      "SourceInfo": {
+                        "Line": 23,
+                        "Col": 1,
+                        "Offset": 287,
+                        "Text": "typedef InnerStructType InnerStructTypeTypedef\n"
+                      }
+                    },
+                    "PreRefType": null,
+                    "FinalRefType": null,
+                    "Fields": null,
+                    "Values": null,
+                    "ExpandCategoryStr": "",
+                    "SourceInfo": {
+                      "Line": 49,
+                      "Col": 21,
+                      "Offset": 1177,
+                      "Text": "list\u003cInnerStructTypeTypedef\u003e"
+                    }
+                  },
+                  "PreRefType": null,
+                  "FinalRefType": null,
+                  "Fields": null,
+                  "Values": null,
+                  "ExpandCategoryStr": "",
+                  "SourceInfo": {
+                    "Line": 49,
+                    "Col": 9,
+                    "Offset": 1165,
+                    "Text": "map\u003cstring, list\u003cInnerStructTypeTypedef\u003e\u003e "
+                  }
+                },
+                "Default": null,
+                "Annotations": null,
+                "SourceInfo": {
+                  "Line": 49,
+                  "Col": 5,
+                  "Offset": 1161,
+                  "Text": "108:map\u003cstring, list\u003cInnerStructTypeTypedef\u003e\u003e var_string_list_struct_map2;"
                 }
               },
               {
@@ -1166,9 +1303,9 @@
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 49,
+                  "Line": 52,
                   "Col": 5,
-                  "Offset": 1121,
+                  "Offset": 1253,
                   "Text": "201:EnumType var_enum;"
                 }
               },
@@ -1250,18 +1387,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 50,
+                    "Line": 53,
                     "Col": 9,
-                    "Offset": 1152,
+                    "Offset": 1284,
                     "Text": "set\u003cEnumType\u003e "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 50,
+                  "Line": 53,
                   "Col": 5,
-                  "Offset": 1148,
+                  "Offset": 1280,
                   "Text": "202:set\u003cEnumType\u003e var_enum_set;"
                 }
               },
@@ -1353,9 +1490,9 @@
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 53,
+                  "Line": 56,
                   "Col": 5,
-                  "Offset": 1198,
+                  "Offset": 1330,
                   "Text": "301:UnionType var_union;"
                 }
               },
@@ -1375,18 +1512,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 56,
+                    "Line": 59,
                     "Col": 18,
-                    "Offset": 1267,
+                    "Offset": 1399,
                     "Text": "i32 "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 56,
+                  "Line": 59,
                   "Col": 5,
-                  "Offset": 1254,
+                  "Offset": 1386,
                   "Text": "401:required i32 var_required_i32;"
                 }
               },
@@ -1406,18 +1543,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 57,
+                    "Line": 60,
                     "Col": 18,
-                    "Offset": 1306,
+                    "Offset": 1438,
                     "Text": "i32 "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 57,
+                  "Line": 60,
                   "Col": 5,
-                  "Offset": 1293,
+                  "Offset": 1425,
                   "Text": "402:optional i32 var_optional_i32;"
                 }
               }
@@ -1425,10 +1562,10 @@
             "Values": null,
             "ExpandCategoryStr": "",
             "SourceInfo": {
-              "Line": 23,
+              "Line": 25,
               "Col": 1,
-              "Offset": 287,
-              "Text": "struct StructType {\n    // basic type\n    1:bool var_bool;\n    // The \"byte\" type is a compatibility alias for \"i8\".\n    // Use \"i8\" to emphasize the signedness of this type.\n    2:byte var_byte;\n    3:i16 var_i16;\n    4:i32 var_i32;\n    5:i64 var_i64;\n    6:double var_double;\n    7:string var_string;\n    8:binary var_binary; // equal to string\n    9:StrType var_string_type;\n    10:InnerStructType var_struct_type;\n\n    // conatiner\n    100:list\u003cstring\u003e var_string_list;\n    101:list\u003cbinary\u003e var_binary_list;\n    102:set\u003cstring\u003e var_string_set;\n    103:map\u003cstring, binary\u003e var_string_binary_map;\n    104:list\u003cInnerStructType\u003e var_struct_list;\n    105:set\u003cInnerStructType\u003e var_struct_set;\n    106:map\u003cstring, InnerStructType\u003e var_string_struct_map;\n    107:map\u003cstring, list\u003cInnerStructType\u003e\u003e var_string_struct_map;\n\n    // enum\n    201:EnumType var_enum;\n    202:set\u003cEnumType\u003e var_enum_set;\n\n    // union\n    301:UnionType var_union;\n\n    // Field Requiredness\n    401:required i32 var_required_i32;\n    402:optional i32 var_optional_i32;\n}\n"
+              "Offset": 335,
+              "Text": "struct StructType {\n    // basic type\n    1:bool var_bool;\n    // The \"byte\" type is a compatibility alias for \"i8\".\n    // Use \"i8\" to emphasize the signedness of this type.\n    2:byte var_byte;\n    3:i16 var_i16;\n    4:i32 var_i32;\n    5:i64 var_i64;\n    6:double var_double;\n    7:string var_string;\n    8:binary var_binary; // equal to string\n    9:StrType var_string_type;\n    10:InnerStructType var_struct_type;\n\n    // conatiner\n    100:list\u003cstring\u003e var_string_list;\n    101:list\u003cbinary\u003e var_binary_list;\n    102:set\u003cstring\u003e var_string_set;\n    103:map\u003cstring, binary\u003e var_string_binary_map;\n    104:list\u003cInnerStructType\u003e var_struct_list;\n    105:set\u003cInnerStructType\u003e var_struct_set;\n    106:map\u003cstring, InnerStructType\u003e var_string_struct_map;\n    107:map\u003cstring, list\u003cInnerStructType\u003e\u003e var_string_list_struct_map;\n    108:map\u003cstring, list\u003cInnerStructTypeTypedef\u003e\u003e var_string_list_struct_map2;\n\n    // enum\n    201:EnumType var_enum;\n    202:set\u003cEnumType\u003e var_enum_set;\n\n    // union\n    301:UnionType var_union;\n\n    // Field Requiredness\n    401:required i32 var_required_i32;\n    402:optional i32 var_optional_i32;\n}\n"
             }
           },
           ["Cg=="]
@@ -1459,18 +1596,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 61,
+                    "Line": 64,
                     "Col": 6,
-                    "Offset": 1362,
+                    "Offset": 1494,
                     "Text": "string "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 61,
+                  "Line": 64,
                   "Col": 3,
-                  "Offset": 1359,
+                  "Offset": 1491,
                   "Text": "1: string msg;"
                 }
               }
@@ -1478,9 +1615,9 @@
             "Values": null,
             "ExpandCategoryStr": "",
             "SourceInfo": {
-              "Line": 60,
+              "Line": 63,
               "Col": 1,
-              "Offset": 1331,
+              "Offset": 1463,
               "Text": "exception ExceptionType {\n  1: string msg;\n}\n"
             }
           },
@@ -1499,9 +1636,9 @@
             "Values": null,
             "ExpandCategoryStr": "",
             "SourceInfo": {
-              "Line": 64,
+              "Line": 67,
               "Col": 1,
-              "Offset": 1377,
+              "Offset": 1509,
               "Text": "struct MethodReq {\n}\n"
             }
           },
@@ -1520,9 +1657,9 @@
             "Values": null,
             "ExpandCategoryStr": "",
             "SourceInfo": {
-              "Line": 67,
+              "Line": 70,
               "Col": 1,
-              "Offset": 1399,
+              "Offset": 1531,
               "Text": "struct MethodResponse {\n}\n"
             }
           },
@@ -1541,9 +1678,9 @@
             "Values": null,
             "ExpandCategoryStr": "",
             "SourceInfo": {
-              "Line": 70,
+              "Line": 73,
               "Col": 1,
-              "Offset": 1426,
+              "Offset": 1558,
               "Text": "struct InnerStructType2 {\n}\n"
             }
           },
@@ -1568,9 +1705,9 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 67,
+                    "Line": 70,
                     "Col": 1,
-                    "Offset": 1399,
+                    "Offset": 1531,
                     "Text": "struct MethodResponse {\n}\n"
                   }
                 },
@@ -1591,18 +1728,18 @@
                       "Values": null,
                       "ExpandCategoryStr": "",
                       "SourceInfo": {
-                        "Line": 64,
+                        "Line": 67,
                         "Col": 1,
-                        "Offset": 1377,
+                        "Offset": 1509,
                         "Text": "struct MethodReq {\n}\n"
                       }
                     },
                     "Default": null,
                     "Annotations": null,
                     "SourceInfo": {
-                      "Line": 74,
+                      "Line": 77,
                       "Col": 26,
-                      "Offset": 1500,
+                      "Offset": 1632,
                       "Text": "1: MethodReq req"
                     }
                   }
@@ -1613,9 +1750,9 @@
                     "Name": "tag.v1",
                     "Value": "xxx",
                     "SourceInfo": {
-                      "Line": 74,
+                      "Line": 77,
                       "Col": 45,
-                      "Offset": 1519,
+                      "Offset": 1651,
                       "Text": "tag.v1='xxx', "
                     }
                   },
@@ -1623,17 +1760,17 @@
                     "Name": "tag.v2",
                     "Value": "xxx",
                     "SourceInfo": {
-                      "Line": 74,
+                      "Line": 77,
                       "Col": 59,
-                      "Offset": 1533,
+                      "Offset": 1665,
                       "Text": "tag.v2='xxx'"
                     }
                   }
                 },
                 "SourceInfo": {
-                  "Line": 74,
+                  "Line": 77,
                   "Col": 3,
-                  "Offset": 1477,
+                  "Offset": 1609,
                   "Text": "MethodResponse method1(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');"
                 }
               },
@@ -1657,18 +1794,18 @@
                       "Values": null,
                       "ExpandCategoryStr": "",
                       "SourceInfo": {
-                        "Line": 64,
+                        "Line": 67,
                         "Col": 1,
-                        "Offset": 1377,
+                        "Offset": 1509,
                         "Text": "struct MethodReq {\n}\n"
                       }
                     },
                     "Default": null,
                     "Annotations": null,
                     "SourceInfo": {
-                      "Line": 75,
+                      "Line": 78,
                       "Col": 16,
-                      "Offset": 1563,
+                      "Offset": 1695,
                       "Text": "1: MethodReq req"
                     }
                   }
@@ -1679,9 +1816,9 @@
                     "Name": "tag.v1",
                     "Value": "xxx",
                     "SourceInfo": {
-                      "Line": 75,
+                      "Line": 78,
                       "Col": 35,
-                      "Offset": 1582,
+                      "Offset": 1714,
                       "Text": "tag.v1='xxx', "
                     }
                   },
@@ -1689,17 +1826,17 @@
                     "Name": "tag.v2",
                     "Value": "xxx",
                     "SourceInfo": {
-                      "Line": 75,
+                      "Line": 78,
                       "Col": 49,
-                      "Offset": 1596,
+                      "Offset": 1728,
                       "Text": "tag.v2='xxx'"
                     }
                   }
                 },
                 "SourceInfo": {
-                  "Line": 75,
+                  "Line": 78,
                   "Col": 3,
-                  "Offset": 1550,
+                  "Offset": 1682,
                   "Text": "void method2(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');"
                 }
               },
@@ -1727,9 +1864,9 @@
                         "Values": null,
                         "ExpandCategoryStr": "",
                         "SourceInfo": {
-                          "Line": 76,
+                          "Line": 79,
                           "Col": 22,
-                          "Offset": 1632,
+                          "Offset": 1764,
                           "Text": "string"
                         }
                       },
@@ -1750,9 +1887,9 @@
                           "Values": null,
                           "ExpandCategoryStr": "",
                           "SourceInfo": {
-                            "Line": 70,
+                            "Line": 73,
                             "Col": 1,
-                            "Offset": 1426,
+                            "Offset": 1558,
                             "Text": "struct InnerStructType2 {\n}\n"
                           }
                         },
@@ -1762,9 +1899,9 @@
                         "Values": null,
                         "ExpandCategoryStr": "",
                         "SourceInfo": {
-                          "Line": 76,
+                          "Line": 79,
                           "Col": 30,
-                          "Offset": 1640,
+                          "Offset": 1772,
                           "Text": "list\u003cInnerStructType2\u003e"
                         }
                       },
@@ -1774,18 +1911,18 @@
                       "Values": null,
                       "ExpandCategoryStr": "",
                       "SourceInfo": {
-                        "Line": 76,
+                        "Line": 79,
                         "Col": 18,
-                        "Offset": 1628,
+                        "Offset": 1760,
                         "Text": "map\u003cstring, list\u003cInnerStructType2\u003e\u003e "
                       }
                     },
                     "Default": null,
                     "Annotations": null,
                     "SourceInfo": {
-                      "Line": 76,
+                      "Line": 79,
                       "Col": 16,
-                      "Offset": 1626,
+                      "Offset": 1758,
                       "Text": "1:map\u003cstring, list\u003cInnerStructType2\u003e\u003e req"
                     }
                   }
@@ -1796,9 +1933,9 @@
                     "Name": "tag.v1",
                     "Value": "xxx",
                     "SourceInfo": {
-                      "Line": 76,
+                      "Line": 79,
                       "Col": 60,
-                      "Offset": 1670,
+                      "Offset": 1802,
                       "Text": "tag.v1='xxx', "
                     }
                   },
@@ -1806,26 +1943,26 @@
                     "Name": "tag.v2",
                     "Value": "xxx",
                     "SourceInfo": {
-                      "Line": 76,
+                      "Line": 79,
                       "Col": 74,
-                      "Offset": 1684,
+                      "Offset": 1816,
                       "Text": "tag.v2='xxx'"
                     }
                   }
                 },
                 "SourceInfo": {
-                  "Line": 76,
+                  "Line": 79,
                   "Col": 3,
-                  "Offset": 1613,
+                  "Offset": 1745,
                   "Text": "void method3(1:map\u003cstring, list\u003cInnerStructType2\u003e\u003e req) (tag.v1='xxx', tag.v2='xxx');"
                 }
               }
             ],
             "Annotations": null,
             "SourceInfo": {
-              "Line": 73,
+              "Line": 76,
               "Col": 1,
-              "Offset": 1455,
+              "Offset": 1587,
               "Text": "service ServiceV1 {\n  MethodResponse method1(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');\n  void method2(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');\n  void method3(1:map\u003cstring, list\u003cInnerStructType2\u003e\u003e req) (tag.v1='xxx', tag.v2='xxx');\n}\n"
             }
           },

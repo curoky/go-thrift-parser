@@ -20,6 +20,8 @@ union UnionType {
 struct InnerStructType {
 }
 
+typedef InnerStructType InnerStructTypeTypedef
+
 struct StructType {
     // basic type
     1:bool var_bool;
@@ -43,7 +45,8 @@ struct StructType {
     104:list<InnerStructType> var_struct_list;
     105:set<InnerStructType> var_struct_set;
     106:map<string, InnerStructType> var_string_struct_map;
-    107:map<string, list<InnerStructType>> var_string_struct_map;
+    107:map<string, list<InnerStructType>> var_string_list_struct_map;
+    108:map<string, list<InnerStructTypeTypedef>> var_string_list_struct_map2;
 
     // enum
     201:EnumType var_enum;

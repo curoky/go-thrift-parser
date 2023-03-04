@@ -50,9 +50,18 @@ func recursiveResolveIdentifierType(document *Document, typ *Type) {
 			recursiveResolveIdentifierType(document, typ.ValueType)
 		}
 	}
+	if typ.PreRefType != nil {
+		if typ.PreRefType.Category == CategoryIdentifier {
+			if originalType, exists := document.Types[typ.PreRefType.Name]; exists {
+				typ.PreRefType = originalType
+			}
+		} else {
+			recursiveResolveIdentifierType(document, typ.PreRefType)
+		}
+	}
 }
 
-func ResolveIdentifierType(document *Document) {
+func resolveIdentifierType(document *Document) {
 	for _, typ := range document.Types {
 		recursiveResolveIdentifierType(document, typ)
 	}
@@ -118,6 +127,6 @@ func (document *Document) Resolve(thrift *Thrift) error {
 		}
 	}
 
-	ResolveIdentifierType(document)
+	resolveIdentifierType(document)
 	return nil
 }
