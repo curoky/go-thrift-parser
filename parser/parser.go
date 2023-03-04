@@ -57,7 +57,7 @@ func (p *Parser) Dump(filename string) error {
 	if err != nil {
 		return err
 	}
-	content, err := json.Marshal(p.Thrift)
+	content, err := json.MarshalIndent(p.Thrift, "", "  ")
 	if err != nil {
 		return err
 	}
