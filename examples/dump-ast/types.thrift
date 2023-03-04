@@ -43,6 +43,7 @@ struct StructType {
     104:list<InnerStructType> var_struct_list;
     105:set<InnerStructType> var_struct_set;
     106:map<string, InnerStructType> var_string_struct_map;
+    107:map<string, list<InnerStructType>> var_string_struct_map;
 
     // enum
     201:EnumType var_enum;
@@ -66,7 +67,11 @@ struct MethodReq {
 struct MethodResponse {
 }
 
+struct InnerStructType2 {
+}
+
 service ServiceV1 {
   MethodResponse method1(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');
   void method2(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');
+  void method3(1:map<string, list<InnerStructType2>> req) (tag.v1='xxx', tag.v2='xxx');
 }

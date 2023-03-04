@@ -1015,6 +1015,88 @@
                 }
               },
               {
+                "ID": 107,
+                "Name": "var_string_struct_map",
+                "Requiredness": "Default",
+                "Type": {
+                  "Name": "map",
+                  "Category": "Map",
+                  "Annotations": null,
+                  "KeyType": {
+                    "Name": "string",
+                    "Category": "String",
+                    "Annotations": null,
+                    "KeyType": null,
+                    "ValueType": null,
+                    "PreRefType": null,
+                    "FinalRefType": null,
+                    "Fields": null,
+                    "Values": null,
+                    "ExpandCategoryStr": "",
+                    "SourceInfo": {
+                      "Line": 46,
+                      "Col": 13,
+                      "Offset": 1050,
+                      "Text": "string"
+                    }
+                  },
+                  "ValueType": {
+                    "Name": "list",
+                    "Category": "List",
+                    "Annotations": null,
+                    "KeyType": null,
+                    "ValueType": {
+                      "Name": "InnerStructType",
+                      "Category": "Struct",
+                      "Annotations": null,
+                      "KeyType": null,
+                      "ValueType": null,
+                      "PreRefType": null,
+                      "FinalRefType": null,
+                      "Fields": [],
+                      "Values": null,
+                      "ExpandCategoryStr": "",
+                      "SourceInfo": {
+                        "Line": 20,
+                        "Col": 1,
+                        "Offset": 259,
+                        "Text": "struct InnerStructType {\n}\n"
+                      }
+                    },
+                    "PreRefType": null,
+                    "FinalRefType": null,
+                    "Fields": null,
+                    "Values": null,
+                    "ExpandCategoryStr": "",
+                    "SourceInfo": {
+                      "Line": 46,
+                      "Col": 21,
+                      "Offset": 1058,
+                      "Text": "list\u003cInnerStructType\u003e"
+                    }
+                  },
+                  "PreRefType": null,
+                  "FinalRefType": null,
+                  "Fields": null,
+                  "Values": null,
+                  "ExpandCategoryStr": "",
+                  "SourceInfo": {
+                    "Line": 46,
+                    "Col": 9,
+                    "Offset": 1046,
+                    "Text": "map\u003cstring, list\u003cInnerStructType\u003e\u003e "
+                  }
+                },
+                "Default": null,
+                "Annotations": null,
+                "SourceInfo": {
+                  "Line": 46,
+                  "Col": 5,
+                  "Offset": 1042,
+                  "Text": "107:map\u003cstring, list\u003cInnerStructType\u003e\u003e var_string_struct_map;"
+                }
+              },
+              {
                 "ID": 201,
                 "Name": "var_enum",
                 "Requiredness": "Default",
@@ -1084,9 +1166,9 @@
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 48,
+                  "Line": 49,
                   "Col": 5,
-                  "Offset": 1055,
+                  "Offset": 1121,
                   "Text": "201:EnumType var_enum;"
                 }
               },
@@ -1168,18 +1250,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 49,
+                    "Line": 50,
                     "Col": 9,
-                    "Offset": 1086,
+                    "Offset": 1152,
                     "Text": "set\u003cEnumType\u003e "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 49,
+                  "Line": 50,
                   "Col": 5,
-                  "Offset": 1082,
+                  "Offset": 1148,
                   "Text": "202:set\u003cEnumType\u003e var_enum_set;"
                 }
               },
@@ -1271,9 +1353,9 @@
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 52,
+                  "Line": 53,
                   "Col": 5,
-                  "Offset": 1132,
+                  "Offset": 1198,
                   "Text": "301:UnionType var_union;"
                 }
               },
@@ -1293,18 +1375,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 55,
+                    "Line": 56,
                     "Col": 18,
-                    "Offset": 1201,
+                    "Offset": 1267,
                     "Text": "i32 "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 55,
+                  "Line": 56,
                   "Col": 5,
-                  "Offset": 1188,
+                  "Offset": 1254,
                   "Text": "401:required i32 var_required_i32;"
                 }
               },
@@ -1324,18 +1406,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 56,
+                    "Line": 57,
                     "Col": 18,
-                    "Offset": 1240,
+                    "Offset": 1306,
                     "Text": "i32 "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 56,
+                  "Line": 57,
                   "Col": 5,
-                  "Offset": 1227,
+                  "Offset": 1293,
                   "Text": "402:optional i32 var_optional_i32;"
                 }
               }
@@ -1346,7 +1428,7 @@
               "Line": 23,
               "Col": 1,
               "Offset": 287,
-              "Text": "struct StructType {\n    // basic type\n    1:bool var_bool;\n    // The \"byte\" type is a compatibility alias for \"i8\".\n    // Use \"i8\" to emphasize the signedness of this type.\n    2:byte var_byte;\n    3:i16 var_i16;\n    4:i32 var_i32;\n    5:i64 var_i64;\n    6:double var_double;\n    7:string var_string;\n    8:binary var_binary; // equal to string\n    9:StrType var_string_type;\n    10:InnerStructType var_struct_type;\n\n    // conatiner\n    100:list\u003cstring\u003e var_string_list;\n    101:list\u003cbinary\u003e var_binary_list;\n    102:set\u003cstring\u003e var_string_set;\n    103:map\u003cstring, binary\u003e var_string_binary_map;\n    104:list\u003cInnerStructType\u003e var_struct_list;\n    105:set\u003cInnerStructType\u003e var_struct_set;\n    106:map\u003cstring, InnerStructType\u003e var_string_struct_map;\n\n    // enum\n    201:EnumType var_enum;\n    202:set\u003cEnumType\u003e var_enum_set;\n\n    // union\n    301:UnionType var_union;\n\n    // Field Requiredness\n    401:required i32 var_required_i32;\n    402:optional i32 var_optional_i32;\n}\n"
+              "Text": "struct StructType {\n    // basic type\n    1:bool var_bool;\n    // The \"byte\" type is a compatibility alias for \"i8\".\n    // Use \"i8\" to emphasize the signedness of this type.\n    2:byte var_byte;\n    3:i16 var_i16;\n    4:i32 var_i32;\n    5:i64 var_i64;\n    6:double var_double;\n    7:string var_string;\n    8:binary var_binary; // equal to string\n    9:StrType var_string_type;\n    10:InnerStructType var_struct_type;\n\n    // conatiner\n    100:list\u003cstring\u003e var_string_list;\n    101:list\u003cbinary\u003e var_binary_list;\n    102:set\u003cstring\u003e var_string_set;\n    103:map\u003cstring, binary\u003e var_string_binary_map;\n    104:list\u003cInnerStructType\u003e var_struct_list;\n    105:set\u003cInnerStructType\u003e var_struct_set;\n    106:map\u003cstring, InnerStructType\u003e var_string_struct_map;\n    107:map\u003cstring, list\u003cInnerStructType\u003e\u003e var_string_struct_map;\n\n    // enum\n    201:EnumType var_enum;\n    202:set\u003cEnumType\u003e var_enum_set;\n\n    // union\n    301:UnionType var_union;\n\n    // Field Requiredness\n    401:required i32 var_required_i32;\n    402:optional i32 var_optional_i32;\n}\n"
             }
           },
           ["Cg=="]
@@ -1377,18 +1459,18 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 60,
+                    "Line": 61,
                     "Col": 6,
-                    "Offset": 1296,
+                    "Offset": 1362,
                     "Text": "string "
                   }
                 },
                 "Default": null,
                 "Annotations": null,
                 "SourceInfo": {
-                  "Line": 60,
+                  "Line": 61,
                   "Col": 3,
-                  "Offset": 1293,
+                  "Offset": 1359,
                   "Text": "1: string msg;"
                 }
               }
@@ -1396,9 +1478,9 @@
             "Values": null,
             "ExpandCategoryStr": "",
             "SourceInfo": {
-              "Line": 59,
+              "Line": 60,
               "Col": 1,
-              "Offset": 1265,
+              "Offset": 1331,
               "Text": "exception ExceptionType {\n  1: string msg;\n}\n"
             }
           },
@@ -1417,9 +1499,9 @@
             "Values": null,
             "ExpandCategoryStr": "",
             "SourceInfo": {
-              "Line": 63,
+              "Line": 64,
               "Col": 1,
-              "Offset": 1311,
+              "Offset": 1377,
               "Text": "struct MethodReq {\n}\n"
             }
           },
@@ -1438,10 +1520,31 @@
             "Values": null,
             "ExpandCategoryStr": "",
             "SourceInfo": {
-              "Line": 66,
+              "Line": 67,
               "Col": 1,
-              "Offset": 1333,
+              "Offset": 1399,
               "Text": "struct MethodResponse {\n}\n"
+            }
+          },
+          ["Cg=="]
+        ],
+        [
+          {
+            "Name": "InnerStructType2",
+            "Category": "Struct",
+            "Annotations": null,
+            "KeyType": null,
+            "ValueType": null,
+            "PreRefType": null,
+            "FinalRefType": null,
+            "Fields": [],
+            "Values": null,
+            "ExpandCategoryStr": "",
+            "SourceInfo": {
+              "Line": 70,
+              "Col": 1,
+              "Offset": 1426,
+              "Text": "struct InnerStructType2 {\n}\n"
             }
           },
           ["Cg=="]
@@ -1465,9 +1568,9 @@
                   "Values": null,
                   "ExpandCategoryStr": "",
                   "SourceInfo": {
-                    "Line": 66,
+                    "Line": 67,
                     "Col": 1,
-                    "Offset": 1333,
+                    "Offset": 1399,
                     "Text": "struct MethodResponse {\n}\n"
                   }
                 },
@@ -1488,18 +1591,18 @@
                       "Values": null,
                       "ExpandCategoryStr": "",
                       "SourceInfo": {
-                        "Line": 63,
+                        "Line": 64,
                         "Col": 1,
-                        "Offset": 1311,
+                        "Offset": 1377,
                         "Text": "struct MethodReq {\n}\n"
                       }
                     },
                     "Default": null,
                     "Annotations": null,
                     "SourceInfo": {
-                      "Line": 70,
+                      "Line": 74,
                       "Col": 26,
-                      "Offset": 1405,
+                      "Offset": 1500,
                       "Text": "1: MethodReq req"
                     }
                   }
@@ -1510,9 +1613,9 @@
                     "Name": "tag.v1",
                     "Value": "xxx",
                     "SourceInfo": {
-                      "Line": 70,
+                      "Line": 74,
                       "Col": 45,
-                      "Offset": 1424,
+                      "Offset": 1519,
                       "Text": "tag.v1='xxx', "
                     }
                   },
@@ -1520,17 +1623,17 @@
                     "Name": "tag.v2",
                     "Value": "xxx",
                     "SourceInfo": {
-                      "Line": 70,
+                      "Line": 74,
                       "Col": 59,
-                      "Offset": 1438,
+                      "Offset": 1533,
                       "Text": "tag.v2='xxx'"
                     }
                   }
                 },
                 "SourceInfo": {
-                  "Line": 70,
+                  "Line": 74,
                   "Col": 3,
-                  "Offset": 1382,
+                  "Offset": 1477,
                   "Text": "MethodResponse method1(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');"
                 }
               },
@@ -1554,18 +1657,18 @@
                       "Values": null,
                       "ExpandCategoryStr": "",
                       "SourceInfo": {
-                        "Line": 63,
+                        "Line": 64,
                         "Col": 1,
-                        "Offset": 1311,
+                        "Offset": 1377,
                         "Text": "struct MethodReq {\n}\n"
                       }
                     },
                     "Default": null,
                     "Annotations": null,
                     "SourceInfo": {
-                      "Line": 71,
+                      "Line": 75,
                       "Col": 16,
-                      "Offset": 1468,
+                      "Offset": 1563,
                       "Text": "1: MethodReq req"
                     }
                   }
@@ -1576,9 +1679,9 @@
                     "Name": "tag.v1",
                     "Value": "xxx",
                     "SourceInfo": {
-                      "Line": 71,
+                      "Line": 75,
                       "Col": 35,
-                      "Offset": 1487,
+                      "Offset": 1582,
                       "Text": "tag.v1='xxx', "
                     }
                   },
@@ -1586,27 +1689,144 @@
                     "Name": "tag.v2",
                     "Value": "xxx",
                     "SourceInfo": {
-                      "Line": 71,
+                      "Line": 75,
                       "Col": 49,
-                      "Offset": 1501,
+                      "Offset": 1596,
                       "Text": "tag.v2='xxx'"
                     }
                   }
                 },
                 "SourceInfo": {
-                  "Line": 71,
+                  "Line": 75,
                   "Col": 3,
-                  "Offset": 1455,
+                  "Offset": 1550,
                   "Text": "void method2(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');"
+                }
+              },
+              {
+                "Name": "method3",
+                "ReturnType": null,
+                "Arguments": [
+                  {
+                    "ID": 1,
+                    "Name": "req",
+                    "Requiredness": "Default",
+                    "Type": {
+                      "Name": "map",
+                      "Category": "Map",
+                      "Annotations": null,
+                      "KeyType": {
+                        "Name": "string",
+                        "Category": "String",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": null,
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 76,
+                          "Col": 22,
+                          "Offset": 1632,
+                          "Text": "string"
+                        }
+                      },
+                      "ValueType": {
+                        "Name": "list",
+                        "Category": "List",
+                        "Annotations": null,
+                        "KeyType": null,
+                        "ValueType": {
+                          "Name": "InnerStructType2",
+                          "Category": "Struct",
+                          "Annotations": null,
+                          "KeyType": null,
+                          "ValueType": null,
+                          "PreRefType": null,
+                          "FinalRefType": null,
+                          "Fields": [],
+                          "Values": null,
+                          "ExpandCategoryStr": "",
+                          "SourceInfo": {
+                            "Line": 70,
+                            "Col": 1,
+                            "Offset": 1426,
+                            "Text": "struct InnerStructType2 {\n}\n"
+                          }
+                        },
+                        "PreRefType": null,
+                        "FinalRefType": null,
+                        "Fields": null,
+                        "Values": null,
+                        "ExpandCategoryStr": "",
+                        "SourceInfo": {
+                          "Line": 76,
+                          "Col": 30,
+                          "Offset": 1640,
+                          "Text": "list\u003cInnerStructType2\u003e"
+                        }
+                      },
+                      "PreRefType": null,
+                      "FinalRefType": null,
+                      "Fields": null,
+                      "Values": null,
+                      "ExpandCategoryStr": "",
+                      "SourceInfo": {
+                        "Line": 76,
+                        "Col": 18,
+                        "Offset": 1628,
+                        "Text": "map\u003cstring, list\u003cInnerStructType2\u003e\u003e "
+                      }
+                    },
+                    "Default": null,
+                    "Annotations": null,
+                    "SourceInfo": {
+                      "Line": 76,
+                      "Col": 16,
+                      "Offset": 1626,
+                      "Text": "1:map\u003cstring, list\u003cInnerStructType2\u003e\u003e req"
+                    }
+                  }
+                ],
+                "Exceptions": null,
+                "Annotations": {
+                  "tag.v1": {
+                    "Name": "tag.v1",
+                    "Value": "xxx",
+                    "SourceInfo": {
+                      "Line": 76,
+                      "Col": 60,
+                      "Offset": 1670,
+                      "Text": "tag.v1='xxx', "
+                    }
+                  },
+                  "tag.v2": {
+                    "Name": "tag.v2",
+                    "Value": "xxx",
+                    "SourceInfo": {
+                      "Line": 76,
+                      "Col": 74,
+                      "Offset": 1684,
+                      "Text": "tag.v2='xxx'"
+                    }
+                  }
+                },
+                "SourceInfo": {
+                  "Line": 76,
+                  "Col": 3,
+                  "Offset": 1613,
+                  "Text": "void method3(1:map\u003cstring, list\u003cInnerStructType2\u003e\u003e req) (tag.v1='xxx', tag.v2='xxx');"
                 }
               }
             ],
             "Annotations": null,
             "SourceInfo": {
-              "Line": 69,
+              "Line": 73,
               "Col": 1,
-              "Offset": 1360,
-              "Text": "service ServiceV1 {\n  MethodResponse method1(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');\n  void method2(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');\n}\n"
+              "Offset": 1455,
+              "Text": "service ServiceV1 {\n  MethodResponse method1(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');\n  void method2(1: MethodReq req) (tag.v1='xxx', tag.v2='xxx');\n  void method3(1:map\u003cstring, list\u003cInnerStructType2\u003e\u003e req) (tag.v1='xxx', tag.v2='xxx');\n}\n"
             }
           },
           null

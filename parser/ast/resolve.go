@@ -21,6 +21,66 @@ package ast
 
 import "fmt"
 
+func recursiveResolveIdentifierType(document *Document, typ *Type) {
+	for _, field := range typ.Fields {
+		if field.Type.Category == CategoryIdentifier {
+			if originalType, exists := document.Types[field.Type.Name]; exists {
+				field.Type = originalType
+			}
+		} else {
+			recursiveResolveIdentifierType(document, field.Type)
+		}
+
+	}
+	if typ.KeyType != nil {
+		if typ.KeyType.Category == CategoryIdentifier {
+			if originalType, exists := document.Types[typ.KeyType.Name]; exists {
+				typ.KeyType = originalType
+			}
+		} else {
+			recursiveResolveIdentifierType(document, typ.KeyType)
+		}
+	}
+	if typ.ValueType != nil {
+		if typ.ValueType.Category == CategoryIdentifier {
+			if originalType, exists := document.Types[typ.ValueType.Name]; exists {
+				typ.ValueType = originalType
+			}
+		} else {
+			recursiveResolveIdentifierType(document, typ.ValueType)
+		}
+	}
+}
+
+func ResolveIdentifierType(document *Document) {
+	for _, typ := range document.Types {
+		recursiveResolveIdentifierType(document, typ)
+	}
+
+	for _, service := range document.Services {
+		for _, function := range service.Functions {
+			for _, argument := range function.Arguments {
+				if argument.Type.Category == CategoryIdentifier {
+					if originalType, exists := document.Types[argument.Type.Name]; exists {
+						argument.Type = originalType
+					}
+				} else {
+					recursiveResolveIdentifierType(document, argument.Type)
+				}
+			}
+			if function.ReturnType != nil {
+				if function.ReturnType.Category == CategoryIdentifier {
+					if originalType, exists := document.Types[function.ReturnType.Name]; exists {
+						function.ReturnType = originalType
+					}
+				} else {
+					recursiveResolveIdentifierType(document, function.ReturnType)
+				}
+			}
+		}
+	}
+}
+
 func (document *Document) Resolve(thrift *Thrift) error {
 
 	// Fill Document's `Includes/Namespaces/Constants/Structs/...`,
@@ -51,7 +111,6 @@ func (document *Document) Resolve(thrift *Thrift) error {
 			if v.Category != CategoryIdentifier {
 				document.Types[v.Name] = v
 			}
-
 		case *Service:
 			document.Services[v.Name] = v
 		default:
@@ -59,41 +118,6 @@ func (document *Document) Resolve(thrift *Thrift) error {
 		}
 	}
 
-	for _, typ := range document.Types {
-		for _, field := range typ.Fields {
-			if field.Type.Category == CategoryIdentifier {
-				if originalType, exists := document.Types[field.Type.Name]; exists {
-					field.Type = originalType
-				}
-			}
-			if (field.Type.KeyType != nil) && (field.Type.KeyType.Category == CategoryIdentifier) {
-				if originalType, exists := document.Types[field.Type.KeyType.Name]; exists {
-					field.Type.KeyType = originalType
-				}
-			}
-			if (field.Type.ValueType != nil) && (field.Type.ValueType.Category == CategoryIdentifier) {
-				if originalType, exists := document.Types[field.Type.ValueType.Name]; exists {
-					field.Type.ValueType = originalType
-				}
-			}
-		}
-	}
-
-	for _, service := range document.Services {
-		for _, function := range service.Functions {
-			for _, argument := range function.Arguments {
-				if argument.Type.Category == CategoryIdentifier {
-					if originalType, exists := document.Types[argument.Type.Name]; exists {
-						argument.Type = originalType
-					}
-				}
-			}
-			if function.ReturnType != nil && (function.ReturnType.Category == CategoryIdentifier) {
-				if originalType, exists := document.Types[function.ReturnType.Name]; exists {
-					function.ReturnType = originalType
-				}
-			}
-		}
-	}
+	ResolveIdentifierType(document)
 	return nil
 }
