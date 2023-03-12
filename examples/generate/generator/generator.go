@@ -19,7 +19,7 @@
 package generator
 
 import (
-	"github.com/curoky/go-thrift-parser/examples/generator/generator/template"
+	"github.com/curoky/go-thrift-parser/examples/generate/generator/template"
 	"github.com/curoky/go-thrift-parser/parser/ast"
 )
 

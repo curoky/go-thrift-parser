@@ -22,7 +22,7 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/curoky/go-thrift-parser/examples/generator/generator/template"
+	"github.com/curoky/go-thrift-parser/examples/generate/generator/template"
 	"github.com/curoky/go-thrift-parser/parser/ast"
 	"github.com/flosch/pongo2/v6"
 )

@@ -23,8 +23,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/curoky/go-thrift-parser/examples/generator/generator"
-	"github.com/curoky/go-thrift-parser/examples/generator/generator/filter"
+	"github.com/curoky/go-thrift-parser/examples/generate/generator"
+	"github.com/curoky/go-thrift-parser/examples/generate/generator/filter"
 	"github.com/curoky/go-thrift-parser/parser"
 	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
