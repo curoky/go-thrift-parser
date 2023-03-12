@@ -3,4 +3,4 @@ version: '3'
 tasks:
   default:
     cmds:
-      - go run ./main.go --file ../simple/types.thrift --out .
+      - go run ./main.go --file ../simple/types.thrift --out output
