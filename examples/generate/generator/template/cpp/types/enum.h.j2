@@ -1,0 +1,7 @@
+{% for _, en in document.Enums %}
+enum struct {{ en.Name }} {
+  {% for v in en.Values %}
+    {{ v.Name }} = {{ v.Value }},
+  {% endfor %}
+};
+{% endfor %}

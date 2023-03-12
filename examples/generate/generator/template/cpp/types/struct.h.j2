@@ -1,0 +1,38 @@
+{% for _, st in document.Structs %}
+class RTTR_API {{ st.Name }} {
+ public:
+  {{ st.Name }}();
+  {{ st.Name }}({{ st.Name }}&&) = default;
+  {{ st.Name }}(const {{ st.Name }}&) = default;
+  {{ st.Name }}& operator=({{ st.Name }}&&) = default;
+  {{ st.Name }}& operator=(const {{ st.Name }}&) = default;
+
+  {% for f in st.Fields %}
+  {{ f.Type | cpp_type }} {{ f.Name }} {% if f.Default %} = {{ f.Default | cpp_value }} {% endif %};
+  {% endfor %}
+
+  struct {
+    {% for f in st.Fields %}
+      {% if f.Requiredness == 1 || f.Requiredness == 3 %}
+        bool {{ f.Name }} = false;
+      {% endif%}
+    {% endfor %}
+  } __isset = {};
+
+  {% for f in st.Fields %}
+    template <typename T = {{ f.Type | cpp_type }}>
+    auto& set_{{ f.Name }}(T&& x) {
+      this->{{ f.Name }} = std::forward<T>(x);
+      {% if f.Requiredness == 0 || f.Requiredness == 2 %}
+        __isset.{{ f.Name }} = true;
+      {% endif %}
+      return this->{{ f.Name }};
+    }
+    const {{ f.Type | cpp_type }}* get_{{ f.Name }}() const {
+      return __isset.{{ f.Name }} == true ? &this->{{ f.Name }} : nullptr;
+    }
+  {% endfor %}
+  RTTR_ENABLE()
+};
+
+{% endfor %}

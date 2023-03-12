@@ -1,0 +1,6 @@
+{% for _, cs in document.Constants %}
+  static const {{ cs.Type | cpp_type }}  {{ cs.Name }}_ = {{ cs.Value | cpp_value }};
+  inline static const {{ cs.Type | cpp_type }}& {{ cs.Name }}() {
+    return {{ cs.Name }}_;
+  }
+{% endfor %}

@@ -1,0 +1,34 @@
+{% import "utils.j2" autogen_head,namespace_begin,namespace_end %}
+{{ autogen_head() }}
+
+#include "{{ document.Filename | base_name }}.h"
+
+#include <rttr/registration>
+
+{{ namespace_begin() }}
+
+RTTR_REGISTRATION {
+// BEGIN Register_enums
+{% for _, en in document.Enums %}
+  rttr::registration::enumeration<{{ en.Name }}>("{{ en.Name }}")(
+  {% for v in en.Values %}
+    rttr::value("{{ v.Name }}", {{ en.Name }}::{{ v.Name }}),
+  {% endfor %}
+  rttr::metadata("thrift", "")
+  );
+{% endfor %}
+// END Register_enums
+
+// BEGIN Register_structs
+{% for _, st in document.Structs %}
+  rttr::registration::class_<{{ st.Name }}>("{{ st.Name }}")
+  {% for f in st.Fields %}
+    .property("{{ f.Name }}", &{{ st.Name }}::{{ f.Name }})(
+      rttr::metadata("thrift", "{{ f.ID }},{{ f.Requiredness.String | safe }},{{ f.Type.FinalType | expandCategory }}")
+    )
+  {% endfor %};
+{% endfor %}
+// END Register_structs
+}
+
+{{ namespace_end() }}

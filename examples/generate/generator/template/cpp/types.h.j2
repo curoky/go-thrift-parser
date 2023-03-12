@@ -1,0 +1,23 @@
+{% import "utils.j2" autogen_head,namespace_begin,namespace_end %}
+{{ autogen_head() }}
+
+#pragma once
+#include <vector>
+#include <map>
+#include <set>
+#include <string>
+
+{# #include <rttr/type> #}
+#define RTTR_API()
+#define RTTR_ENABLE()
+
+{{ namespace_begin() }}
+
+{% include 'types/constant.h.j2' %}
+{% include 'types/enum.h.j2' %}
+{% include 'types/forward_declare.h.j2' %}
+{% include 'types/typedef.h.j2' %}
+{% include 'types/union.h.j2' %}
+{% include 'types/struct.h.j2' %}
+
+{{ namespace_end() }}

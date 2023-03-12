@@ -1,0 +1,3 @@
+{% for _, td in document.Typedefs %}
+typedef {{ td.PreRefType | cpp_type }} {{ td.Name }};
+{% endfor %}
