@@ -23,7 +23,6 @@ package parser
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 	"path/filepath"
 
@@ -31,33 +30,12 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-type PreProcessorType func(filename string) ([]byte, error)
-
-type Parser struct {
-	Thrift       ast.Thrift
-	IncludePaths []string
-	Verbose      bool
-	PreProcessor PreProcessorType
-}
-
-func readOnlyProcessor(filename string) ([]byte, error) {
-	return os.ReadFile(filename)
-}
-
-func CreateParser(verbose bool, includePaths []string) *Parser {
-	p := &Parser{Verbose: verbose}
-	p.Thrift.Documents = make(map[string]*ast.Document)
-	p.IncludePaths = includePaths
-	p.PreProcessor = readOnlyProcessor
-	return p
-}
-
-func (p *Parser) Dump(filename string) error {
+func Dump(thrift *ast.Thrift, filename string) error {
 	absPath, err := filepath.Abs(filename)
 	if err != nil {
 		return err
 	}
-	content, err := json.MarshalIndent(p.Thrift, "", "  ")
+	content, err := json.MarshalIndent(thrift, "", "  ")
 	if err != nil {
 		return err
 	}
@@ -68,67 +46,84 @@ func (p *Parser) Dump(filename string) error {
 	return nil
 }
 
-func (p *Parser) findThriftFileInIncludePath(filename string) *string {
-	if filepath.IsAbs(filename) {
-		if _, err := os.Stat(filename); err == nil {
-			return &filename
-		}
-	}
-	for _, includePath := range p.IncludePaths {
-		log.Debugf("findThriftFileInIncludePath: %s %s", includePath, filename)
+func searchThriftFileInIncludePath(filename string, includePaths []string) (string, error) {
+	// TODO(curoky): check if there are any files with same name in different directory.
+	for _, includePath := range includePaths {
+		log.Debugf("parser: searching <%s> from <%s>", filename, includePath)
 		path := filepath.Join(includePath, filename)
 		if _, err := os.Stat(path); err == nil {
-			return &path
+			return path, nil
 		}
 	}
-	return nil
+	return "", &os.PathError{Op: "search", Path: filename, Err: os.ErrNotExist}
 }
 
-func (p *Parser) RecursiveParse(filename string) error {
-	log.Debugf("RecursiveParse: start process %s", filename)
+func ParseThriftFile(filename string, includePaths []string, recursive bool, verbose bool) (*ast.Thrift, error) {
+	thrift := &ast.Thrift{
+		Documents: make(map[string]*ast.Document),
+	}
+	filename, err := filepath.Abs(filename)
+	if err != nil {
+		return nil, err
+	}
+	includePaths = append(includePaths, ".", "/")
+	err = recursiveParseThriftFile(thrift, filename, includePaths, verbose)
+	if err != nil {
+		return nil, err
+	}
+	return thrift, err
+}
 
-	absPath := ""
-	if path := p.findThriftFileInIncludePath(filename); path != nil {
-		absPath = *path
-		p.IncludePaths = append(p.IncludePaths, filepath.Dir(absPath))
-	} else {
-		return fmt.Errorf("RecursiveParse: can't find %s", filename)
+func parseThriftString(filename string, fileContent []byte, verbose bool) (*ast.Document, error) {
+	docIf, err := Parse(filename, fileContent, Debug(verbose))
+	if err != nil {
+		return nil, err
+	}
+	doc := docIf.(*ast.Document)
+	doc.Filename = filename
+
+	err = doc.Resolve(nil)
+	if err != nil {
+		return nil, err
+	}
+	return doc, err
+}
+
+func recursiveParseThriftFile(thrift *ast.Thrift, filename string, includePaths []string, verbose bool) error {
+	reslovedPath, err := searchThriftFileInIncludePath(filename, includePaths)
+	log.Debugf("parser: searched %s", reslovedPath)
+	if err != nil {
+		log.Errorf("parser: can't find %s", filename)
+		return err
 	}
 
-	if _, ok := p.Thrift.Documents[absPath]; ok {
-		log.Debugf("RecursiveParse: already in cached, skip %s", absPath)
+	if _, ok := thrift.Documents[reslovedPath]; ok {
+		log.Debugf("parser: already in cached, skip %s", reslovedPath)
 		return nil
 	}
 
-	log.Debugf("RecursiveParse: parse %s", absPath)
-	content, err := p.PreProcessor(absPath)
+	log.Debugf("parser: parse %s", reslovedPath)
+	content, err := os.ReadFile(reslovedPath)
 	if err != nil {
-		log.Errorf("RecursiveParse: PreProcessor failed %s, err %s", absPath, err)
+		log.Errorf("parser: ReadFile failed %s, err %s", reslovedPath, err)
 		return err
 	}
 
-	docIf, err := Parse(absPath, content, Debug(p.Verbose))
+	doc, err := parseThriftString(reslovedPath, content, verbose)
 	if err != nil {
-		log.Errorf("RecursiveParse: parse failed %s, err %s", absPath, err)
-		return err
-	}
-	doc := docIf.(*ast.Document)
-	doc.Filename = absPath
-
-	err = doc.Resolve(&p.Thrift)
-	if err != nil {
+		log.Errorf("parser: parseThriftString failed %s, err %s", reslovedPath, err)
 		return err
 	}
 
-	log.Debugf("RecursiveParse: parse %s success", doc.Filename)
-	p.Thrift.Documents[absPath] = doc
+	log.Debugf("parser: parse %s success", doc.Filename)
+	thrift.Documents[reslovedPath] = doc
 
 	for _, inc := range doc.Includes {
-		err = p.RecursiveParse(inc.Path)
+		err = recursiveParseThriftFile(thrift, inc.Path, append(includePaths, filepath.Dir(reslovedPath)), verbose)
 		if err != nil {
 			return err
 		}
-		inc.Reference = p.Thrift.Documents[inc.Path]
+		inc.Reference = thrift.Documents[inc.Path]
 	}
 	return nil
 }

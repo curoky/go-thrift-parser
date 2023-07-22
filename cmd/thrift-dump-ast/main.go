@@ -59,13 +59,13 @@ func app() *cli.App {
 		output_dir := c.Path("out")
 		log.Infof("Input file: %s", input_file)
 
-		p := parser.CreateParser(c.Bool("verbose"), c.StringSlice("include"))
-		if err := p.RecursiveParse(input_file); err != nil {
+		thrift, err := parser.ParseThriftFile(input_file, c.StringSlice("include"), true, c.Bool("verbose"))
+		if err != nil {
 			log.Fatal(err)
 		}
 
 		log.Infof("Dump to: %s", output_dir)
-		err := p.Dump(output_dir)
+		err = parser.Dump(thrift, output_dir)
 		if err != nil {
 			return err
 		}

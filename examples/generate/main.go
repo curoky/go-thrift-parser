@@ -61,12 +61,12 @@ func app() *cli.App {
 		output_dir := c.Path("out")
 		log.Infof("Input file: %s", input_file)
 
-		p := parser.CreateParser(c.Bool("verbose"), c.StringSlice("include"))
-		if err := p.RecursiveParse(input_file); err != nil {
+		thrift, err := parser.ParseThriftFile(input_file, c.StringSlice("include"), true, c.Bool("verbose"))
+		if err != nil {
 			log.Fatal(err)
 		}
 		filter.Init()
-		return generator.CreateGenerator("cpp").Generate(&p.Thrift, input_file, generator.Config{OutputPrefix: output_dir})
+		return generator.CreateGenerator("cpp").Generate(thrift, input_file, generator.Config{OutputPrefix: output_dir})
 	}
 	return app
 }

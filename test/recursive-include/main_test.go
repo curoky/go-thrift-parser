@@ -20,33 +20,17 @@
 package main
 
 import (
-	"fmt"
+	"testing"
 
 	"github.com/curoky/go-thrift-parser/parser"
-	"github.com/curoky/go-thrift-parser/parser/ast"
 	log "github.com/sirupsen/logrus"
+	"github.com/stretchr/testify/require"
 )
 
-func main() {
+func TestGenerate(t *testing.T) {
 	log.SetLevel(log.DebugLevel)
-	thrift, err := parser.ParseThriftFile("types.thrift", []string{}, true, false)
-	if err != nil {
-		panic(err)
-	}
-
-	for name, doc := range thrift.Documents {
-		fmt.Printf("%s\n", name)
-		fmt.Printf("%s\n", doc.Filename)
-		for _, body := range doc.Body {
-			switch v := body.([]interface{})[0].(type) {
-			case *ast.Include:
-				fmt.Printf("include: %s\n", v.Name)
-			case *ast.Type:
-				fmt.Printf("type: %s\n", v.Name)
-			case *ast.Service:
-				fmt.Printf("service: %s\n", v.Name)
-			}
-		}
-	}
-
+	_, err := parser.ParseThriftFile("b/b.thrift", []string{}, true, false)
+	require.NoError(t, err)
+	_, err = parser.ParseThriftFile("a/a.thrift", []string{}, true, false)
+	require.NoError(t, err)
 }
