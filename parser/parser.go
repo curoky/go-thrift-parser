@@ -90,6 +90,7 @@ func (p *Parser) RecursiveParse(filename string) error {
 	absPath := ""
 	if path := p.findThriftFileInIncludePath(filename); path != nil {
 		absPath = *path
+		p.IncludePaths = append(p.IncludePaths, filepath.Dir(absPath))
 	} else {
 		return fmt.Errorf("RecursiveParse: can't find %s", filename)
 	}
